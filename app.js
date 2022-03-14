@@ -1,6 +1,7 @@
 // modules
 const express = require('express')
 const path = require('path')
+const morgan = require('morgan')
 
 // express app
 const app = express()
@@ -11,6 +12,8 @@ const PORT = 3000
 app.set('view engine', 'ejs')
 
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`))
+
+app.use(express.static('public'))
 
 app.get('/', (req, res) => res.render('index'))
 app.get('/about', (req, res) => res.render('about'))
