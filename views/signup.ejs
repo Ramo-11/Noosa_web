@@ -1,0 +1,36 @@
+<html lang="en">
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <Form id="signup-form">
+        <input type="text" autocomplete="off" autocapitalize="off" id="username" placeholder="email" />
+        <input type="password" autocomplete="off" autocapitalize="off" id="password" placeholder="password">
+        <input type="submit" value="Submit">
+    </Form>
+
+    <script>
+        const form = document.getElementById('signup-form')
+
+        form.addEventListener('submit', registerUser)
+
+        async function registerUser(event) {
+            event.preventDefault() // This will prevent the refresh event
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+
+            const result = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify ({
+                    username,
+                    password
+                })
+            }).then((res) => res.json())
+        }
+    </script>
+
+    <%- include('./partials/footer.ejs') %>    
+</body>
+</html>
