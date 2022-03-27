@@ -2,35 +2,35 @@
 <body>
     <%- include('./partials/nav.ejs') %>
 
-    <Form id="signup-form">
-        <input type="text" autocomplete="off" id="name" placeholder="name" />
+    <Form id="login-form">
         <input type="text" autocomplete="off" autocapitalize="off" id="email" placeholder="email" />
         <input type="password" autocomplete="off" autocapitalize="off" id="password" placeholder="password">
         <input type="submit" value="Submit">
     </Form>
 
     <script>
-        const form = document.getElementById('signup-form')
+        const form = document.getElementById('login-form')
 
-        form.addEventListener('submit', signupUser)
+        form.addEventListener('submit', loginUser)
 
-        async function signupUser(event) {
+        async function loginUser(event) {
             event.preventDefault() // This will prevent the refresh event
-            const name = document.getElementById('name').value
             const email = document.getElementById('email').value
             const password = document.getElementById('password').value
 
-            const result = await fetch('/api/signup', {
+            const result = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify ({
-                    name,
                     email,
                     password
                 })
             }).then((res) => res.json())
+
+            if(result.status === 'ok')
+                console.log("sheesh: ", result.data)
         }
     </script>
 
