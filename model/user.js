@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
     },
     gender: String
 },
-{ collection: 'users'}
+{ collection: 'users' }
 )
 
 const userModel = mongoose.model('UserSchema', UserSchema)

@@ -36,7 +36,7 @@ route.get('/signup', (req, res) => res.render('signup'))
 // API Routes
 route.post('/api/signup', dbController.createUser)
 route.get('/api/signup', dbController.findUser)
-route.put('/api/signup:id', dbController.updateUser)
-route.delete('/api/signup:id', dbController.deleteUser)
+route.put('/api/signup/:id', dbController.updateUser)
+route.delete('/api/signup/:id', dbController.deleteUser)
 
 module.exports = route
