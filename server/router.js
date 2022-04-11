@@ -39,4 +39,6 @@ route.get('/api/signup', dbController.findUser)
 route.put('/api/signup/:id', dbController.updateUser)
 route.delete('/api/signup/:id', dbController.deleteUser)
 
+route.post('/api/login', dbController.loginUser)
+
 module.exports = route

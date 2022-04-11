@@ -1,5 +1,8 @@
 const userModel = require('../../model/user')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { send } = require('express/lib/response');
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
 
 // create new userModel
 exports.createUser = async (req, res) => {
@@ -29,11 +32,10 @@ exports.createUser = async (req, res) => {
         }) 
         res.status(200).send({message: "user was created successfully"})
     } catch (error) {
-        console.log("exception caught: unable to create user")
         if(error.code === 11000)
             res.status(400).send({message: "email already exists"})
         else
-            res.status(400).send({message: "unable to create user"})
+            res.status(400).send({message: "unable to create user", error})
     }
 }
 
@@ -42,8 +44,7 @@ exports.findUser = async (req, res) => {
         const user = await userModel.find()
         res.json(user)
     } catch (error) {
-        console.log("exception caught: unable to retrieve users")
-        res.status(400).send({message: "unable to get data from database"})
+        res.status(400).send({message: "unable to get data from database", error})
     }
 }
 
@@ -53,7 +54,6 @@ exports.updateUser = async (req, res) => {
         await userModel.findByIdAndUpdate(userID, req.body)
         res.status(200).send({message: "user was updated successfully"})
     } catch (error) {
-        console.log("exception caught: unable to update user")
         res.status(400).send({message: "unable to update user", error})
     }
 }
@@ -64,7 +64,22 @@ exports.deleteUser = async (req, res) => {
         await userModel.findByIdAndDelete(userID)
         res.status(200).send({message: "users were deleted successfully"})
     } catch (error) {
-        console.log("exception caught: unable to delete user")
         res.status(400).send({message: "unable to delete user", error})
+    }
+}
+
+exports.loginUser = async (req, res) => {
+    const { email, password } = req.body
+    try {
+        const user = await userModel.findOne({ email }).lean()
+        if(await bcrypt.compare(password, user.password)) {
+            const token = jwt.sign({id: user._id, username: user.email}, JWT_SECRET)
+            res.status(200).send({message: "user logged in successfully", data: token})
+        }
+        else {
+            res.status(400).send({message: "invalid email/password", error})
+        }
+    } catch (error) {
+        res.status(400).send({message: "invalid email/password", error})
     }
 }
