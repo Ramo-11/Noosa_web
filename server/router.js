@@ -33,6 +33,8 @@ route.get('/login', (req, res) => res.render('login'))
  */
 route.get('/signup', (req, res) => res.render('signup'))
 
+route.get('/change_password', (req, res) => res.render('change_password'))
+
 // API Routes
 route.post('/api/signup', dbController.createUser)
 route.get('/api/signup', dbController.findUser)
@@ -40,5 +42,6 @@ route.put('/api/signup/:id', dbController.updateUser)
 route.delete('/api/signup/:id', dbController.deleteUser)
 
 route.post('/api/login', dbController.loginUser)
+route.post('/api/change_password', dbController.change_password)
 
 module.exports = route

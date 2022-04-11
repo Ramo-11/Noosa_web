@@ -19,15 +19,4 @@ app.listen(process.env.PORT, () => console.log(`Server running on port: http://l
 
 app.use('/', require('./Server/router'))
 
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body
-
-    const user = await User.findOne({ email }).lean()
-
-    if(await bcrypt.compare(password, user.password))
-        return res.json({ status: 'ok' })
-
-    return res.json({ status: 'error', error: 'username and password did not match any in the record' })
-})
-
 app.use((req,res) => res.status(404).render('404'))

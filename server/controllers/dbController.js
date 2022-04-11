@@ -1,7 +1,8 @@
 const userModel = require('../../model/user')
 const bcrypt = require('bcryptjs');
 const { send } = require('express/lib/response');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { verify } = require('jsonwebtoken');
 const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
 
 // create new userModel
@@ -17,10 +18,9 @@ exports.createUser = async (req, res) => {
         return res.status(400).send({message: "name cannot be empty"})
     if(!email || typeof email !== 'string' || !validateEmail(email))
         return res.status(400).send({message: "invalid email"})
-    if(!plainTextPassword || typeof plainTextPassword !== 'string') 
-        return res.status(400).send({message: "invalid password"})
-    if(plainTextPassword <= 5)
-        return res.status(400).send({message: "password is too short (it should be at least 6 characters)"})
+    passwordCheck = verifyPassword(plainTextPassword)
+    if(passwordCheck !== "password is good")
+        return res.state(400).send({message: passwordCheck})
 
     const password = await bcrypt.hash(plainTextPassword, 10)
 
@@ -33,18 +33,18 @@ exports.createUser = async (req, res) => {
         res.status(200).send({message: "user was created successfully"})
     } catch (error) {
         if(error.code === 11000)
-            res.status(400).send({message: "email already exists"})
+            return res.status(400).send({message: "email already exists"})
         else
-            res.status(400).send({message: "unable to create user", error})
+            return res.status(400).send({message: "unable to create user"})
     }
 }
 
 exports.findUser = async (req, res) => {
     try {
         const user = await userModel.find()
-        res.json(user)
+        return res.json(user)
     } catch (error) {
-        res.status(400).send({message: "unable to get data from database", error})
+        return res.status(400).send({message: "unable to get data from database"})
     }
 }
 
@@ -52,9 +52,9 @@ exports.updateUser = async (req, res) => {
     const userID = req.params.id
     try {
         await userModel.findByIdAndUpdate(userID, req.body)
-        res.status(200).send({message: "user was updated successfully"})
+        return res.status(200).send({message: "user was updated successfully"})
     } catch (error) {
-        res.status(400).send({message: "unable to update user", error})
+        return res.status(400).send({message: "unable to update user"})
     }
 }
 
@@ -62,9 +62,9 @@ exports.deleteUser = async (req, res) => {
     const userID = req.params.id
     try {
         await userModel.findByIdAndDelete(userID)
-        res.status(200).send({message: "users were deleted successfully"})
+        return res.status(200).send({message: "users were deleted successfully"})
     } catch (error) {
-        res.status(400).send({message: "unable to delete user", error})
+        return res.status(400).send({message: "unable to delete user"})
     }
 }
 
@@ -74,12 +74,47 @@ exports.loginUser = async (req, res) => {
         const user = await userModel.findOne({ email }).lean()
         if(await bcrypt.compare(password, user.password)) {
             const token = jwt.sign({id: user._id, username: user.email}, JWT_SECRET)
-            res.status(200).send({message: "user logged in successfully", data: token})
+            return res.status(200).send({message: "user logged in successfully"})
         }
         else {
-            res.status(400).send({message: "invalid email/password", error})
+            return res.status(400).send({message: "invalid email/password"})
         }
     } catch (error) {
-        res.status(400).send({message: "invalid email/password", error})
+        return res.status(400).send({message: "invalid email/password"})
     }
+}
+
+exports.change_password = async (req, res) => {
+    const { token } = req.headers
+    const { newPassword } = req.body
+
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const _id = user.id
+        const password = await bcrypt.hash(newPassword)
+
+        passwordCheck = verifyPassword(newPassword)
+        if(passwordCheck !== "password is good")
+            return res.state(400).send({message: passwordCheck})
+
+        await userModel.updateOne( 
+            {_id }, 
+            { 
+                $set: { password }
+            }
+        )
+
+        return res.status(200).send({message: "password was changed successfully"})
+    } catch (error) {
+        return res.status(400).send({message: "Invalid request"})
+    }
+}
+
+function verifyPassword(password) {
+    if(!password || typeof password !== 'string') 
+        return "invalid password"
+    if(password <= 5)
+        return "password is too short (it should be at least 6 characters)"
+
+    return "password is good"
 }
