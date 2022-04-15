@@ -20,8 +20,11 @@ exports.sendemail = async (req, res) => {
 
     mailTransporter.sendMail(details, (error) => {
         if(!error)
-            console.log("email was sent")
-        else
+            return res.status(200).send({message: "Message was sent successfully"})
+
+        else {
             console.log("BIG ERROR: ", error)
+            return res.status(400).send({message: "Message was not sent"})
+        }
     })
 }
