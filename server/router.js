@@ -33,7 +33,11 @@ route.get('/login', (req, res) => res.render('login'))
  */
 route.get('/signup', (req, res) => res.render('signup'))
 
-route.get('/change_password', (req, res) => res.render('change_password'))
+/**
+ * @description change password route
+ * @method GET /change_password
+ */
+// route.get('/change_password', (req, res) => res.render('change_password'))
 
 // API Routes
 route.post('/api/signup', dbController.createUser)

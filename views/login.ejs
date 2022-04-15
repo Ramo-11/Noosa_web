@@ -27,10 +27,9 @@
                     email,
                     password
                 })
-            }).then((res) => res)
+            }).then((res) => res.json())
             if(result.status === 200) {
                 localStorage.setItem('token', result.data)
-                console.log('token was set')
             }
         }
     </script>

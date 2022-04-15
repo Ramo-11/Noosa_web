@@ -74,20 +74,21 @@ exports.loginUser = async (req, res) => {
         const user = await userModel.findOne({ email }).lean()
         if(await bcrypt.compare(password, user.password)) {
             const token = jwt.sign({id: user._id, username: user.email}, JWT_SECRET)
-            return res.status(200).send({message: "user logged in successfully"})
+            res.status(200)
+            return res.json({data: token})
         }
         else {
             return res.status(400).send({message: "invalid email/password"})
         }
     } catch (error) {
-        return res.status(400).send({message: "invalid email/password"})
+        return res.status(400).send({message: "error has occured"})
     }
 }
 
 exports.change_password = async (req, res) => {
     const { token } = req.headers
     const { newPassword } = req.body
-
+    
     try {
         const user = jwt.verify(token, JWT_SECRET)
         const _id = user.id
@@ -106,6 +107,7 @@ exports.change_password = async (req, res) => {
 
         return res.status(200).send({message: "password was changed successfully"})
     } catch (error) {
+        console.log(error)
         return res.status(400).send({message: "Invalid request"})
     }
 }
