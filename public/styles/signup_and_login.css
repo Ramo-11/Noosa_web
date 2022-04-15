@@ -1,18 +1,6 @@
 h1 {
 	font-weight: bold;
-    padding-bottom: 10px;
-}
-
-h2 {
-	text-align: center;
-}
-
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
+    padding-bottom: 30px;
 }
 
 span {
