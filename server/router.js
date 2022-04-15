@@ -2,6 +2,7 @@ const express = require('express')
 const route = express.Router()
 
 const dbController = require('./controllers/dbController')
+const mailController = require('./controllers/mailController')
 
 /**
  * @description home route
@@ -47,5 +48,7 @@ route.delete('/api/signup/:id', dbController.deleteUser)
 
 route.post('/api/login', dbController.loginUser)
 route.post('/api/change_password', dbController.change_password)
+
+route.post('/api/sendemail', mailController.sendemail)
 
 module.exports = route

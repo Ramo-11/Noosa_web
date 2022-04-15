@@ -14,7 +14,7 @@
     <%- include('./partials/nav.ejs') %>
 
     <div class="contact-div">
-        <form class="contact-form">
+        <form id="contact-form" class="contact-form">
             <h1>Contact Us</h1>
             <div class="fname">
                 <label for="fname"></label>
@@ -39,5 +39,16 @@
     </div>
 
     <%- include('./partials/footer.ejs') %> 
+
+    <script>
+        const form = document.getElementById('contact-form')
+
+        form.addEventListener('submit', sendemail)
+
+        async function sendemail(event) {
+            event.preventDefault() // This will prevent the refresh event
+            console.log("blablabla")
+        }
+    </script>
 </body>
 </html>

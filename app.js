@@ -11,7 +11,7 @@ const User = require('./model/user')
 
 app.use(express.static('public'))
 
-connectDB()
+// connectDB()
 
 app.set('view engine', 'ejs')
 
