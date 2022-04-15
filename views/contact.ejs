@@ -28,9 +28,9 @@
                 <label for="email"></label>
                 <input type="text" id="email" name="emailname" placeholder="Your email..">
             </div>
-            <div class="subject">
-                <label for="subject"></label>
-                <textarea id="subject" name="subject" placeholder="Write us something.." style="height:200px"></textarea>
+            <div class="content">
+                <label for="content"></label>
+                <textarea id="content" name="content" placeholder="Write us something.." style="height:200px"></textarea>
             </div>
             <div class="submit-button">
                 <input type="submit" value="Submit">
@@ -42,12 +42,30 @@
 
     <script>
         const form = document.getElementById('contact-form')
-
         form.addEventListener('submit', sendemail)
 
+        
+        
         async function sendemail(event) {
             event.preventDefault() // This will prevent the refresh event
-            console.log("blablabla")
+            
+            const firstName = document.getElementById('fname').value
+            const lastName = document.getElementById('lname').value
+            const email = document.getElementById('email').value
+            const content = document.getElementById('content').value
+
+            const result = await fetch('/api/sendemail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify ({
+                    firstName,
+                    lastName,
+                    email,
+                    content
+                })
+            }).then((res) => res)
         }
     </script>
 </body>
