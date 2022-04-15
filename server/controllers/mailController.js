@@ -13,7 +13,7 @@ exports.sendemail = async (req, res) => {
 
     let details = {
         from: email,
-        to: "oabdela@iu.edu",
+        to: "omarh5877@gmail.com",      // This should ultimately be the Noosa email: support@noosa.com
         subject: `Message from ${email}`,
         text: content
     }

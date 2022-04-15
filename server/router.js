@@ -26,13 +26,13 @@ route.get('/contact', (req, res) => res.render('contact'))
  * @description login route
  * @method GET /login
  */
-route.get('/login', (req, res) => res.render('login'))
+route.get('/login', (req, res) => res.render('signup_and_login'))
 
 /**
  * @description signup route
  * @method GET /signup
  */
-route.get('/signup', (req, res) => res.render('signup'))
+route.get('/signup', (req, res) => res.render('signup_and_login'))
 
 /**
  * @description change password route
