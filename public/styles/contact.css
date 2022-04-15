@@ -1,0 +1,49 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    border: 2px solid red;
+}
+
+.contact-div {
+    height: 74vh;
+    padding-top: 50px; 
+}
+
+.contact-form{
+    position: relative;
+    left: 10%;
+    width: 80%;
+    height: 56vh;
+    padding: 5px;
+}
+
+/* Contact Form style */
+input,
+textarea {
+    width: 20%;
+    margin-top: 2rem;
+    border: none;
+    border-bottom: 1.5px solid
+} 
+
+textarea[id="subject"] {
+    width: 80%;
+    padding: 12px;
+}
+
+input[type="submit"] {
+    color: white;
+    cursor: pointer;
+    padding: 0.7rem;
+    border-radius: 50px;
+    background-color: rgba(11, 149, 11, 1);
+
+}
+input[type="submit"]:hover {
+    opacity: 0.75;
+}

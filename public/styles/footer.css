@@ -5,11 +5,8 @@
 }
 
 footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
-    right: 0;
-    left: 0;
-    height: auto;
     padding-top: 10px;
     background-color: darkseagreen;
 }

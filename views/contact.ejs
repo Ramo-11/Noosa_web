@@ -1,6 +1,43 @@
+<!DOCTYPE html>
 <html lang="en">
+<head>
+    <link rel="stylesheet" href="/styles/contact.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Text+Me+One&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Noosa</title>
+</head>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <%- include('./partials/footer.ejs') %>  
+
+    <div class="contact-div">
+        <form class="contact-form">
+            <h1>Contact Us</h1>
+            <div class="fname">
+                <label for="fname"></label>
+                <input type="text" id="fname" name="firstname" placeholder="Your first name..">
+            </div>
+            <div class="lname">
+                <label for="lname"></label>
+                <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+            </div>
+            <div class="email">
+                <label for="email"></label>
+                <input type="text" id="email" name="emailname" placeholder="Your email..">
+            </div>
+            <div class="subject">
+                <label for="subject"></label>
+                <textarea id="subject" name="subject" placeholder="Write us something.." style="height:200px"></textarea>
+            </div>
+            <div class="submit-button">
+                <input type="submit" value="Submit">
+            </div>
+        </form>    
+    </div>
+
+    <%- include('./partials/footer.ejs') %> 
 </body>
 </html>
