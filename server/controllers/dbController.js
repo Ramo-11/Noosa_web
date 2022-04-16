@@ -30,7 +30,7 @@ exports.createUser = async (req, res) => {
             email,
             password
         }) 
-        res.status(200).send({message: "user was created successfully"})
+        return res.status(200).send({message: "user was created successfully"})
     } catch (error) {
         if(error.code === 11000)
             return res.status(400).send({message: "email already exists"})

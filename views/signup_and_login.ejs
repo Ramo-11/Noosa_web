@@ -75,9 +75,11 @@
                     email,
                     password
                 })
-            }).then((res) => res.json())
+            }).then((res) => res)
+            if (result.status === 200) {
+                window.location.href="/"    // send user to home screen after signing up
+            }
         }
-
 
 
         const login_form = document.getElementById('login-form')
@@ -99,6 +101,7 @@
             }).then((res) => res.json())
             if(result.status === 200) {
                 localStorage.setItem('token', result.data)
+                window.location.href="/"    // send user to home screen after loggin in
             }
         }
     </script>
