@@ -5,65 +5,156 @@
     box-sizing: border-box;
 }
 
-.container {
-    background-color: #fff;
-    
-    /* To center the form in the middle fo the screen */
-	position: relative;
-    left: 50%;
-    transform: translate(-50%);
+body {
+    /* min-height: 50vh; */
 
-	overflow: hidden;
-	width: 1100px;
-	max-width: 100%;
-	min-height: 70vh;
-    margin-top: 30px;
-    margin-bottom: 10px;
 }
-
-.form-container {
-	position: absolute;
-	top: 0;
-	height: 100%;
-	transition: all 0.6s ease-in-out;
+/* Contact Form positioning */
+.contact-form{
+    position: relative;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 100%;
 }
 
 /* Contact Form style */
 input,
 textarea {
-    width: 30%;
-    margin-top: 3rem;
+    width: 20%;
+    margin-top: 2rem;
     border: none;
-    border-bottom: 1.5px solid;
-    margin-left: 1rem;
+    border-bottom: 1.5px solid
 } 
 
-*:focus {
-    outline: none;
-}
-
-textarea {
-    width: 50%;
-    height: 20vh;
+textarea[id="subject"] {
+    width: 80%;
+    padding: 12px;
 }
 
 button[type="submit"] {
-    margin-top: 2rem;
-    margin-left: 1rem;
-	border-radius: 20px;
-	border: 1px solid #14a82f;
-	background-color: #14a82f;
-	color: white;
+    color: white;
     cursor: pointer;
-    padding: 1rem;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
+    padding: 0.7rem;
+    border-radius: 50px;
+    background-color: rgba(11, 149, 11, 1);
+
+}
+button[type="submit"]:hover {
+    opacity: 0.75;
 }
 
-button[type="submit"]:hover {
-    opacity: 0.9;
+/* Pop up window */
+.popup-screen {
+    position: fixed;
+    z-index: 999990;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    visibility: visible;
+
+}
+.open-popup {
+    visibility: visible;
+}
+
+.close-popup{
+    visibility: hidden;
+}
+
+.popup-window {
+    /* display: -ms-grid;
+    display: grid; */
+    /* grid: 25vh; */
+    height: 50vh;
+    /* grid-template-columns: auto; */
+    /* position: relative; */
+    background-color: green;
+    border-radius: 25px;
+    box-shadow: 0 0 20px;
+    max-width: 500px; 
+    width: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+    /* padding: 10px; */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    
+}
+
+.popup-tophalf {
+    display:flex;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    top: 0;
+    /* border: 3px solid red; */
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+.checkmark-circle {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    border: 5px solid #78b13f;
+}
+.checkmark-stem {
+
+    position: absolute;
+    left: 35%;
+    top: 20%;
+    transform: rotate(45deg);
+    height: 35px;
+    width: 18px;
+    border-bottom: 5px solid #78b13f;
+    border-right: 5px solid #78b13f;   
+}
+
+.popup-bottomhalf {
+    display:flex;
+    height: 100%;
+    width: 100%;
+    background-color: #78b13f;
+    /* border: 3px solid red; */
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
+
+
+
+.popup-text {
+    padding: 12px;
+    letter-spacing: 1px;
+
+}
+
+.popup-text h1 {
+    font: bold 2em arial, helvetica;
+
+}
+
+button[type="button"] {
+    color: blue;
+    cursor: pointer;
+    padding: 0.7rem;
+    border-radius: 70px;
+    width: 40%;
+    background-color: rgba(11, 149, 11, 1);
+}
+
+button[type="button"]:hover {
+    opacity: 0.75;
 }
