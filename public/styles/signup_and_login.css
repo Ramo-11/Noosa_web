@@ -1,10 +1,18 @@
-h1 {
-	font-weight: bold;
-    padding-bottom: 30px;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+h1, h2 {
+	font-weight: normal;
+	font-family: 'Montserrat', sans-serif;
 }
 
-span {
-	font-size: 12px;
+h1 {
+    padding-bottom: 15px;
+}
+
+h2 {
+	text-align: center;
+	font-size: 19px;
+	margin-bottom: 20px;
 }
 
 a {
@@ -12,34 +20,6 @@ a {
 	font-size: 14px;
 	text-decoration: none;
 	margin: 15px 0;
-}
-
-button {
-	border-radius: 20px;
-	border: 1px solid #14a82f;
-	background-color: #14a82f;
-	color: #FFFFFF;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
-}
-
-button:active {
-	transform: scale(0.95);
-}
-
-button:focus {
-	outline: none;
-}
-
-button.ghost {
-	background-color: transparent;
-	border-color: #000;
-    color: #14a82f;
-    background-color: rgba(255, 255, 255, 0.589);
 }
 
 form {
@@ -75,7 +55,7 @@ input {
 	overflow: hidden;
 	width: 1100px;
 	max-width: 100%;
-	min-height: 620px;
+	min-height: 65vh;
     margin-top: 30px;
     margin-bottom: 30px;
 }
@@ -186,4 +166,38 @@ input {
 
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
+}
+
+.container button {
+	border-radius: 20px;
+	background-color: #14a82f;
+	color: #FFFFFF;
+	font-size: 15px;
+	/* font-weight: bold; */
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+.container button:active {
+	transform: scale(0.95);
+}
+
+.container button:focus {
+	outline: none;
+}
+
+.container button.ghost {
+	background-color: transparent;
+	border-color: #000;
+    color: #14a82f;
+    background-color: rgba(255, 255, 255, 0.589);
+}
+
+.active_signup {
+	margin-top: 10px;
+}
+
+.active_title {
+	color: #14a82f;
 }
