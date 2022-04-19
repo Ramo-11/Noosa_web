@@ -45,7 +45,7 @@ button[type="submit"]:hover {
 }
 
 /* Pop up window */
-.popup-screen {
+.popup-screen-success {
     position: fixed;
     z-index: 999990;
     width: 100%;
@@ -55,7 +55,7 @@ button[type="submit"]:hover {
     justify-content: center;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    visibility: visible;
+    visibility: hidden;
 
 }
 .open-popup {
@@ -158,3 +158,34 @@ button[type="button"] {
 button[type="button"]:hover {
     opacity: 0.75;
 }
+
+
+/* popup fail email */
+.popup-screen-fail {
+    position: fixed;
+    z-index: 999990;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    visibility: hidden;
+
+}
+
+.popup-bottomhalf-fail {
+    display:flex;
+    height: 100%;
+    width: 100%;
+    background-color: red;
+    /* border: 3px solid red; */
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
+
