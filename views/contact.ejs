@@ -40,8 +40,8 @@
             </div>
             <div class="popup-bottomhalf-fail">
                 <div class ="popup-text">
-                    <h1>Thank You!</h1>
-                    <h2>Email has been Sent</h2>
+                    <h1>Error!</h1>
+                    <h2>Email was not sent</h2>
                     <div class="popup-button">
                         <button type="button" onclick="closePopup()">Continue</button>
                     </div> 
@@ -106,15 +106,12 @@
             }).then((res) => res)
             
             if (result.status === 200) {
-                console.log('open')
                 success_popup.classList.add("popup-screen-success")
                 success_popup.classList.add("open-popup")
             }
             else {
-                console.log('fail')
                 fail_popup.classList.add("popup-screen-fail")
                 fail_popup.classList.add("open-popup")         
-                console.log("fail:::: khsadfklsdj : ", fail_popup)   
             }
         }
 
