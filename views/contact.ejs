@@ -11,6 +11,44 @@
     <title>Contact Noosa</title>
 </head>
 <body>
+    <!-- Success email sent -->
+    <div class="popup-screen-success" id="popup-screen-success">
+        <div class="popup-window">
+            <div class="popup-tophalf">
+                <div class="checkmark-circle">
+                <div class="checkmark-stem"></div>
+                </div>
+            </div>
+            <div class="popup-bottomhalf">
+                <div class ="popup-text">
+                    <h1>Thank You!</h1>
+                    <h2>Email has been Sent</h2>
+                    <div class="popup-button">
+                        <button type="button" onclick="closePopup()">Continue</button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- fail email sent -->
+    <div class="popup-screen-fail" id="popup-screen-fail">
+        <div class="popup-window">
+            <div class="popup-tophalf">
+                <div class="checkmark-circle">
+                <div class="checkmark-stem"></div>
+                </div>
+            </div>
+            <div class="popup-bottomhalf-fail">
+                <div class ="popup-text">
+                    <h1>Error!</h1>
+                    <h2>Email was not sent</h2>
+                    <div class="popup-button">
+                        <button type="button" onclick="closePopup()">Continue</button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div> 
     <%- include('./partials/nav.ejs') %>
 
     <div class="container">
@@ -32,18 +70,19 @@
                 <label for="content"></label>
                 <textarea id="content" name="content" placeholder="Write us something.."></textarea>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" id="submit">Submit</button>
         </form>    
     </div>
 
     <%- include('./partials/footer.ejs') %> 
 
     <script>
-        const form = document.getElementById('contact-form')
-        form.addEventListener('submit', sendemail)
+        const contact_form = document.getElementById('contact-form')
+        contact_form.addEventListener('submit', sendemail)
+        
+        const success_popup = document.getElementById('popup-screen-success')
+        const fail_popup = document.getElementById('popup-screen-fail')
 
-        
-        
         async function sendemail(event) {
             event.preventDefault() // This will prevent the refresh event
             
@@ -52,6 +91,7 @@
             const email = document.getElementById('email').value
             const content = document.getElementById('content').value
 
+            
             const result = await fetch('/api/sendemail', {
                 method: 'POST',
                 headers: {
@@ -64,15 +104,23 @@
                     content
                 })
             }).then((res) => res)
+            
             if (result.status === 200) {
-                // TODO: show a success message here 
-
+                success_popup.classList.add("popup-screen-success")
+                success_popup.classList.add("open-popup")
             }
             else {
-                // TODO: show a failure message here
-
+                fail_popup.classList.add("popup-screen-fail")
+                fail_popup.classList.add("open-popup")         
             }
         }
+
+        function closePopup() {
+            console.log("I am being called")
+            success_popup.classList.add("close-popup")
+            fail_popup.classList.add("close-popup")
+        }
+
     </script>
 </body>
 </html>
