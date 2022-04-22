@@ -5,10 +5,6 @@
     box-sizing: border-box;
 }
 
-body {
-    /* min-height: 50vh; */
-
-}
 /* Contact Form positioning */
 .contact-form{
     position: relative;
@@ -40,6 +36,7 @@ button[type="submit"] {
     background-color: rgba(11, 149, 11, 1);
 
 }
+
 button[type="submit"]:hover {
     opacity: 0.75;
 }
@@ -55,14 +52,6 @@ button[type="submit"]:hover {
     justify-content: center;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    visibility: hidden;
-
-}
-.open-popup {
-    visibility: visible;
-}
-
-.close-popup{
     visibility: hidden;
 }
 
@@ -85,7 +74,6 @@ button[type="submit"]:hover {
     /* padding: 10px; */
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    
 }
 
 .popup-tophalf {
@@ -107,8 +95,8 @@ button[type="submit"]:hover {
     border-radius: 50%;
     border: 5px solid #78b13f;
 }
-.checkmark-stem {
 
+.checkmark-stem {
     position: absolute;
     left: 35%;
     top: 20%;
@@ -130,20 +118,15 @@ button[type="submit"]:hover {
     bottom: 0;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-
 }
-
-
 
 .popup-text {
     padding: 12px;
     letter-spacing: 1px;
-
 }
 
 .popup-text h1 {
     font: bold 2em arial, helvetica;
-
 }
 
 button[type="button"] {
@@ -159,7 +142,6 @@ button[type="button"]:hover {
     opacity: 0.75;
 }
 
-
 /* popup fail email */
 .popup-screen-fail {
     position: fixed;
@@ -172,7 +154,6 @@ button[type="button"]:hover {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     visibility: hidden;
-
 }
 
 .popup-bottomhalf-fail {
@@ -186,6 +167,12 @@ button[type="button"]:hover {
     bottom: 0;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-
 }
 
+.open-popup {
+    visibility: visible;
+}
+
+.close-popup{
+    visibility: hidden;
+}

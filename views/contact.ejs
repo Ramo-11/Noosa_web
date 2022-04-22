@@ -77,13 +77,12 @@
     <%- include('./partials/footer.ejs') %> 
 
     <script>
-        const form = document.getElementById('contact-form')
-        const popup = document.getElementById('submit')
-        form.addEventListener('submit', sendemail)
-        popup.addEventListener('submit', sendemail)
+        const contact_form = document.getElementById('contact-form')
+        contact_form.addEventListener('submit', sendemail)
+        
+        const success_popup = document.getElementById('popup-screen-success')
+        const fail_popup = document.getElementById('popup-screen-fail')
 
-        
-        
         async function sendemail(event) {
             event.preventDefault() // This will prevent the refresh event
             
@@ -105,25 +104,25 @@
                     content
                 })
             }).then((res) => res)
-            return result
             
-            const popup = document.getElementById("submit").onclick
-
             if (result.status === 200) {
                 console.log('open')
-                popup.classList.add("open-popup")
+                success_popup.classList.add("popup-screen-success")
+                success_popup.classList.add("open-popup")
             }
             else {
                 console.log('fail')
-                popup.classList.add("open-popup").add("popup-screen-fail")
-                
+                fail_popup.classList.add("popup-screen-fail")
+                fail_popup.classList.add("open-popup")         
+                console.log("fail:::: khsadfklsdj : ", fail_popup)   
             }
         }
 
         function closePopup() {
-            popup.classList.remove("close-popup")
+            console.log("I am being called")
+            success_popup.classList.add("close-popup")
+            fail_popup.classList.add("close-popup")
         }
-
 
     </script>
 </body>
