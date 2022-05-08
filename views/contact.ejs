@@ -21,7 +21,7 @@
             </div>
             <div class="popup-bottomhalf">
                 <div class ="popup-text">
-                    <h1>Thank You!</h1>
+                    <h1>Success!</h1>
                     <h2>Email has been Sent</h2>
                     <div class="popup-button">
                         <button type="button" onclick="closePopup()">Continue</button>
@@ -50,8 +50,7 @@
         </div>
     </div> 
     <%- include('./partials/nav.ejs') %>
-
-    <div class="container">
+    <div class="contact-container">
         <form id="contact-form" class="contact-form">
             <h1>Contact Us</h1>
             <div>
@@ -73,7 +72,6 @@
             <button type="submit" id="submit">Submit</button>
         </form>    
     </div>
-
     <%- include('./partials/footer.ejs') %> 
 
     <script>
@@ -90,7 +88,6 @@
             const lastName = document.getElementById('lname').value
             const email = document.getElementById('email').value
             const content = document.getElementById('content').value
-
             
             const result = await fetch('/api/sendemail', {
                 method: 'POST',
@@ -120,7 +117,6 @@
             success_popup.classList.add("close-popup")
             fail_popup.classList.add("close-popup")
         }
-
     </script>
 </body>
 </html>
