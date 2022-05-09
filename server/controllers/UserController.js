@@ -85,6 +85,23 @@ exports.loginUser = async (req, res) => {
     }
 }
 
+exports.fakeLogin = async(req, res) => {
+    const { email, password } = req.body
+    if(email && password) {
+        if(req.session.user)
+            return res.status(200).send({message: "You are already logged in"})
+        else {
+            req.session.user = {
+                email,
+            }
+            return res.status(200).send(req.session)
+        }
+    }
+    else {
+        return res.status(400).send({message: "you suck"})
+    }
+}
+
 exports.change_password = async (req, res) => {
     const { token } = req.headers
     const { newPassword } = req.body

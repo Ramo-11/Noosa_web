@@ -1,22 +1,44 @@
 // modules
 const express = require('express')
+const session = require('express-session')
+const router = require('./server/router')
 const app = express()
+
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+const connectDB = require('./server/database/connection')
+
+require('dotenv').config()
+
+// Connect the app to the database
+connectDB()
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json())
-require('dotenv').config()
-const connectDB = require('./server/database/connection')
-const User = require('./model/user')
-
 app.use(express.static('public'))
 
-connectDB()
+app.use(cookieParser())
+app.use(session({
+    secret: "kljasoiuj3io43@$3klnklv4515451$232s:",
+    resave: false,
+    saveUninitialized: false
+}))
+
+// do not allow user to view any page before logging in
+// app.use((req, res, next) => {
+//     if(req.session.user) {
+//         next()
+//     }
+//     else
+//         return res.sendStatus(401)
+// })
+
+app.use('/', router)
 
 app.set('view engine', 'ejs')
 
 app.listen(process.env.PORT, () => console.log(`Server running on port: http://localhost:${process.env.PORT}`))
 
-app.use('/', require('./Server/router'))
-
+// show 404 page if client is trying to access a page that doesn't exist
 app.use((req,res) => res.status(404).render('404'))
