@@ -9,9 +9,9 @@ passport.deserializeUser(async function (id, done) {
         const user = await User.findById(id)
         if(!user)
             throw new Error('User was not found')
-        done(null, user)
+        return done(null, user)
     } catch(error) {
-        done(error, null)
+        return done(error, null)
     }
 })
 
@@ -25,28 +25,31 @@ passport.use(
                 if(!user)
                     throw new Error('User was not found with the given email')
                 if(await bcrypt.compare(password, user.password))
-                    done(null, user)
+                    return done(null, user)
                 else
                     throw new Error('Password is incorrect')
             }
             else
                 throw new Error('Email and password must not be empty')
         } catch (error) {
-            done(error, null)
+            return done(error, null)
         }
     })
 )
 
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated())
+    if(req.isAuthenticated()) {
+        console.log('user is logged in')
         return next()
-    res.redirect('/signup_and_login')
+    }
+    return res.redirect('/signup_and_login')
 }
 
 function isLoggedOut(req, res, next) {
-    if(!req.isAuthenticated())
-        return next()
-    res.redirect('/')
+    if(req.isAuthenticated()) 
+        return res.redirect('/')
+    console.log('user is logged out')
+    return next()
 }
 
 module.exports = {
