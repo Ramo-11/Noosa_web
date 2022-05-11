@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-exports.sendemail = async (req, res) => {
+async function sendEmail(req, res) {
     const {first_name, last_name, email, content} = req.body
 
     let mailTransporter = nodemailer.createTransport({
@@ -28,3 +28,5 @@ exports.sendemail = async (req, res) => {
         }
     })
 }
+
+module.exports = sendEmail

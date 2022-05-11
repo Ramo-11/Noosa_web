@@ -6,7 +6,7 @@ const connectDB = async() => {
 
         console.log(`MongoDB connected successfully: ${con.connection.host}`)
     } catch(error) {
-        console.log("unable to connect to database: are you sure the IP address is whitelisted in the database?\n\n", error)
+        console.log("unable to connect to database: are you sure the IP address is whitelisted in the database?\n")
     }
 }
 

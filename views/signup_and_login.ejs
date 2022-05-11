@@ -3,63 +3,6 @@
     <link rel="stylesheet" href="/styles/signup_and_login.css">
 </head>
 <body>
-    <!-- successful signup message -->
-    <div class="popup-signup-success" id="popup-signup-success">
-        <div class="popup-window">
-            <div class="popup-tophalf">
-                <div class="checkmark-circle">
-                <div class="checkmark-stem"></div>
-                </div>
-            </div>
-            <div class="popup-bottomhalf">
-                <div class ="popup-text">
-                    <h1>Success!</h1>
-                    <h2>Account was Created</h2>
-                    <div class="popup-button">
-                        <button type="button" onclick="closePopup()">Continue</button>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> 
-     <!-- successful login message -->
-     <div class="popup-login-success" id="popup-login-success">
-        <div class="popup-window">
-            <div class="popup-tophalf">
-                <div class="checkmark-circle">
-                <div class="checkmark-stem"></div>
-                </div>
-            </div>
-            <div class="popup-bottomhalf">
-                <div class ="popup-text">
-                    <h1>Success!</h1>
-                    <h2>Logged in Successfully</h2>
-                    <div class="popup-button">
-                        <button type="button" onclick="closePopup()">Continue</button>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> 
-    <!-- fail message -->
-    <div class="popup-screen-fail" id="popup-screen-fail">
-        <div class="popup-window">
-            <div class="popup-tophalf">
-                <div class="checkmark-circle">
-                <div class="checkmark-stem"></div>
-                </div>
-            </div>
-            <div class="popup-bottomhalf-fail">
-                <div class ="popup-text">
-                    <h1>Error!</h1>
-                    <h2>An Error Has Occurd</h2>
-                    <div class="popup-button">
-                        <button type="button" onclick="failClosePopup()">Continue</button>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> 
     <%- include('./partials/nav.ejs') %>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
@@ -104,10 +47,6 @@
         const signInButton = document.getElementById('signin');
         const container = document.getElementById('container');
 
-        const signup_success_popup = document.getElementById('popup-signup-success')
-        const login_success_popup = document.getElementById('popup-login-success')
-        const fail_popup = document.getElementById('popup-screen-fail')
-
         signUpButton.addEventListener('click', () => {
             container.classList.add("right-panel-active");
         });
@@ -119,6 +58,7 @@
 
         const signup_form = document.getElementById('signup-form')
         signup_form.addEventListener('submit', signupUser)
+
         async function signupUser(event) {
             event.preventDefault() // This will prevent the refresh event
             const name = document.getElementById('name').value
@@ -137,17 +77,14 @@
                 })
             }).then((res) => res)
             if (result.status === 200) {
-                signup_success_popup.classList.add("popup-screen-success")
-                signup_success_popup.classList.add("open-popup")
             }
             else {
-                fail_popup.classList.add("popup-screen-fail")
-                fail_popup.classList.add("open-popup") 
             }
         }
 
         const login_form = document.getElementById('login-form')
         login_form.addEventListener('submit', loginUser)
+
         async function loginUser(event) {
             event.preventDefault() // This will prevent the refresh event
             const email = document.getElementById('login-email').value
@@ -165,33 +102,9 @@
             })
             const token = await result.json();
             if(result.status === 200) {
-                localStorage.setItem('token', token)
-                login_success_popup.classList.add("popup-screen-success")
-                login_success_popup.classList.add("open-popup")
             }
-            else {
-                fail_popup.classList.add("popup-screen-fail")
-                fail_popup.classList.add("open-popup") 
+            else { 
             }
-        }
-
-        function closePopup() {
-            signup_success_popup.classList.add("close-popup")
-            signup_success_popup.classList.remove("open-popup");
-            signup_success_popup.classList.remove("close-popup")
-
-            login_success_popup.classList.add("close-popup")
-            login_success_popup.classList.remove("open-popup");
-            login_success_popup.classList.remove("close-popup")
-
-            // send user to home screen after loggin in
-            window.location.href="/"    
-        }
-
-        function failClosePopup() {
-            fail_popup.classList.add("close-popup")
-            fail_popup.classList.remove("open-popup");
-            fail_popup.classList.remove("close-popup")
         }
     </script>
 </body>

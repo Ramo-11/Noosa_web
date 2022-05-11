@@ -3,17 +3,15 @@ const bcrypt = require('bcryptjs');
 const { send } = require('express/lib/response');
 const jwt = require('jsonwebtoken');
 const { verify } = require('jsonwebtoken');
+const { validateEmail, verifyPassword } = require('../../utils/authentication')
+
 const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
 
 // create new userModel
-exports.createUser = async (req, res) => {
+async function createUser(req, res) {
     const { name, email, password: plainTextPassword } = req.body
 
-    function validateEmail(email) {
-        const re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    }
-
+    // verify that all fields entered by user are valid
     if(!name)
         return res.status(400).send({message: "name cannot be empty"})
     if(!email || typeof email !== 'string' || !validateEmail(email))
@@ -22,6 +20,7 @@ exports.createUser = async (req, res) => {
     if(passwordCheck !== "password is good")
         return res.state(400).send({message: passwordCheck})
 
+    // encrypt the password
     const password = await bcrypt.hash(plainTextPassword, 10)
 
     try {
@@ -39,7 +38,7 @@ exports.createUser = async (req, res) => {
     }
 }
 
-exports.findUser = async (req, res) => {
+ async function findUser(req, res) {
     try {
         const user = await userModel.find()
         return res.json(user)
@@ -48,7 +47,7 @@ exports.findUser = async (req, res) => {
     }
 }
 
-exports.updateUser = async (req, res) => {
+async function updateUser(req, res) {
     const userID = req.params.id
     try {
         await userModel.findByIdAndUpdate(userID, req.body)
@@ -58,51 +57,44 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-exports.deleteUser = async (req, res) => {
+async function deleteUser (req, res) {
     const userID = req.params.id
     try {
         await userModel.findByIdAndDelete(userID)
-        return res.status(200).send({message: "users were deleted successfully"})
+        return res.status(200).send({message: "U sers were deleted successfully"})
     } catch (error) {
-        return res.status(400).send({message: "unable to delete user"})
+        return res.status(400).send({message: "Unable to delete user"})
     }
 }
 
-exports.loginUser = async (req, res) => {
+async function loginUser (req, res) {
     const { email, password } = req.body
     try {
-        const user = await userModel.findOne({ email }).lean()
-        if(await bcrypt.compare(password, user.password)) {
-            const token = jwt.sign({id: user._id, username: user.email}, JWT_SECRET)
-            res.status(200)
-            return res.json({data: token})
+        if(email && password) {
+            // User is already logged in
+            if(req.session.user)
+                return res.status(400).send({message: "User is already logged in"})
+            else {
+                const user = await userModel.findOne({ email }).lean()
+                if(await bcrypt.compare(password, user.password)) {
+                    req.session.user = {
+                        email,
+                    }
+                    return res.status(200).send({message: "Log in was successful"})
+                }
+                else
+                    return res.status(400).send({message: "Password is not correct"})
+            }
         }
         else {
-            return res.status(400).send({message: "invalid email/password"})
+            return res.status(400).send({message: "Email and password must not be empty"})
         }
     } catch (error) {
-        return res.status(400).send({message: "error has occured"})
+        return res.status(400).send({message: "Error has occured"})
     }
 }
 
-exports.fakeLogin = async(req, res) => {
-    const { email, password } = req.body
-    if(email && password) {
-        if(req.session.user)
-            return res.status(200).send({message: "You are already logged in"})
-        else {
-            req.session.user = {
-                email,
-            }
-            return res.status(200).send(req.session)
-        }
-    }
-    else {
-        return res.status(400).send({message: "you suck"})
-    }
-}
-
-exports.change_password = async (req, res) => {
+async function change_password (req, res) {
     const { token } = req.headers
     const { newPassword } = req.body
     
@@ -129,11 +121,11 @@ exports.change_password = async (req, res) => {
     }
 }
 
-function verifyPassword(password) {
-    if(!password || typeof password !== 'string') 
-        return "invalid password"
-    if(password <= 5)
-        return "password is too short (it should be at least 6 characters)"
-
-    return "password is good"
+module.exports = {
+    createUser,
+    findUser,
+    updateUser,
+    deleteUser,
+    loginUser,
+    change_password
 }
