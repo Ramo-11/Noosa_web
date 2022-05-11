@@ -55,7 +55,6 @@
             container.classList.remove("right-panel-active");
         });
 
-
         const signup_form = document.getElementById('signup-form')
         signup_form.addEventListener('submit', signupUser)
 
@@ -75,7 +74,8 @@
                     email,
                     password
                 })
-            }).then((res) => res)
+            })
+            const something = await result;
             if (result.status === 200) {
             }
             else {
@@ -100,7 +100,6 @@
                     password
                 })
             })
-            const token = await result.json();
             if(result.status === 200) {
             }
             else { 

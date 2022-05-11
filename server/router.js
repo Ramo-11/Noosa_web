@@ -1,14 +1,17 @@
 const express = require('express')
 const route = express.Router()
 
+const { isLoggedIn, isLoggedOut } = require('./local')
+
 const { createUser, findUser, updateUser, deleteUser, loginUser, change_password } = require('./controllers/UserController')
 const sendEmail = require('./controllers/mailController')
+const passport = require('passport')
 
 /**
  * @description home route
  * @method GET /
  */
-route.get('/', (req, res) => res.render('index'))
+route.get('/', isLoggedIn, (req, res) => res.render('index'))
 
 /**
  * @description about route
@@ -28,19 +31,16 @@ route.get('/contact', (req, res) => res.render('contact'))
  */
 route.get('/signup_and_login', (req, res) => res.render('signup_and_login'))
 
-/**
- * @description change password route
- * @method GET /change_password
- */
-// route.get('/change_password', (req, res) => res.render('change_password'))
-
 // API Routes
 route.post('/api/signup', createUser)
 route.get('/api/signup', findUser)
 route.put('/api/signup/:id', updateUser)
 route.delete('/api/signup/:id', deleteUser)
 
-route.post('/api/login', loginUser)
+route.post('/api/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/signup_and_login',
+}))
 route.post('/api/change_password', change_password)
 
 route.post('/api/sendemail', sendEmail)

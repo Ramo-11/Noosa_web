@@ -1,6 +1,10 @@
 // modules
 const express = require('express')
 const session = require('express-session')
+
+const passport = require('passport')
+require('./server/local')
+
 const router = require('./server/router')
 const app = express()
 
@@ -25,14 +29,8 @@ app.use(session({
     saveUninitialized: false
 }))
 
-// do not allow user to view any page before logging in
-// app.use((req, res, next) => {
-//     if(req.session.user) {
-//         next()
-//     }
-//     else
-//         return res.sendStatus(401)
-// })
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', router)
 
