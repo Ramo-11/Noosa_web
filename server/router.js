@@ -3,7 +3,7 @@ const route = express.Router()
 
 const { isLoggedIn, isLoggedOut } = require('./local')
 
-const { createUser, findUser, updateUser, deleteUser, loginUser, change_password } = require('./controllers/UserController')
+const { createUser, findUser, updateUser, deleteUser, change_password } = require('./controllers/UserController')
 const sendEmail = require('./controllers/mailController')
 const passport = require('passport')
 
