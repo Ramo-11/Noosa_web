@@ -11,6 +11,7 @@ const app = express()
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const connectDB = require('./server/database/connection')
+const MongoStore = require('connect-mongo')
 
 require('dotenv').config()
 
@@ -23,10 +24,12 @@ app.use(express.json())
 app.use(express.static('public'))
 
 app.use(cookieParser())
+
 app.use(session({
     secret: "kljasoiuj3io43@$3klnklv4515451$232s:",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }))
 
 app.use(passport.initialize())

@@ -46,10 +46,11 @@ function isLoggedIn(req, res, next) {
 }
 
 function isLoggedOut(req, res, next) {
-    if(req.isAuthenticated()) 
-        return res.redirect('/')
-    console.log('user is logged out')
-    return next()
+    if(!req.isAuthenticated()) {
+        console.log('user is logged out')
+        return next()
+    }
+    return res.redirect('/')
 }
 
 module.exports = {
