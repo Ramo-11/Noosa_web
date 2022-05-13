@@ -14,7 +14,6 @@ async function createUser(req, res) {
 
     // verify that all fields entered by user are valid
     if(!name) {
-        console.log(authLogger)
         authLogger.error("user name is empty")
         return res.status(400).send({message: "name cannot be empty"})
     }

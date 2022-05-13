@@ -5,9 +5,9 @@ function getLoggerType(type) {
     if(process.env.NODE_ENV.trim() === 'development')
         switch(type) {
             case 'general':
-                return dev_generalLogger
+                logger = dev_generalLogger
             case 'authentication':
-                return dev_authLogger
+                logger = dev_authLogger
             case 'database':
                 logger = dev_databaseLogger
                 break;
@@ -15,7 +15,6 @@ function getLoggerType(type) {
                 logger = dev_mailLogger
                 break
             default:
-                console.log("REALLY?")
                 logger = dev_generalLogger
         }
     else 
