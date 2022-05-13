@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer')
-const logger = require('../../utils/logger')
+const { getLoggerType } = require('../../utils/loggers/loggerType')
+mailLogger = getLoggerType('mail')
 
 async function sendEmail(req, res) {
     const {first_name, last_name, email, content} = req.body
@@ -21,12 +22,12 @@ async function sendEmail(req, res) {
 
     mailTransporter.sendMail(details, (error) => {
         if(!error) { 
-            logger.info('email was sent successfully from contact page')
+            mailLogger.info('email was sent successfully from contact page')
             return res.status(200).send({message: 'Message was sent successfully'})
         }
 
         else {
-            logger.error(error)
+            mailLogger.error(error)
             return res.status(400).send({message: 'Message was not sent'})
         }
     })

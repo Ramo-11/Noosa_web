@@ -13,7 +13,8 @@ const bodyParser = require('body-parser')
 const connectDB = require('./server/database/connection')
 const MongoStore = require('connect-mongo')
 
-const logger = require('./utils/logger')
+const { getLoggerType } = require('./utils/loggers/loggerType')
+generalLogger = getLoggerType('general')
 
 require('dotenv').config()
 
@@ -41,7 +42,7 @@ app.use('/', router)
 
 app.set('view engine', 'ejs')
 
-app.listen(process.env.PORT, () => logger.info(`server running on port: http://localhost:${process.env.PORT}`))
+app.listen(process.env.PORT, () => generalLogger.info(`server running on port: http://localhost:${process.env.PORT}`))
 
 // show 404 page if client is trying to access a page that doesn't exist
 app.use((req,res) => res.status(404).render('404'))

@@ -2,7 +2,9 @@ const passport = require('passport')
 const { Strategy } = require('passport-local')
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
-const logger = require('../utils/logger')
+
+const { getLoggerType } = require('../utils/loggers/loggerType')
+authLogger = getLoggerType('authentication')
 
 passport.serializeUser((user, done) => done(null, user._id))
 passport.deserializeUser(async function (id, done) {
@@ -12,6 +14,7 @@ passport.deserializeUser(async function (id, done) {
             throw new Error('user was not found')
         return done(null, user)
     } catch(error) {
+        authLogger.error('unable to deserialize user: user was not found')
         return done(error, null)
     }
 })
@@ -26,7 +29,7 @@ passport.use(
                 if(!user)
                     throw new Error('user was not found with the given email')
                 if(await bcrypt.compare(password, user.password)) {
-                    logger.info('user logged in successfully')
+                    authLogger.info('user logged in successfully')
                     return done(null, user)
                 }
                 else
@@ -35,7 +38,7 @@ passport.use(
             else
                 throw new Error('email and password must not be empty')
         } catch (error) {
-            logger.error(error)
+            authLogger.error(error)
             return done(error, null)
         }
     })
@@ -43,7 +46,7 @@ passport.use(
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
-        logger.debug('user is logged in')
+        authLogger.debug('user is logged in')
         return next()
     }
     return res.redirect('/signup_and_login')
@@ -51,7 +54,7 @@ function isLoggedIn(req, res, next) {
 
 function isLoggedOut(req, res, next) {
     if(!req.isAuthenticated()) {
-        logger.debug('user is logged out')
+        authLogger.debug('user is logged out')
         return next()
     }
     return res.redirect('/')

@@ -1,10 +1,10 @@
 const userModel = require('../../model/user')
 const bcrypt = require('bcryptjs');
-const { send } = require('express/lib/response');
 const jwt = require('jsonwebtoken');
-const { verify } = require('jsonwebtoken');
 const { validateEmail, verifyPassword } = require('../../utils/authentication')
-const logger = require('../../utils/logger')
+
+const { getLoggerType } = require('../../utils/loggers/loggerType')
+authLogger = getLoggerType('authentication')
 
 const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
 
@@ -14,16 +14,17 @@ async function createUser(req, res) {
 
     // verify that all fields entered by user are valid
     if(!name) {
-        logger.error("user name is empty")
+        console.log(authLogger)
+        authLogger.error("user name is empty")
         return res.status(400).send({message: "name cannot be empty"})
     }
     if(!email || typeof email !== 'string' || !validateEmail(email)) {
-        logger.error("email is not valid")
+        authLogger.error("email is not valid")
         return res.status(400).send({message: "invalid email"})
     }
     passwordCheck = verifyPassword(plainTextPassword)
     if(passwordCheck !== "password is good") {
-        logger.error("password is not valid")
+        authLogger.error("password is not valid")
         return res.state(400).send({message: passwordCheck})
     }
 
@@ -36,15 +37,15 @@ async function createUser(req, res) {
             email,
             password
         }) 
-        logger.info("user was created successfully")
+        authLogger.info("user was created successfully")
         return res.status(200).send({message: "user was created successfully"})
     } catch (error) {
         if(error.code === 11000) {
-            logger.error("unable to register user: email already exists")
+            authLogger.error("unable to register user: email already exists")
             return res.status(400).send({message: "email already exists"})
         }
         else {
-            logger.error("unable to register user: error occurd")
+            authLogger.error("unable to register user: error occurd")
             return res.status(400).send({message: "unable to create user"})
         }
     }
@@ -98,10 +99,10 @@ async function change_password (req, res) {
                 $set: { password }
             }
         )
-        logger.info('password was changed successfully')
+        authLogger.info('password was changed successfully')
         return res.status(200).send({message: 'Password was changed successfully'})
     } catch (error) {
-        logger.error(error)
+        authLogger.error(error)
         return res.status(400).send({message: 'Invalid request'})
     }
 }
