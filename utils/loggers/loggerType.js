@@ -5,36 +5,29 @@ function getLoggerType(type) {
     if(process.env.NODE_ENV.trim() === 'development')
         switch(type) {
             case 'general':
-                logger = dev_generalLogger
+                return dev_generalLogger
             case 'authentication':
-                logger = dev_authLogger
+                return dev_authLogger
             case 'database':
-                logger = dev_databaseLogger
-                break;
+                return dev_databaseLogger
             case 'mail':
-                logger = dev_mailLogger
-                break
+                return dev_mailLogger
             default:
-                logger = dev_generalLogger
+                return dev_generalLogger
         }
     else 
         switch(type) {
             case 'general':
-                logger = prod_generalLogger
-                break;
+                return prod_generalLogger
             case 'authentication':
-                logger = prod_authLogger
-                break;
+                return prod_authLogger
             case 'database':
-                logger = prod_databaseLogger
-                break;
+                return prod_databaseLogger
             case 'mail':
-                logger = prod_mailLogger
-                break
+                return prod_mailLogger
             default:
-                logger = prod_generalLogger
+                return prod_generalLogger
     }
-    return logger
 }
 
 module.exports =  {
