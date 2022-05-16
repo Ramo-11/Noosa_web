@@ -1,17 +1,20 @@
 const express = require('express')
 const route = express.Router()
 
-const { isLoggedIn, isLoggedOut } = require('./local')
+const { isLoggedIn, isLoggedOut, logUserOut } = require('./local')
 
 const { createUser, findUser, updateUser, deleteUser, change_password } = require('./controllers/UserController')
 const sendEmail = require('./controllers/mailController')
 const passport = require('passport')
 
+const { getLoggerType } = require('../utils/loggers/loggerType')
+generalLogger = getLoggerType('general')
+
 /**
  * @description home route
  * @method GET /
  */
-route.get('/', isLoggedIn, (req, res) => res.render('index'))
+route.get('/', isLoggedIn, (req, res) => res.render('index', { user: res.req.user.name }))
 
 /**
  * @description about route
@@ -41,6 +44,8 @@ route.post('/api/login', isLoggedOut, passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signup_and_login',
 }))
+
+route.post('/api/logout', logUserOut)
 route.post('/api/change_password', change_password)
 
 route.post('/api/sendemail', sendEmail)

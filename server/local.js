@@ -44,23 +44,26 @@ passport.use(
     })
 )
 
+function logUserOut(req, res) {
+    req.logout()
+    authLogger.debug('user has been logged out')
+    return res.redirect('/')
+}
+
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated()) {
-        authLogger.debug('user is logged in')
+    if(req.isAuthenticated())
         return next()
-    }
     return res.redirect('/signup_and_login')
 }
 
 function isLoggedOut(req, res, next) {
-    if(!req.isAuthenticated()) {
-        authLogger.debug('user is logged out')
+    if(!req.isAuthenticated())
         return next()
-    }
     return res.redirect('/')
 }
 
 module.exports = {
     isLoggedIn,
-    isLoggedOut
+    isLoggedOut,
+    logUserOut
 }
