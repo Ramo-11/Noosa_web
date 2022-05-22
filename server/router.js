@@ -14,7 +14,9 @@ generalLogger = getLoggerType('general')
  * @description home route
  * @method GET /
  */
-route.get('/', isLoggedIn, (req, res) => res.render('index', { user: res.req.user.name }))
+route.get('/', isLoggedIn, (req, res) => { 
+    res.render('index', { user: res.req.user.name }) 
+})
 
 /**
  * @description about route
@@ -32,7 +34,11 @@ route.get('/contact', (req, res) => res.render('contact'))
  * @description signup and login route
  * @method GET /signup_and_login
  */
-route.get('/signup_and_login', isLoggedOut, (req, res) => res.render('signup_and_login'))
+route.get('/signup_and_login', isLoggedOut, (req, res) => { 
+    const message = req.flash('message')[0]
+    console.log('the message', message)
+    res.render('signup_and_login', { error: message }) 
+})
 
 // API Routes
 route.post('/api/signup', isLoggedOut, createUser)

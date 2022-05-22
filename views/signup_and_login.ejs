@@ -7,6 +7,9 @@
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form id="signup-form">
+                <% if (typeof error != 'undefined') { %>
+                    <p class="error_message" id="error_flag">INVALID</p>
+                <% } %>
                 <h1 class="active_title">Sign Up</h1>
                 <input type="text" id="name" placeholder="Full Name" />
                 <input type="email" id="signup-email" placeholder="Email" />
@@ -17,6 +20,13 @@
 
         <div class="form-container sign-in-container">
             <form id="login-form">
+                <% if (typeof error === 'undefined') { %>
+                    <% console.log('anything?', error) %>
+                    <!-- <p class="error_message">VALID</p> -->
+                <% } else { %>
+                    <% console.log('anything2?', error) %>
+                    <h1 class="error_message" id="error_flag">INVALID</h1>
+                <% } %>
                 <h1 class="active_title">Sign In</h1>
                 <input type="email" id="login-email" placeholder="Email" />
                 <input type="password" id="login-password" placeholder="Password" />
@@ -85,6 +95,8 @@
         const login_form = document.getElementById('login-form')
         login_form.addEventListener('submit', loginUser)
 
+        const error = document.getElementById('login_error_flag')
+
         async function loginUser(event) {
             event.preventDefault() // This will prevent the refresh event
             const email = document.getElementById('login-email').value
@@ -99,10 +111,15 @@
                     email,
                     password
                 })
-            })
-            if (result.status === 200)
-                location.reload(true);
-            else {}
+            })  
+            console.log('the error', result)         
+            if (error) {
+                console.log('yes')
+            }
+            else {
+                console.log('no')
+                // location.reload(true);
+            }
         }
     </script>
 </body>

@@ -3,6 +3,7 @@ const express = require('express')
 const session = require('express-session')
 
 const passport = require('passport')
+const flash = require('express-flash');
 require('./server/local')
 
 const router = require('./server/router')
@@ -34,6 +35,8 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }))
+
+app.use(flash());
 
 app.use(passport.initialize())
 app.use(passport.session())

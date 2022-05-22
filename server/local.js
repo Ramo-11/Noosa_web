@@ -2,6 +2,7 @@ const passport = require('passport')
 const { Strategy } = require('passport-local')
 const User = require('../model/user')
 const bcrypt = require('bcryptjs');
+const fs = require('fs')
 
 const { getLoggerType } = require('../utils/loggers/loggerType')
 authLogger = getLoggerType('authentication')
@@ -39,7 +40,7 @@ passport.use(
                 throw new Error('email and password must not be empty')
         } catch (error) {
             authLogger.error(error)
-            return done(error, null)
+            return done(null, null)
         }
     })
 )
