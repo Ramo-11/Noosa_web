@@ -43,12 +43,6 @@ route.get('/api/signup', findUser)
 route.put('/api/signup/:id', updateUser)
 route.delete('/api/signup/:id', deleteUser)
 
-// route.post('/api/login', isLoggedOut, passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/signup_and_login',
-//     failureFlash: true 
-// }))
-
 route.post('/api/login', function(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
       if (err)

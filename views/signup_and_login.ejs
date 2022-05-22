@@ -110,9 +110,8 @@
             const message = await result.json()
             if (reqResult.status === 200)
                 location.reload(true);
-            else {
+            else
                 document.getElementById("error_flag").innerHTML = message['message']
-            }
         }
     </script>
 </body>
