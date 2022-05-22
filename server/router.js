@@ -9,6 +9,7 @@ const passport = require('passport')
 
 const { getLoggerType } = require('../utils/loggers/loggerType')
 generalLogger = getLoggerType('general')
+authLogger = getLoggerType('authentication')
 
 /**
  * @description home route
@@ -34,11 +35,7 @@ route.get('/contact', (req, res) => res.render('contact'))
  * @description signup and login route
  * @method GET /signup_and_login
  */
-route.get('/signup_and_login', isLoggedOut, (req, res) => { 
-    const message = req.flash('message')[0]
-    console.log('the message', message)
-    res.render('signup_and_login', { error: message }) 
-})
+route.get('/signup_and_login', isLoggedOut, (req, res) => res.render('signup_and_login'))
 
 // API Routes
 route.post('/api/signup', isLoggedOut, createUser)
@@ -46,10 +43,27 @@ route.get('/api/signup', findUser)
 route.put('/api/signup/:id', updateUser)
 route.delete('/api/signup/:id', deleteUser)
 
-route.post('/api/login', isLoggedOut, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/signup_and_login',
-}))
+// route.post('/api/login', isLoggedOut, passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/signup_and_login',
+//     failureFlash: true 
+// }))
+
+route.post('/api/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      if (err)
+        return next(err) // will generate a 500 error
+      // usually this means missing credentials
+      if (!user)
+        return res.status(400).send({ message: info.message })
+      req.login(user, loginErr => {
+        if (loginErr)
+          return next(loginErr)
+        authLogger.info('user was logged in successfully')
+        return res.status(200).send({ message: 'user was logged in successfully' })
+      }) 
+    }) (req, res, next)
+  })
 
 route.post('/api/logout', logUserOut)
 route.post('/api/change_password', change_password)

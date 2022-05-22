@@ -28,19 +28,19 @@ passport.use(
             if(email && password) {
                 const user = await User.findOne({ email }).lean()
                 if(!user)
-                    throw new Error('user was not found with the given email')
+                    throw new Error('User was not found with the given email')
                 if(await bcrypt.compare(password, user.password)) {
                     authLogger.info('user logged in successfully')
                     return done(null, user)
                 }
-                else
-                    throw new Error('password is incorrect')
+                else 
+                    throw new Error('Password is incorrect')
             }
             else
-                throw new Error('email and password must not be empty')
+                throw new Error('Email and password must not be empty')
         } catch (error) {
             authLogger.error(error)
-            return done(null, null)
+            return done(null, false, { message: error.message })
         }
     })
 )

@@ -20,13 +20,7 @@
 
         <div class="form-container sign-in-container">
             <form id="login-form">
-                <% if (typeof error === 'undefined') { %>
-                    <% console.log('anything?', error) %>
-                    <!-- <p class="error_message">VALID</p> -->
-                <% } else { %>
-                    <% console.log('anything2?', error) %>
-                    <h1 class="error_message" id="error_flag">INVALID</h1>
-                <% } %>
+                <p class="error_message" id="error_flag"></p>
                 <h1 class="active_title">Sign In</h1>
                 <input type="email" id="login-email" placeholder="Email" />
                 <input type="password" id="login-password" placeholder="Password" />
@@ -112,13 +106,12 @@
                     password
                 })
             })  
-            console.log('the error', result)         
-            if (error) {
-                console.log('yes')
-            }
+            const reqResult = await result
+            const message = await result.json()
+            if (reqResult.status === 200)
+                location.reload(true);
             else {
-                console.log('no')
-                // location.reload(true);
+                document.getElementById("error_flag").innerHTML = message['message']
             }
         }
     </script>
