@@ -15,18 +15,18 @@ async function createUser(req, res) {
     // verify that all fields entered by user are valid
     if(!name) {
         authLogger.error("user name is empty")
-        return res.status(400).send({message: "name cannot be empty"})
+        return res.status(400).send({message: "Name cannot be empty"})
     }
     if(!email || typeof email !== 'string' || !validateEmail(email)) {
         authLogger.error("email is not valid")
-        return res.status(400).send({message: "invalid email"})
+        return res.status(400).send({message: "Invalid email"})
     }
     passwordCheck = verifyPassword(plainTextPassword)
     if(passwordCheck !== "password is good") {
         authLogger.error("password is not valid")
-        return res.state(400).send({message: passwordCheck})
+        return res.status(400).send({message: passwordCheck})
     }
-
+    
     // encrypt the password
     const password = await bcrypt.hash(plainTextPassword, 10)
 
@@ -37,15 +37,15 @@ async function createUser(req, res) {
             password
         }) 
         authLogger.info("user was created successfully")
-        return res.status(200).send({message: "user was created successfully"})
+        return res.status(200).send({message: "User was created successfully"})
     } catch (error) {
         if(error.code === 11000) {
             authLogger.error("unable to register user: email already exists")
-            return res.status(400).send({message: "email already exists"})
+            return res.status(400).send({message: "Email already exists"})
         }
         else {
             authLogger.error("unable to register user: error occurd")
-            return res.status(400).send({message: "unable to create user"})
+            return res.status(400).send({message: "Unable to create user"})
         }
     }
 }
