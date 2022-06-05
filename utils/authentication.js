@@ -7,9 +7,9 @@ function validateEmail(email) {
 // Ensure password is valid
 function verifyPassword(password) {
     if(!password || typeof password !== 'string') 
-        return "invalid password"
-    if(password <= 5)
-        return "password is too short (it should be at least 6 characters)"
+        return "Invalid password"
+    if(password.length <= 5)
+        return "Password is too short (it should be at least 6 characters)"
 
     return "password is good"
 }
