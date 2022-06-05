@@ -201,3 +201,19 @@ input {
 .active_title {
 	color: #14a82f;
 }
+
+.custom_error_success_message {
+	margin: 10px 0;
+	padding: 10px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.error_message {
+	color: #D8000C;
+  	background-color: #FFBABA;
+}
+
+.success_message {
+	color: #270;
+  	background-color: #DFF2BF;
+}

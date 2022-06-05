@@ -8,6 +8,7 @@
         <div class="form-container sign-up-container">
             <form id="signup-form">
                 <p class="error_message" id="signup_error_flag"></p>
+                <p class="success_message" id="signup_success_flag"></p>
                 <h1 class="active_title">Sign Up</h1>
                 <input type="text" id="name" placeholder="Full Name" />
                 <input type="email" id="signup-email" placeholder="Email" />
@@ -19,6 +20,7 @@
         <div class="form-container sign-in-container">
             <form id="login-form">
                 <p class="error_message" id="login_error_flag"></p>
+                <p class="success_message" id="login_success_flag"></p>
                 <h1 class="active_title">Sign In</h1>
                 <input type="email" id="login-email" placeholder="Email" />
                 <input type="password" id="login-password" placeholder="Password" />
@@ -82,21 +84,18 @@
             const reqResult = await result
             const message = await result.json()
             if (reqResult.status === 200) {
-                document.getElementById("signup_error_flag").innerHTML = message['message']
+                document.getElementById("signup_error_flag").classList.remove('custom_error_success_message')
+                document.getElementById("signup_error_flag").innerHTML = ''
+                document.getElementById("signup_success_flag").classList.add('custom_error_success_message')
+                document.getElementById("signup_success_flag").innerHTML = message['message']
                 await sleep(3000)
                 location.reload(true);
             }
             else {
-                document.getElementById('name').value = ''
-                document.getElementById('signup-email').value = ''
+                document.getElementById("signup_error_flag").classList.add('custom_error_success_message')
                 document.getElementById('signup-password').value = ''
                 document.getElementById("signup_error_flag").innerHTML = message['message']
             }
-
-            function sleep(ms) {
-                return new Promise(resolve => setTimeout(resolve, ms));
-            }
-
         }
 
         // Log in javascript
@@ -123,10 +122,22 @@
             const message = await result.json()
 
             // If login was successful, reload so that user is taken to home page
-            if (reqResult.status === 200)
+            if (reqResult.status === 200) {
+                document.getElementById("login_error_flag").classList.remove("custom_error_success_message")
+                document.getElementById("login_error_flag").innerHTML = ''
+                document.getElementById("login_success_flag").classList.add('custom_error_success_message')
+                document.getElementById("login_success_flag").innerHTML = message['message']
+                await sleep(2000)
                 location.reload(true);
-            else
+            }
+            else {
+                document.getElementById("login_error_flag").classList.add('custom_error_success_message')
                 document.getElementById("login_error_flag").innerHTML = message['message']
+            }
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
     </script>
 </body>

@@ -54,7 +54,7 @@ route.post('/api/login', function(req, res, next) {
         if (loginErr)
           return next(loginErr)
         authLogger.info('user was logged in successfully')
-        return res.status(200).send({ message: 'user was logged in successfully' })
+        return res.status(200).send({ message: 'User was logged in successfully' })
       }) 
     }) (req, res, next)
   })
