@@ -1,20 +1,23 @@
 <html lang="en">
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <% if (user != 'nouser') { %>
+        <%- include('./partials/user_nav.ejs') %>
+    <% } else { %>
+        <%- include('./partials/generic_nav.ejs') %>
+    <% } %>
     <h1><%= user %></h1>
-    <br>
-    <button type="submit" id="logout">Logout</button>
-    <br><br><br>
+    <br><br><br><br>
     <%- include('./partials/footer.ejs') %>    
 </body>
 
 <script>
     const logoutButton = document.getElementById('logout')
-    logoutButton.addEventListener('click', logUserOut)
+    if(logoutButton != null)
+        logoutButton.addEventListener('click', logUserOut)
     
     async function logUserOut(event) {
         event.preventDefault()
-        var result = fetch('/api/logout', {
+        const result = fetch('/api/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,9 +25,9 @@
             body: JSON.stringify ({})
         }).then((res) => res)
 
-        result = await result
-        if (result.status === 200) {
-            location.reload(true);
+        const reqResult = await result
+        if (reqResult.status === 200) {
+            location.href = reqResult.url;
         }
         else {}
     }

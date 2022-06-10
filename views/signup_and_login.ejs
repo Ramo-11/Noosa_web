@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/styles/signup_and_login.css">
 </head>
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/generic_nav.ejs') %>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form id="signup-form">
@@ -127,7 +127,7 @@
                 document.getElementById("login_error_flag").innerHTML = ''
                 document.getElementById("login_success_flag").classList.add('custom_error_success_message')
                 document.getElementById("login_success_flag").innerHTML = message['message']
-                await sleep(2000)
+                await sleep(1000)
                 location.reload(true);
             }
             else {

@@ -48,7 +48,7 @@ passport.use(
 function logUserOut(req, res) {
     req.logout()
     authLogger.debug('user has been logged out')
-    return res.redirect('/')
+    return res.redirect('/signup_and_login')
 }
 
 function isLoggedIn(req, res, next) {

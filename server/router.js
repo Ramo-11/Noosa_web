@@ -15,8 +15,11 @@ authLogger = getLoggerType('authentication')
  * @description home route
  * @method GET /
  */
-route.get('/', isLoggedIn, (req, res) => { 
+route.get('/', (req, res) => { 
+  if (res.req.user != undefined)
     res.render('index', { user: res.req.user.name }) 
+  else
+    res.render('index', { user: 'nouser'})
 })
 
 /**
