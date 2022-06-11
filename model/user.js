@@ -14,8 +14,15 @@ const UserSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    gender: String,
-    profilePictureURL: String
+    gender: {
+        String
+    },
+    profilePicture: {
+        type: String
+    },
+    cloudinary_id: {
+        type: String
+    }
 },
 { collection: "users" }
 )

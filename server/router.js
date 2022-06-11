@@ -11,7 +11,7 @@ generalLogger = getLoggerType("general")
 authLogger = getLoggerType("authentication")
 
 const multer = require("./userImage/multer");
-const uploadImage = require("./userImage/imageHandler")
+const { uploadImage } = require("./userImage/imageHandler")
 
 /**
  * @description home route
@@ -37,7 +37,7 @@ route.get("/contact", (req, res) => res.render("contact"))
  */
 route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and_login"))
 
-// API Routes
+// Signup API routes
 route.post("/api/signup", isLoggedOut, createUser)
 route.get("/api/signup", findUser)
 route.put("/api/signup/:id", updateUser)
@@ -49,7 +49,8 @@ route.post("/api/logout", logUserOut)
 
 route.post("/api/change_password", change_password)
 
-route.post("/api/uploadImage", multer.single("image"), uploadImage)
+// User Profile Image API Routes
+route.post("/api/profilePicture/upload", multer.single("image"), uploadImage)
 
 route.post("/api/sendemail", sendEmail)
 

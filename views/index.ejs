@@ -3,11 +3,13 @@
     <% if (typeof(user) != "undefined") { %>
         <%- include("./partials/user_nav.ejs") %>
         <h1><%=user.name%></h1>
+        <img src=<%=user.profilePicture%> width="200px" height="200px" />
     <% } else { %>
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
     <div id="img-preview"></div>
     <input type="file" name='image' id='image'/>
+    <input type="submit" id="submit-picture">submit</input>
     </form>
     <br><br><br><br>
     <%- include("./partials/footer.ejs") %>    
@@ -36,23 +38,24 @@
     }
 
     const input = document.getElementById("image")
+    const submit = document.getElementById("submit-picture")
     var data = new FormData()
-    input.addEventListener("change", uploadImage)
+    submit.addEventListener("click", uploadImage)
     
     async function uploadImage(event) {
         data.append('image', input.files[0])
         event.preventDefault()
-        const result = fetch("/api/uploadImage", {
+        const result = fetch("/api/profilePicture/upload", {
             method: "POST",
             headers: {},
             body: data
         }).then((res) => res)
 
         const reqResult = await result
-    //     if (reqResult.status === 200) {
-    //         location.href = reqResult.url;
-    //     }
-    //     else {}
+        if (reqResult.status === 200) {
+            location.reload(true)
+        }
+        else {}
     }
 </script>
 </html>
