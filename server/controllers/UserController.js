@@ -1,12 +1,12 @@
-const userModel = require('../../model/user')
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { validateEmail, verifyPassword } = require('../../utils/authentication')
+const userModel = require("../../model/user")
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { validateEmail, verifyPassword } = require("../../utils/authentication")
 
-const { getLoggerType } = require('../../utils/loggers/loggerType')
-authLogger = getLoggerType('authentication')
+const { getLoggerType } = require("../../utils/loggers/loggerType")
+authLogger = getLoggerType("authentication")
 
-const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
+const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"
 
 // create new userModel
 async function createUser(req, res) {
@@ -17,7 +17,7 @@ async function createUser(req, res) {
         authLogger.error("user name is empty")
         return res.status(400).send({message: "Name cannot be empty"})
     }
-    if(!email || typeof email !== 'string' || !validateEmail(email)) {
+    if(!email || typeof email !== "string" || !validateEmail(email)) {
         authLogger.error("email is not valid")
         return res.status(400).send({message: "Invalid email"})
     }
@@ -89,7 +89,7 @@ async function change_password (req, res) {
         const password = await bcrypt.hash(newPassword)
 
         passwordCheck = verifyPassword(newPassword)
-        if(passwordCheck !== 'password is good')
+        if(passwordCheck !== "password is good")
             return res.state(400).send({message: passwordCheck})
 
         await userModel.updateOne( 
@@ -98,11 +98,11 @@ async function change_password (req, res) {
                 $set: { password }
             }
         )
-        authLogger.info('password was changed successfully')
-        return res.status(200).send({message: 'Password was changed successfully'})
+        authLogger.info("password was changed successfully")
+        return res.status(200).send({message: "Password was changed successfully"})
     } catch (error) {
         authLogger.error(error)
-        return res.status(400).send({message: 'Invalid request'})
+        return res.status(400).send({message: "Invalid request"})
     }
 }
 

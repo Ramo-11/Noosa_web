@@ -1,29 +1,29 @@
-const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger } = require('./dev-loggers')
-const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger } = require('./prod-loggers')
+const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger } = require("./dev-loggers")
+const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger } = require("./prod-loggers")
 
 function getLoggerType(type) {
-    if(process.env.NODE_ENV.trim() === 'development')
+    if(process.env.NODE_ENV.trim() === "development")
         switch(type) {
-            case 'general':
+            case "general":
                 return dev_generalLogger
-            case 'authentication':
+            case "authentication":
                 return dev_authLogger
-            case 'database':
+            case "database":
                 return dev_databaseLogger
-            case 'mail':
+            case "mail":
                 return dev_mailLogger
             default:
                 return dev_generalLogger
         }
     else 
         switch(type) {
-            case 'general':
+            case "general":
                 return prod_generalLogger
-            case 'authentication':
+            case "authentication":
                 return prod_authLogger
-            case 'database':
+            case "database":
                 return prod_databaseLogger
-            case 'mail':
+            case "mail":
                 return prod_mailLogger
             default:
                 return prod_generalLogger
