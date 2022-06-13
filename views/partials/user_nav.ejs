@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/styles/nav.css">
+<link rel="stylesheet" href="/styles/user_drop_down.css">
+
+<div class="main-div">
+    <nav>
+        <a href="/"><img src="/images/logo.png" alt="site logo"></a>
+        <ul>
+            <li><a href="/">Noosa</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li>
+                <div class="action">
+                    <div class="profile" onclick=" menuToggle();">
+                        <img src="<%=user.profilePicture%>" width="200px" height="200px">
+                    </div>
+                    <div class="menu">
+                        <h1><%=user.name%></h1>
+                        <ul>
+                            <li><a href="#">Profile Information</a></li>
+                            <li><a href="#">Groups</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><button type="submit" id="logout">Logout</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>

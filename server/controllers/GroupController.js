@@ -1,9 +1,9 @@
-const groupModel = require('../../model/group')
-const bcrypt = require('bcryptjs');
-const { send } = require('express/lib/response');
-const jwt = require('jsonwebtoken');
-const { verify } = require('jsonwebtoken');
-const JWT_SECRET = 'kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk'
+const groupModel = require("../../model/group")
+const bcrypt = require("bcryptjs");
+const { send } = require("express/lib/response");
+const jwt = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
+const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"
 
 // create new groupModel
 exports.createGroup = async (req, res) => {

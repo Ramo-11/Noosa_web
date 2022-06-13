@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const User = require('userModel')
+const mongoose = require("mongoose")
+const User = require("userModel")
 
 const GroupSchema = new mongoose.Schema({
     name: {
@@ -20,9 +20,9 @@ const GroupSchema = new mongoose.Schema({
     },
     users: [User]
 },
-{ collection: 'groups' }
+{ collection: "groups" }
 )
 
-const groupModel = mongoose.model('GroupSchema', GroupSchema)
+const groupModel = mongoose.model("GroupSchema", GroupSchema)
 
 module.exports = groupModel

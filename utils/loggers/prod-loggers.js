@@ -1,4 +1,4 @@
-const { createLogger, transports, format } = require('winston')
+const { createLogger, transports, format } = require("winston")
 const { timestamp, combine, errors, json } = format
 
 const prod_authLogger = createLogger({
@@ -7,9 +7,9 @@ const prod_authLogger = createLogger({
         errors({ stack: true }),
         json()
     ),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: "user-service" },
     transports: [
-        new transports.File({filename: './logs/prod_authentication.log', level: 'silly'})
+        new transports.File({filename: "./logs/prod_authentication.log", level: "silly"})
     ]
 })
 
@@ -19,9 +19,9 @@ const prod_databaseLogger = createLogger({
         errors({ stack: true }),
         json()
     ),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: "user-service" },
     transports: [
-        new transports.File({filename: './logs/prod_database.log', level: 'silly'})
+        new transports.File({filename: "./logs/prod_database.log", level: "silly"})
     ]
 })
 
@@ -31,9 +31,9 @@ const prod_generalLogger = createLogger({
         errors({ stack: true }),
         json()
     ),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: "user-service" },
     transports: [
-        new transports.File({filename: './logs/prod_general.log', level: 'silly'})
+        new transports.File({filename: "./logs/prod_general.log", level: "silly"})
     ]
 })
 
@@ -43,9 +43,9 @@ const prod_mailLogger = createLogger({
         errors({ stack: true }),
         json()
     ),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: "user-service" },
     transports: [
-        new transports.File({filename: './logs/prod_mail.log', level: 'silly'})
+        new transports.File({filename: "./logs/prod_mail.log", level: "silly"})
     ]
 })
 

@@ -1,30 +1,66 @@
 <html lang="en">
 <body>
-    <%- include('./partials/nav.ejs') %>
-    <h1><%= user %></h1>
-    <br>
-    <button type="submit" id="logout">Logout</button>
-    <br><br><br>
-    <%- include('./partials/footer.ejs') %>    
+    <% if (typeof(user) != "undefined") { %>
+        <%- include("./partials/user_nav.ejs") %>
+    <% } else { %>
+        <%- include("./partials/generic_nav.ejs") %>
+    <% } %>
+
+    <input type="file" name='image' id='image'/>
+    <input type="submit" id="submit-picture">submit</input>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <%- include("./partials/footer.ejs") %>
 </body>
 
 <script>
-    const logoutButton = document.getElementById('logout')
-    logoutButton.addEventListener('click', logUserOut)
+
+    function menuToggle() {
+        const toggleMenu = document.querySelector('.menu')
+        toggleMenu.classList.toggle('active')
+    }
+
+    const logoutButton = document.getElementById("logout")
+    if(logoutButton != null)
+        logoutButton.addEventListener("click", logUserOut)
     
     async function logUserOut(event) {
         event.preventDefault()
-        var result = fetch('/api/logout', {
-            method: 'POST',
+        const result = fetch("/api/logout", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
             body: JSON.stringify ({})
         }).then((res) => res)
 
-        result = await result
-        if (result.status === 200) {
-            location.reload(true);
+        const reqResult = await result
+        if (reqResult.status === 200) {
+            location.href = reqResult.url;
+        }
+        else {}
+    }
+
+    const input = document.getElementById("image")
+    const submit = document.getElementById("submit-picture")
+    var data = new FormData()
+    submit.addEventListener("click", uploadImage)
+    
+    async function uploadImage(event) {
+        data.append('image', input.files[0])
+        event.preventDefault()
+        const result = fetch("/api/profilePicture/upload", {
+            method: "POST",
+            headers: {},
+            body: data
+        }).then((res) => res)
+
+        const reqResult = await result
+        if (reqResult.status === 200) {
+            location.reload(true)
         }
         else {}
     }

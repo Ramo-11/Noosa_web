@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/styles/signup_and_login.css">
 </head>
 <body>
-    <%- include('./partials/nav.ejs') %>
+    <%- include("./partials/generic_nav.ejs") %>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form id="signup-form">
@@ -44,36 +44,36 @@
             </div>
         </div>
     </div>
-    <%- include('./partials/footer.ejs') %>   
+    <%- include("./partials/footer.ejs") %>   
 
     <script>
         // Sign up javascript
-        const signUpButton = document.getElementById('signup');
-        const signInButton = document.getElementById('signin');
-        const container = document.getElementById('container');
+        const signUpButton = document.getElementById("signup");
+        const signInButton = document.getElementById("signin");
+        const container = document.getElementById("container");
 
-        signUpButton.addEventListener('click', () => {
+        signUpButton.addEventListener("click", () => {
             container.classList.add("right-panel-active");
         });
 
-        signInButton.addEventListener('click', () => {
+        signInButton.addEventListener("click", () => {
             container.classList.remove("right-panel-active");
         });
 
-        const signup_form = document.getElementById('signup-form')
-        signup_form.addEventListener('submit', signupUser)
+        const signup_form = document.getElementById("signup-form")
+        signup_form.addEventListener("submit", signupUser)
 
         async function signupUser(event) {
             event.preventDefault() // This will prevent the refresh event
-            var name = document.getElementById('name').value
-            var email = document.getElementById('signup-email').value
-            var password = document.getElementById('signup-password').value
+            var name = document.getElementById("name").value
+            var email = document.getElementById("signup-email").value
+            var password = document.getElementById("signup-password").value
             
             // Sign up api call
-            const result = await fetch('/api/signup', {
-                method: 'POST',
+            const result = await fetch("/api/signup", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify ({
                     name,
@@ -84,34 +84,34 @@
             const reqResult = await result
             const message = await result.json()
             if (reqResult.status === 200) {
-                document.getElementById("signup_error_flag").classList.remove('custom_error_success_message')
-                document.getElementById("signup_error_flag").innerHTML = ''
-                document.getElementById("signup_success_flag").classList.add('custom_error_success_message')
-                document.getElementById("signup_success_flag").innerHTML = message['message']
+                document.getElementById("signup_error_flag").classList.remove("custom_error_success_message")
+                document.getElementById("signup_error_flag").innerHTML = ""
+                document.getElementById("signup_success_flag").classList.add("custom_error_success_message")
+                document.getElementById("signup_success_flag").innerHTML = message["message"]
                 await sleep(3000)
                 location.reload(true);
             }
             else {
-                document.getElementById("signup_error_flag").classList.add('custom_error_success_message')
-                document.getElementById('signup-password').value = ''
-                document.getElementById("signup_error_flag").innerHTML = message['message']
+                document.getElementById("signup_error_flag").classList.add("custom_error_success_message")
+                document.getElementById("signup-password").value = ""
+                document.getElementById("signup_error_flag").innerHTML = message["message"]
             }
         }
 
         // Log in javascript
-        const login_form = document.getElementById('login-form')
-        login_form.addEventListener('submit', loginUser)
+        const login_form = document.getElementById("login-form")
+        login_form.addEventListener("submit", loginUser)
 
         async function loginUser(event) {
             event.preventDefault() // This will prevent the refresh event
-            const email = document.getElementById('login-email').value
-            const password = document.getElementById('login-password').value
+            const email = document.getElementById("login-email").value
+            const password = document.getElementById("login-password").value
 
             // Log in api call
-            const result = await fetch('/api/login', {
-                method: 'POST',
+            const result = await fetch("/api/login", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify ({
                     email,
@@ -124,15 +124,15 @@
             // If login was successful, reload so that user is taken to home page
             if (reqResult.status === 200) {
                 document.getElementById("login_error_flag").classList.remove("custom_error_success_message")
-                document.getElementById("login_error_flag").innerHTML = ''
-                document.getElementById("login_success_flag").classList.add('custom_error_success_message')
-                document.getElementById("login_success_flag").innerHTML = message['message']
-                await sleep(2000)
+                document.getElementById("login_error_flag").innerHTML = ""
+                document.getElementById("login_success_flag").classList.add("custom_error_success_message")
+                document.getElementById("login_success_flag").innerHTML = message["message"]
+                await sleep(1000)
                 location.reload(true);
             }
             else {
-                document.getElementById("login_error_flag").classList.add('custom_error_success_message')
-                document.getElementById("login_error_flag").innerHTML = message['message']
+                document.getElementById("login_error_flag").classList.add("custom_error_success_message")
+                document.getElementById("login_error_flag").innerHTML = message["message"]
             }
         }
 

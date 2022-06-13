@@ -49,7 +49,7 @@
             </div>
         </div>
     </div> 
-    <%- include('./partials/nav.ejs') %>
+    <%- include("./partials/nav.ejs") %>
     <div class="contact-container">
         <form id="contact-form" class="contact-form">
             <h1>Contact Us</h1>
@@ -72,27 +72,27 @@
             <button type="submit" id="submit">Submit</button>
         </form>    
     </div>
-    <%- include('./partials/footer.ejs') %> 
+    <%- include("./partials/footer.ejs") %> 
 
     <script>
-        const contact_form = document.getElementById('contact-form')
-        contact_form.addEventListener('submit', sendemail)
+        const contact_form = document.getElementById("contact-form")
+        contact_form.addEventListener("submit", sendemail)
         
-        const success_popup = document.getElementById('popup-screen-success')
-        const fail_popup = document.getElementById('popup-screen-fail')
+        const success_popup = document.getElementById("popup-screen-success")
+        const fail_popup = document.getElementById("popup-screen-fail")
 
         async function sendemail(event) {
             event.preventDefault() // This will prevent the refresh event
             
-            const firstName = document.getElementById('fname').value
-            const lastName = document.getElementById('lname').value
-            const email = document.getElementById('email').value
-            const content = document.getElementById('content').value
+            const firstName = document.getElementById("fname").value
+            const lastName = document.getElementById("lname").value
+            const email = document.getElementById("email").value
+            const content = document.getElementById("content").value
             
-            const result = await fetch('/api/sendemail', {
-                method: 'POST',
+            const result = await fetch("/api/sendemail", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify ({
                     firstName,
