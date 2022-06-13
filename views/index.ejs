@@ -2,20 +2,27 @@
 <body>
     <% if (typeof(user) != "undefined") { %>
         <%- include("./partials/user_nav.ejs") %>
-        <h1><%=user.name%></h1>
-        <img src=<%=user.profilePicture%> width="200px" height="200px" />
     <% } else { %>
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
-    <div id="img-preview"></div>
+
     <input type="file" name='image' id='image'/>
     <input type="submit" id="submit-picture">submit</input>
-    </form>
-    <br><br><br><br>
-    <%- include("./partials/footer.ejs") %>    
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <%- include("./partials/footer.ejs") %>
 </body>
 
 <script>
+
+    function menuToggle() {
+        const toggleMenu = document.querySelector('.menu')
+        toggleMenu.classList.toggle('active')
+    }
+
     const logoutButton = document.getElementById("logout")
     if(logoutButton != null)
         logoutButton.addEventListener("click", logUserOut)

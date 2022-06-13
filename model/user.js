@@ -18,10 +18,11 @@ const UserSchema = new mongoose.Schema({
         String
     },
     profilePicture: {
-        type: String
+        type: String,
+        default: "https://res.cloudinary.com/dqtle5upc/image/upload/v1655088388/default_user_icon_vr0gng.jpg"
     },
     cloudinary_id: {
-        type: String
+        type: String,
     }
 },
 { collection: "users" }
