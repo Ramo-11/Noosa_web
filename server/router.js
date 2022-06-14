@@ -1,7 +1,7 @@
 const express = require("express")
 const route = express.Router()
 
-const { isLoggedOut, logUserIn, logUserOut } = require("./local")
+const {isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, findUser, updateUser, deleteUser, change_password } = require("./controllers/UserController")
 const sendEmail = require("./controllers/mailController")
@@ -36,6 +36,12 @@ route.get("/contact", (req, res) => res.render("contact"))
  * @method GET /signup_and_login
  */
 route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and_login"))
+
+/**
+ * @description personal profile route
+ * @method GET /profile
+ */
+ route.get("/profile", isLoggedIn, (req, res) => res.render("profile", { user: res.req.user }))
 
 // Signup API routes
 route.post("/api/signup", isLoggedOut, createUser)
