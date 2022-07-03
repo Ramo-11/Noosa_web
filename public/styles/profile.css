@@ -5,31 +5,34 @@ body {
 }
 
 .container {
-    background: #fff;
     width: 80%;
-    height: 65%;;
-    margin: 0 auto;
+    height: 65%;
     position: relative;
     top: 3%;
+    margin: 0 auto;
+    background: #fff;
     box-shadow: 2px 5px 20px rgba(119,119,119,0.5);
 }
 
 .leftbox {
-    float: left;
-    top: -5%;
-    left: 5%;
-    position: absolute;
     width: 15%;
     height: 110%;
+    position: absolute;
+    top: -5%;
+    left: 5%;
+    padding-top: 80px;
+    float: left;
+    overflow-y: auto;
+    overflow-x: hidden;
     background: #2ed574;
     box-shadow:  3px 3px 10px rgba(119,119,119,0.5);
     border: 0.1em solid #fff;
 }
 
 .container .leftbox nav a {
+    padding: 35px;
     text-align: center;
     list-style: none;
-    padding: 35px;
     color: black;
     font-size: 1.1em;
     display: block;
@@ -51,53 +54,57 @@ nav a.active {
 }
 
 .rightbox {
+    overflow-y: auto;
     width: 60%;
+    height: 100%;
     margin-left: 27%;
 }
 
 .tabShow {
+    overflow-y: auto;
+    width: 100%;
     transition: all 0.5s ease-in;
-    width: 80%;
 }
 
 .rightbox h1 {
+    padding-top: 30px;
+    margin-bottom: 5px;
     font-family: "Montserrat", sans-serif;
     color: #7ed386;
     font-size: 30px;
-    padding-top: 30px;
-    margin-bottom: 5px;
 }
 
 .rightbox h2 {
+    padding-left: 10px;
+    padding-top: 50px;
     font-family: "Roboto", sans-serif;
     color: #777;
     font-size: 20px;
     letter-spacing: 1px;
-    padding-top: 50px;
-    padding-left: 10px;
 }
 
 .rightbox .input {
+    width: 80%;
+    margin-left: 12px;
+    padding-top: 7px;
     border: 0;
     border-bottom: 1px solid #3fb6a8;
-    width: 80%;
     font-family: "Montserrat", sans-serif;
     font-size: 15px;
-    padding-top: 7px;
-    margin-left: 12px;
     color: #070707;
     outline: none;
 }
 
 .rightbox .button {
+    padding: 7px 15px;
+    margin-top: 15px;
+    margin-left: 12px;
+    margin-bottom: 10px;
     font-family: "Roboto", sans-serif;
     font-size: 15px;
     border: 0;
     color: #fff;
     background: #7ed386;
-    padding: 7px 15px;
-    margin-left: 12px;
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     cursor: pointer;
-    margin-top: 15px;
 }
