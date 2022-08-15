@@ -1,0 +1,24 @@
+To build Docker image:
+    docker build -t [imageName] [pathToDockerfile]
+
+    imageName must be lower case
+
+To list current docker images:
+    docker images
+
+To run docker image:
+    docker run -it -d -p 8000:3000 [nameOfDockerImage]
+
+    -it will give it an interactive terminal
+    -d will run the container in the background
+    8000 is an available port on the current machine
+    3000 is the internal port that the application uses
+
+To view the currently running docker images
+    docker ps
+
+To stop a running container
+    docker stop [containter ID]
+
+To remove a stopped image
+    docker rm [container ID]
