@@ -46,8 +46,8 @@ route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and
 // Signup API routes
 route.post("/api/signup", isLoggedOut, createUser)
 route.get("/api/signup", findUser)
-route.put("/api/signup/:id", updateUser)
-route.delete("/api/signup/:id", deleteUser)
+
+route.post("/api/updateUserInfo", updateUser)
 
 route.post("/api/login", logUserIn)
 
