@@ -16,16 +16,20 @@
         <div class="rightbox">
             <div class="profile tabShow">
                 <h1>Personal Info</h1>
+                <button class="editButton" id="editButton" onclick="editButtonFunction()">Edit</button>
                 <h2>Full Name</h2>
-                <input type="text" class="input" placeholder="<%=user.name%>">
+                <input type="text" class="input" placeholder="<%=user.name%>" readonly>
                 <h2>Email</h2>
-                <input type="text" class="input" placeholder="<%=user.email%>">
+                <input type="text" class="input" placeholder="<%=user.email%>" readonly>
                 <h2>Phone Number</h2>
-                <input type="text" class="input" placeholder="1112223333">
+                <input type="text" class="input" placeholder="1112223333" readonly>
                 <h2>Password</h2>
-                <input type="text" class="input" placeholder="******">
+                <input type="text" class="input" placeholder="******" readonly>
                 <br><br>
-                <button class="button">Submit</button>
+                <div class="flexContainer">
+                    <button class="submitButton" id="submitButton" onclick="submitButtonFunction()" hidden>Submit</button>
+                    <button class="cancelButton" id="cancelButton" onclick="cancelButtonFunction()" hidden>Cancel</button>
+                </div>
             </div> 
         </div>
     </div>
@@ -33,3 +37,34 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br>
     <%- include("./partials/footer.ejs") %>
 </body>
+
+<script>
+    var inputFields = document.getElementsByTagName("input")
+    var submitButton = document.getElementById("submitButton")
+    var editButton = document.getElementById("editButton")
+    var cancelButton = document.getElementById("cancelButton")
+
+    function editButtonFunction() {
+        console.log(inputFields)
+        submitButton.style.display = "block"
+        cancelButton.style.display = "block"
+        editButton.style.display = "none"
+
+        for (let i = 0; i < inputFields.length; i++)
+            inputFields[i].readOnly = false    
+    }
+
+    function submitButtonFunction() {
+        console.log("submit button was clicked")
+    }
+
+    function cancelButtonFunction() {
+        submitButton.style.display = "none"
+        cancelButton.style.display = "none"
+        editButton.style.display = "block"
+
+        for (let i = 0; i < inputFields.length; i++)
+            inputFields[i].readOnly = true  
+    }
+
+</script>

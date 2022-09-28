@@ -61,9 +61,13 @@ function logUserIn(req, res, next) {
 }
 
 function logUserOut(req, res) {
-    req.logout()
-    authLogger.debug("user has been logged out")
-    return res.redirect("/signup_and_login")
+    req.logout(function(err) {
+        if (err) {
+            return next(err)
+        }
+        authLogger.debug("user has been logged out")
+        return res.redirect("/signup_and_login")
+    })
 }
 
 function isLoggedIn(req, res, next) {
