@@ -1,0 +1,102 @@
+<html lang="en">
+<link rel="stylesheet" href="/styles/profile.css">
+<body>
+    <%- include("./partials/user_nav.ejs") %>
+
+    <div class="container">
+        <div class="leftbox">
+            <nav>
+                <a onclick="tabs(0)" class="tab active"><i class="fa fa-user"></i></a>   
+                <a onclick="tabs(1)" class="tab"><i class="fa fa-tasks"></i></a>   
+                <a onclick="tabs(2)" class="tab"><i class="fa fa-credit-card"></i></a>   
+                <a onclick="tabs(3)" class="tab"><i class="fa fa-tv"></i></a>  
+                <a onclick="tabs(4)" class="tab"><i class="fa fa-cog"></i></a>    
+            </nav>
+        </div>
+        <div class="rightbox">
+            <div class="profile tabShow">
+                <h1>Personal Info</h1>
+                <p class="submitFlag" id="submitFlag"></p>
+                <button class="editButton" id="editButton" onclick="editButtonFunction()">Edit</button>
+                <h2>Full Name</h2>
+                <input type="text" class="input" value="<%=user.name%>" readonly>
+                <h2>Email</h2>
+                <input type="text" class="input" value="<%=user.email%>" readonly>
+                <h2>Phone Number</h2>
+                <input type="text" class="input" value="<%=user.phone%>" placeholder="123-4567-890" readonly>
+                <br><br>
+                <div class="flexContainer">
+                    <button class="submitButton" id="submitButton" onclick="submitButtonFunction()" hidden>Submit</button>
+                    <button class="cancelButton" id="cancelButton" onclick="cancelButtonFunction()" hidden>Cancel</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <%- include("./partials/footer.ejs") %>
+</body>
+
+<script>
+    var inputFields = document.getElementsByTagName("input")
+    var submitButton = document.getElementById("submitButton")
+    var editButton = document.getElementById("editButton")
+    var cancelButton = document.getElementById("cancelButton")
+
+    function editButtonFunction() {
+        console.log(inputFields)
+        submitButton.style.display = "block"
+        cancelButton.style.display = "block"
+        editButton.style.display = "none"
+
+        for (let i = 0; i < inputFields.length; i++)
+            inputFields[i].readOnly = false    
+    }
+
+    async function submitButtonFunction() {
+        name = inputFields[0].value;
+        email = inputFields[1].value;
+        phone = inputFields[2].value;
+
+        const result = await fetch("/api/updateUserInfo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify ({
+                name,
+                email,  
+                phone
+            })
+        })
+        const reqResult = await result
+        const message = await result.json()
+        document.getElementById("submitFlag").innerHTML = message["message"]
+
+        if (reqResult.status === 200) {
+            document.getElementById("submitFlag").style.color = "#270"
+            document.getElementById("submitFlag").style.backgroundColor = "#DFF2BF"
+        } else {
+            document.getElementById("submitFlag").style.color = "#D8000C"
+            document.getElementById("submitFlag").style.backgroundColor = "#FFBABA"
+        }
+        await sleep(2000)
+        location.reload(true);
+    }
+
+    function cancelButtonFunction() {
+        submitButton.style.display = "none"
+        cancelButton.style.display = "none"
+        editButton.style.display = "block"
+
+        for (let i = 0; i < inputFields.length; i++) {
+            inputFields[i].value = inputFields[i].defaultValue
+            inputFields[i].readOnly = true  
+        }
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+</script>

@@ -11,37 +11,37 @@
     top: 0;
 }
 
-li, a, button {
+.main-div li, a, button {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
     text-decoration: none;
 }
 
-nav {
+.main-div nav {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     padding: 2% 10%;
 }
 
-li {
+.main-div li {
     list-style: none;
     display: inline-block;
     padding: 0px 20px;
 }
 
-li a {
+.main-div li a {
     transition: all 0.3s ease 0s;
     text-decoration: none;
     color: black;
 }
 
-li a:hover {
+.main-div li a:hover {
     color: darkgreen
 }
 
-button {
+.main-div button {
     padding: 9px 25px;
     background-color: rgba(11, 149, 11, 1);
     border: none;
@@ -50,7 +50,7 @@ button {
     transition: all 0.3s ease 0s;
 }
 
-button:hover {
+.main-div button:hover {
     background-color: darkseagreen;
 }
 

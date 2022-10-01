@@ -10,13 +10,13 @@
             <li><a href="/contact">Contact</a></li>
             <li>
                 <div class="action">
-                    <div class="profile" onclick=" menuToggle();">
+                    <div class="profile" onclick="menuToggle()">
                         <img src="<%=user.profilePicture%>" width="200px" height="200px">
                     </div>
                     <div class="menu">
                         <h1><%=user.name%></h1>
                         <ul>
-                            <li><a href="#">Profile Information</a></li>
+                            <li><a href="/profile">Profile Information</a></li>
                             <li><a href="#">Groups</a></li>
                             <li><a href="#">Settings</a></li>
                             <li><button type="submit" id="logout">Logout</button></li>
@@ -27,3 +27,31 @@
         </ul>
     </nav>
 </div>
+
+<script>
+    function menuToggle() {
+        const toggleMenu = document.querySelector('.menu')
+        toggleMenu.classList.toggle('active')
+    }
+
+    const logoutButton = document.getElementById("logout")
+    if(logoutButton != null)
+        logoutButton.addEventListener("click", logUserOut)
+    
+    async function logUserOut(event) {
+        event.preventDefault()
+        const result = fetch("/api/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify ({})
+        }).then((res) => res)
+
+        const reqResult = await result
+        if (reqResult.status === 200) {
+            location.href = reqResult.url;
+        }
+        else {}
+    }
+</script>

@@ -1,4 +1,4 @@
-const userModel = require("../../model/user")
+const user = require("../../model/user")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validateEmail, verifyPassword } = require("../../utils/authentication")
@@ -8,7 +8,7 @@ authLogger = getLoggerType("authentication")
 
 const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"
 
-// create new userModel
+// create new user
 async function createUser(req, res) {
     const { name, email, password: plainTextPassword } = req.body
 
@@ -31,12 +31,12 @@ async function createUser(req, res) {
     const password = await bcrypt.hash(plainTextPassword, 10)
 
     try {
-        await userModel.create({
+        await user.create({
             name,
             email,
             password
         }) 
-        authLogger.info("user was created successfully")
+        authLogger.info('user with name [' + name + '] was created successfully')
         return res.status(200).send({message: "User was created successfully"})
     } catch (error) {
         if(error.code === 11000) {
@@ -44,7 +44,7 @@ async function createUser(req, res) {
             return res.status(400).send({message: "Email already exists"})
         }
         else {
-            authLogger.error("unable to register user: error occurd")
+            authLogger.error("unable to register user: error occurd" + error)
             return res.status(400).send({message: "Unable to create user"})
         }
     }
@@ -52,7 +52,7 @@ async function createUser(req, res) {
 
  async function findUser(req, res) {
     try {
-        const user = await userModel.find()
+        const user = await user.find()
         return res.json(user)
     } catch (error) {
         return res.status(400).send({message: "unable to get data from database"})
@@ -60,20 +60,32 @@ async function createUser(req, res) {
 }
 
 async function updateUser(req, res) {
-    const userID = req.params.id
+    const userID = req.user._id
+    const email = req.body.email
+    if(!email || typeof email !== "string" || !validateEmail(email)) {
+        var error_message = "email is invalid"
+        authLogger.error("Error in updating user: " + error_message)
+        return res.status(400).send({message: "Error: " + error_message})
+    }
+
     try {
-        await userModel.findByIdAndUpdate(userID, req.body)
-        return res.status(200).send({message: "user was updated successfully"})
+        await user.findByIdAndUpdate(userID, req.body)
+
+        authLogger.info("user was updated successfully")
+        return res.status(200).send({message: "Success: user was updated successfully"})
     } catch (error) {
-        return res.status(400).send({message: "unable to update user"})
+        if (error.codeName == "DuplicateKey")
+            var error_message = "email is already in use"
+        authLogger.error("Error in updating user: " + error_message)
+        return res.status(400).send({message: "Error: " + error_message})
     }
 }
 
 async function deleteUser (req, res) {
     const userID = req.params.id
     try {
-        await userModel.findByIdAndDelete(userID)
-        return res.status(200).send({message: "U sers were deleted successfully"})
+        await user.findByIdAndDelete(userID)
+        return res.status(200).send({message: "Users were deleted successfully"})
     } catch (error) {
         return res.status(400).send({message: "Unable to delete user"})
     }
@@ -92,7 +104,7 @@ async function change_password (req, res) {
         if(passwordCheck !== "password is good")
             return res.state(400).send({message: passwordCheck})
 
-        await userModel.updateOne( 
+        await user.updateOne( 
             {_id }, 
             { 
                 $set: { password }
