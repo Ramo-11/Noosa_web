@@ -24,8 +24,6 @@
                 <input type="text" class="input" value="<%=user.email%>" readonly>
                 <h2>Phone Number</h2>
                 <input type="text" class="input" value="<%=user.phone%>" placeholder="123-4567-890" readonly>
-                <h2>Password</h2>
-                <input type="text" class="input" placeholder="******" readonly>
                 <br><br>
                 <div class="flexContainer">
                     <button class="submitButton" id="submitButton" onclick="submitButtonFunction()" hidden>Submit</button>
@@ -59,7 +57,6 @@
         name = inputFields[0].value;
         email = inputFields[1].value;
         phone = inputFields[2].value;
-        password = inputFields[3].value;
 
         const result = await fetch("/api/updateUserInfo", {
             method: "POST",
@@ -69,8 +66,7 @@
             body: JSON.stringify ({
                 name,
                 email,  
-                phone,
-                password
+                phone
             })
         })
         const reqResult = await result
@@ -78,10 +74,14 @@
         document.getElementById("submitFlag").innerHTML = message["message"]
 
         if (reqResult.status === 200) {
-            document.getElementById("submitFlag").style.color = "green"
+            document.getElementById("submitFlag").style.color = "#270"
+            document.getElementById("submitFlag").style.backgroundColor = "#DFF2BF"
         } else {
-            document.getElementById("submitFlag").style.color = "red"
+            document.getElementById("submitFlag").style.color = "#D8000C"
+            document.getElementById("submitFlag").style.backgroundColor = "#FFBABA"
         }
+        await sleep(2000)
+        location.reload(true);
     }
 
     function cancelButtonFunction() {
@@ -89,8 +89,14 @@
         cancelButton.style.display = "none"
         editButton.style.display = "block"
 
-        for (let i = 0; i < inputFields.length; i++)
+        for (let i = 0; i < inputFields.length; i++) {
+            inputFields[i].value = inputFields[i].defaultValue
             inputFields[i].readOnly = true  
+        }
+    }
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 </script>

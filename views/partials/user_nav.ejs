@@ -33,4 +33,25 @@
         const toggleMenu = document.querySelector('.menu')
         toggleMenu.classList.toggle('active')
     }
+
+    const logoutButton = document.getElementById("logout")
+    if(logoutButton != null)
+        logoutButton.addEventListener("click", logUserOut)
+    
+    async function logUserOut(event) {
+        event.preventDefault()
+        const result = fetch("/api/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify ({})
+        }).then((res) => res)
+
+        const reqResult = await result
+        if (reqResult.status === 200) {
+            location.href = reqResult.url;
+        }
+        else {}
+    }
 </script>

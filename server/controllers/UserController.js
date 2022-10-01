@@ -36,7 +36,7 @@ async function createUser(req, res) {
             email,
             password
         }) 
-        authLogger.info("user was created successfully")
+        authLogger.info('user with name [' + name + '] was created successfully')
         return res.status(200).send({message: "User was created successfully"})
     } catch (error) {
         if(error.code === 11000) {
@@ -44,7 +44,7 @@ async function createUser(req, res) {
             return res.status(400).send({message: "Email already exists"})
         }
         else {
-            authLogger.error("unable to register user: error occurd")
+            authLogger.error("unable to register user: error occurd" + error)
             return res.status(400).send({message: "Unable to create user"})
         }
     }
@@ -61,15 +61,23 @@ async function createUser(req, res) {
 
 async function updateUser(req, res) {
     const userID = req.user._id
+    const email = req.body.email
+    if(!email || typeof email !== "string" || !validateEmail(email)) {
+        var error_message = "email is invalid"
+        authLogger.error("Error in updating user: " + error_message)
+        return res.status(400).send({message: "Error: " + error_message})
+    }
 
     try {
         await user.findByIdAndUpdate(userID, req.body)
 
         authLogger.info("user was updated successfully")
-        return res.status(200).send({message: "user was updated successfully"})
+        return res.status(200).send({message: "Success: user was updated successfully"})
     } catch (error) {
-        authLogger.error("unable to update user successfully")
-        return res.status(400).send({message: "unable to update user"})
+        if (error.codeName == "DuplicateKey")
+            var error_message = "email is already in use"
+        authLogger.error("Error in updating user: " + error_message)
+        return res.status(400).send({message: "Error: " + error_message})
     }
 }
 
@@ -77,7 +85,7 @@ async function deleteUser (req, res) {
     const userID = req.params.id
     try {
         await user.findByIdAndDelete(userID)
-        return res.status(200).send({message: "U sers were deleted successfully"})
+        return res.status(200).send({message: "Users were deleted successfully"})
     } catch (error) {
         return res.status(400).send({message: "Unable to delete user"})
     }

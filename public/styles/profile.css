@@ -118,11 +118,8 @@ Button  {
     gap: 50px;
 }
 
-/* .submitButton {
-    margin-left: 1%;
+.submitFlag {
+	margin-top: 3%;
+	padding: 10px;
+	border-radius: 3px 3px 3px 3px;
 }
-
-.cancelButton {
-    margin-left: 15%;
-    margin-top: -5%;
-} */
