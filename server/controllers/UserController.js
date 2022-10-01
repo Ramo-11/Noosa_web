@@ -61,7 +61,14 @@ async function createUser(req, res) {
 
 async function updateUser(req, res) {
     const userID = req.user._id
-    const email = req.body.email
+    const { name, email } = req.body
+
+    if(!name) {
+        var error_message = "name cannot be empty"
+        authLogger.error("Error in updating user: " + error_message)
+        return res.status(400).send({message: "Error: " + error_message})
+    }
+
     if(!email || typeof email !== "string" || !validateEmail(email)) {
         var error_message = "email is invalid"
         authLogger.error("Error in updating user: " + error_message)
