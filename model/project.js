@@ -1,8 +1,9 @@
 const mongoose = require("mongoose")
 
 const ProjectSchema = new mongoose.Schema({
-    userID: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'UserSchema'
+    author: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'UserSchema',
+        required: true
     },
     title: {
         type: String, 
@@ -11,6 +12,10 @@ const ProjectSchema = new mongoose.Schema({
     date: {
         type: String, 
         required: true, 
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
     picture: {
         type: String,
@@ -21,7 +26,6 @@ const ProjectSchema = new mongoose.Schema({
     }
 },
 { collection: "projects" },
-{ timestamps: true}
 )
 
 const projectModel = mongoose.model("ProjectrSchema", ProjectSchema)
