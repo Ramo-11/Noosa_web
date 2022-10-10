@@ -23,13 +23,13 @@ route.get("/", (req, res) => res.render("index", { user: res.req.user }))
  * @description about route
  * @method GET /about
  */
-route.get("/about", (req, res) => res.render("about"))
+route.get("/about", (req, res) => res.render("about", { user: res.req.user }))
 
 /**
  * @description contact route
  * @method GET /contact
  */
-route.get("/contact", (req, res) => res.render("contact"))
+route.get("/contact", (req, res) => res.render("contact", { user: res.req.user }))
 
 /**
  * @description signup and login route
