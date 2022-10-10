@@ -6,8 +6,16 @@
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
 
-    <input type="file" name='image' id='image'/>
-    <input type="submit" id="submit-picture">submit</input>
+    <div class="container">
+        <h1>Project Details</h1>
+        <h2>Title</h2>
+        <input type="text" class="input" placeholder="Project's title">
+        <h2>Date</h2>
+        <input type="month" class="input">
+        <h2>Description</h2>
+        <input type="text" class="input" placeholder="Project's Description">
+        <button class="submitButton" id="submitButton" onclick="submitButtonFunction()">Submit</button>
+    </div>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -17,25 +25,38 @@
 </body>
 
 <script>
-    const input = document.getElementById("image")
-    const submit = document.getElementById("submit-picture")
-    var data = new FormData()
-    submit.addEventListener("click", uploadImage)
-    
-    async function uploadImage(event) {
-        data.append('image', input.files[0])
-        event.preventDefault()
-        const result = fetch("/api/profilePicture/upload", {
-            method: "POST",
-            headers: {},
-            body: data
-        }).then((res) => res)
+    async function submitButtonFunction() {
+        var inputFields = document.getElementsByTagName("input")
+        title = inputFields[0].value;
+        date = inputFields[1].value;
+        description = inputFields[2].value;
 
+        const result = await fetch("/api/createProject", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify ({
+                title,
+                date,  
+                description
+            })
+        })
         const reqResult = await result
+        const message = await result.json()
+        // document.getElementById("submitFlag").innerHTML = message["message"]
+
         if (reqResult.status === 200) {
-            location.reload(true)
+            console.log("sheesh")
+            // document.getElementById("submitFlag").style.color = "#270"
+            // document.getElementById("submitFlag").style.backgroundColor = "#DFF2BF"
+        } else {
+            // document.getElementById("submitFlag").style.color = "#D8000C"
+            // document.getElementById("submitFlag").style.backgroundColor = "#FFBABA"
+            console.log("hellloooo?")
         }
-        else {}
+        // await sleep(2000)
+        // location.reload(true);
     }
 </script>
 </html>

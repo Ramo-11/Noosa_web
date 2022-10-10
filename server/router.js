@@ -4,6 +4,7 @@ const route = express.Router()
 const {isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, findUser, updateUser, deleteUser, change_password } = require("./controllers/UserController")
+const { createProject } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
 
 const { getLoggerType } = require("../utils/loggers/loggerType")
@@ -59,5 +60,8 @@ route.post("/api/change_password", change_password)
 route.post("/api/profilePicture/upload", multer.single("image"), uploadImage)
 
 route.post("/api/sendemail", sendEmail)
+
+// Project API routes
+route.post("/api/createProject", createProject)
 
 module.exports = route
