@@ -1,5 +1,5 @@
-const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger } = require("./dev-loggers")
-const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger } = require("./prod-loggers")
+const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger, dev_projectLogger } = require("./dev-loggers")
+const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger, prod_projectLogger } = require("./prod-loggers")
 
 function getLoggerType(type) {
     try {
@@ -13,6 +13,8 @@ function getLoggerType(type) {
                     return dev_databaseLogger
                 case "mail":
                     return dev_mailLogger
+                case "project":
+                    return dev_projectLogger
                 default:
                     return dev_generalLogger
             }
@@ -26,6 +28,8 @@ function getLoggerType(type) {
                     return prod_databaseLogger
                 case "mail":
                     return prod_mailLogger
+                case "mail":
+                    return prod_projectLogger
                 default:
                     return prod_generalLogger
         }

@@ -4,7 +4,7 @@ const route = express.Router()
 const {isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, findUser, updateUser, deleteUser, change_password } = require("./controllers/UserController")
-const { createProject, findProject } = require("./controllers/ProjectController")
+const { createProject, getProjects } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
 
 const { getLoggerType } = require("../utils/loggers/loggerType")
@@ -13,6 +13,7 @@ authLogger = getLoggerType("authentication")
 
 const multer = require("./userImage/multer");
 const { uploadImage } = require("./userImage/imageHandler")
+const { create } = require("connect-mongo")
 
 /**
  * @description home route
@@ -44,9 +45,8 @@ route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and
  */
  route.get("/profile", isLoggedIn, (req, res) => res.render("profile", { user: res.req.user }))
 
-// Signup API routes
+// Authentication API routes
 route.post("/api/signup", isLoggedOut, createUser)
-route.get("/api/signup", findUser)
 
 route.post("/api/updateUserInfo", updateUser)
 
@@ -62,6 +62,8 @@ route.post("/api/profilePicture/upload", multer.single("image"), uploadImage)
 route.post("/api/sendemail", sendEmail)
 
 // Project API routes
-route.post("/api/createProject", findProject)
+route.post("/api/createProject", createProject)
+
+route.get("/api/getProjects", getProjects)
 
 module.exports = route

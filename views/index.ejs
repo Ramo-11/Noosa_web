@@ -6,7 +6,14 @@
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
 
-    <div class="container">
+    <div class="list-of-projects" id="list-of-projects">
+        <!-- <h1 id="projectTitle"></h1>
+        <h2 id="projectDate"></h2>
+        <p id="projectDescription"></p>
+        <img id="projectImage" src=""> -->
+        <button class="submitButton" id="submitButton" onclick="retrieveProjects()">Get Projects</button>
+    </div>
+    <div class="create-project">
         <h1>Project Details</h1>
         <h2>Title</h2>
         <input type="text" class="input" placeholder="Project's title">
@@ -14,7 +21,7 @@
         <input type="month" class="input">
         <h2>Description</h2>
         <input type="text" class="input" placeholder="Project's Description">
-        <button class="submitButton" id="submitButton" onclick="submitButtonFunction()">Submit</button>
+        <button class="submitButton" id="submitButton" onclick="createProject()">Submit</button>
     </div>
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -25,7 +32,46 @@
 </body>
 
 <script>
-    async function submitButtonFunction() {
+    async function retrieveProjects() {
+        const result = await fetch("/api/getProjects", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const reqResult = await result
+        var response = await result.json()
+        response = JSON.parse(JSON.stringify(response))
+
+        if (reqResult.status === 200) { 
+            for (let i = 0; i < response.length; i++) {
+                const title_tag = document.createElement("h1")
+                const date_tag = document.createElement("h2")
+                const description_tag = document.createElement("p")
+
+                const title_text = document.createTextNode(response[i]['title'])
+                const date_text = document.createTextNode(response[i]['date'])
+                const description_text = document.createTextNode(response[i]['description'])
+
+                title_tag.appendChild(title_text)
+                date_tag.appendChild(date_text)
+                description_tag.appendChild(description_text)
+
+                const listOfProjectsDiv = document.getElementById("list-of-projects");
+
+                listOfProjectsDiv.appendChild(title_tag);
+                listOfProjectsDiv.appendChild(date_tag);
+                listOfProjectsDiv.appendChild(description_tag);
+            }
+        } else {
+            const error_tag = document.createElement("p")
+            const error_text = document.createTextNode("Error retrieving projects")
+            const listOfProjectsDiv = document.getElementById("list-of-projects");
+            listOfProjectsDiv.appendChild(error_tag);
+        }
+    }
+
+    async function createProject() {
         var inputFields = document.getElementsByTagName("input")
         title = inputFields[0].value;
         date = inputFields[1].value;
