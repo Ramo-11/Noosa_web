@@ -33,7 +33,7 @@ async function getProjects(req, res) {
 
     try {
         const userID = req.user._id
-        const found_projects = await project.find({ author: userID }, { title: 1, date: 1, picture: 1 })
+        const found_projects = await project.find({ author: userID }, { title: 1, date: 1, picture: 1, description: 1 })
 
         projectLogger.info('Projects were retrieved successfully')
         res.status(200)
