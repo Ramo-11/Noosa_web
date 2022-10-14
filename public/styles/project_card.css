@@ -1,0 +1,16 @@
+.list-of-projects {
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20rem;
+    margin: 20px 10% 50px 35%; /* top right bottom left */
+}
+
+div[class^='project'] {
+    padding: 20px;
+    border-radius: 10px;
+    width: 40rem;
+    min-height: 20rem;
+    box-shadow: -1px 1px 10px #000;
+}
