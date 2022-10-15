@@ -15,27 +15,28 @@
                 const reqResult = await result
                 var response = await result.json()
                 response = JSON.parse(JSON.stringify(response))
-        
-                if (reqResult.status === 200) { 
+                if (reqResult.status === 200) {
                     for (let i = 0; i < response.length; i++) {
                         const div_tag = document.createElement("div")
                         div_tag.className = "project" + i
+                        div_tag.setAttribute("id", "project" + i)
                         const title_tag = document.createElement("h1")
                         const date_tag = document.createElement("h2")
+                        const line_tag = document.createElement("hr")
                         const description_tag = document.createElement("p")
-        
+                        const picture_tag = document.createElement("img")
+                        picture_tag.src = response[i]['picture']
+
                         const title_text = document.createTextNode(response[i]['title'])
                         const date_text = document.createTextNode(response[i]['date'])
                         const description_text = document.createTextNode(response[i]['description'])
-
                         title_tag.appendChild(title_text)
                         date_tag.appendChild(date_text)
                         description_tag.appendChild(description_text)
-
                         div_tag.appendChild(title_tag);
                         div_tag.appendChild(date_tag);
+                        div_tag.appendChild(line_tag);
                         div_tag.appendChild(description_tag);
-        
                         const listOfProjectsDiv = document.getElementById("list-of-projects");
                         listOfProjectsDiv.appendChild(div_tag)
                     }
@@ -50,56 +51,70 @@
     <% } else { %>
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
-
     <div class="create-project">
         <h1>Project Details</h1>
-        <h2>Title</h2>
+        <h2>Title*</h2>
         <input type="text" class="input" placeholder="Project's title">
-        <h2>Date</h2>
+        <h2>Date*</h2>
         <input type="month" class="input">
-        <h2>Description</h2>
+        <h2>Description*</h2>
         <input type="text" class="input" placeholder="Project's Description">
+        <h2>Link</h2>
+        <input type="text" class="input" placeholder="link to project"><br><br>
+        <input type="file" name="image" id="image"/>
+        <input type="submit" id="submit-picture">submit</input><br><br>
         <button class="submitButton" id="submitButton" onclick="createProject()">Submit</button>
     </div>
-
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <%- include("./partials/footer.ejs") %>
 </body>
-
 <script>
     async function createProject() {
+        event.preventDefault()
         var inputFields = document.getElementsByTagName("input")
-        title = inputFields[0].value;
-        date = inputFields[1].value;
-        description = inputFields[2].value;
+        var data = new FormData()
+        data.append("picture", inputFields[4].files[0])
+        data.append("title", inputFields[0].value)
+        data.append("date", inputFields[1].value)
+        data.append("description", inputFields[2].value)
+        data.append("link", inputFields[3].value)
 
-        const result = await fetch("/api/createProject", {
+        var result = await fetch("/api/projectPicture/upload", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify ({
-                title,
-                date,  
-                description
-            })
+            body: data // data is a file
         })
-        const reqResult = await result
-        const message = await result.json()
-        // document.getElementById("submitFlag").innerHTML = message["message"]
 
-        if (reqResult.status === 200) { 
-            console.log("sheesh") 
-            // document.getElementById("submitFlag").style.color = "#270"
-            // document.getElementById("submitFlag").style.backgroundColor = "#DFF2BF"
-        } else {
-            // document.getElementById("submitFlag").style.color = "#D8000C"
-            // document.getElementById("submitFlag").style.backgroundColor = "#FFBABA"
-            console.log("hellloooo?")
-        }
-        // await sleep(2000)
-        // location.reload(true);
+        var reqResult = await result
+        const message = await result.json()
+
+        if (reqResult.status === 200) {
+            console.log("sheesh")
+        //     var picture_data = new FormData()
+        //     picture_data.append('image', inputFields[4].files[0])
+        
+        //     result = await fetch("/api/projectPicture/upload", {
+        //         method: "POST",
+        //         headers: {},
+        //         body: picture_data
+        //     })
+
+        //     const reqResult = await result
+        //     const message = await result.json()
+        //     // document.getElementById("submitFlag").innerHTML = message["message"]
+            // if (reqResult.status === 200) {
+            //     console.log("200")
+        //         // document.getElementById("submitFlag").style.color = "#270"
+        //         // document.getElementById("submitFlag").style.backgroundColor = "#DFF2BF"
+            } else {
+        //         // document.getElementById("submitFlag").style.color = "#D8000C"
+        //         // document.getElementById("submitFlag").style.backgroundColor = "#FFBABA"
+                console.log("400")
+            }
+        //     // await sleep(2000)
+        //     // location.reload(true);
+        // }
     }
+        
 </script>
 </html>

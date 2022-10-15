@@ -11,9 +11,8 @@ const { getLoggerType } = require("../utils/loggers/loggerType")
 generalLogger = getLoggerType("general")
 authLogger = getLoggerType("authentication")
 
-const multer = require("./userImage/multer");
-const { uploadImage } = require("./userImage/imageHandler")
-const { create } = require("connect-mongo")
+const multer = require("./pictureHandlers/multer");
+const { uploadUserProfilePicture, uploadProjectPicture } = require("./pictureHandlers/pictureUploader")
 
 /**
  * @description home route
@@ -45,25 +44,23 @@ route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and
  */
  route.get("/profile", isLoggedIn, (req, res) => res.render("profile", { user: res.req.user }))
 
-// Authentication API routes
+// User API routes
 route.post("/api/signup", isLoggedOut, createUser)
-
 route.post("/api/updateUserInfo", updateUser)
-
 route.post("/api/login", logUserIn)
-
 route.post("/api/logout", logUserOut)
-
 route.post("/api/change_password", change_password)
-
-// User Profile Image API Routes
-route.post("/api/profilePicture/upload", multer.single("image"), uploadImage)
+route.post("/api/profilePicture/upload", multer.single("image"), uploadUserProfilePicture)
 
 route.post("/api/sendemail", sendEmail)
 
 // Project API routes
-route.post("/api/createProject", createProject)
-
+route.post("/api/createProject", multer.single("image"), createProject)
+// route.post("/api/projectPicture/upload", multer.single("image"), uploadProjectPicture) mconsole.log(req.file, req.body)
+route.post("/api/projectPicture/upload", multer.single("picture"), function (req, res) {
+    console.log("file, body ", req.file, req.body)
+    return res.status(200).send({ message: "good" })
+})
 route.get("/api/getProjects", getProjects)
 
 module.exports = route

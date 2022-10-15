@@ -17,6 +17,10 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    link: {
+        type: String,
+        default: ""
+    },
     createdAt: {
         type: Date,
         default: Date.now

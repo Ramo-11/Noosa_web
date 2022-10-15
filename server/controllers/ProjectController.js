@@ -4,12 +4,12 @@ authLogger = getLoggerType("authentication")
 projectLogger = getLoggerType("project")
 
 async function createProject(req, res) {
-    const { title, date, description} = req.body
+    var { title, date, description, link } = req.body
     var userID = req.user._id
 
     if(!title || !date || !description) {
         projectLogger.error("one of the required fields are empty, cannot create project")
-        return res.status(400).send({message: "Error: one of the required fields are empty"})
+        return res.status(400).send({ message: "Error: one of the required fields are empty" })
     }
 
     try {
@@ -17,30 +17,30 @@ async function createProject(req, res) {
             author: userID,
             title,
             date,
-            description
+            description,
+            link
         }) 
-
+    
         projectLogger.info('Project with title [' + title + '] was created successfully')
-        return res.status(200).send({message: "Project was created successfully"})
+        return res.status(200).send({ message: "Project was created successfully" })
     } catch (error) {
-        projectLogger.debug("Unable to create project: " + error)
         projectLogger.error("Unable to create project")
+        projectLogger.debug("Unable to create project: " + error)
         return res.status(400).send({ message: "Unable to create project" })
     }
 }
 
 async function getProjects(req, res) {
-
     try {
         const userID = req.user._id
         const found_projects = await project.find({ author: userID }, { title: 1, date: 1, picture: 1, description: 1 })
 
-        projectLogger.info('Projects were retrieved successfully')
+        projectLogger.info("Projects were retrieved successfully")
         res.status(200)
         return res.json(found_projects)
     } catch (error) {
-        projectLogger.debug("Unable to retrieve projects: " + error)
         projectLogger.error("Unable to retrieve projects")
+        projectLogger.debug("Unable to retrieve projects: " + error)
         return res.status(400).send({ message: "Unable to retrieve projects for this user" })
     }
 }
