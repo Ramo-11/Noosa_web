@@ -27,6 +27,12 @@ route.get("/", (req, res) => res.render("index", { user: res.req.user }))
 route.get("/about", (req, res) => res.render("about", { user: res.req.user }))
 
 /**
+ * @description create a project route
+ * @method GET /create_project
+ */
+ route.get("/create_project", (req, res) => res.render("create_project", { user: res.req.user }))
+
+/**
  * @description contact route
  * @method GET /contact
  */
@@ -55,12 +61,7 @@ route.post("/api/profilePicture/upload", multer.single("image"), uploadUserProfi
 route.post("/api/sendemail", sendEmail)
 
 // Project API routes
-route.post("/api/createProject", multer.single("image"), createProject)
-// route.post("/api/projectPicture/upload", multer.single("image"), uploadProjectPicture) mconsole.log(req.file, req.body)
-route.post("/api/projectPicture/upload", multer.single("picture"), function (req, res) {
-    console.log("file, body ", req.file, req.body)
-    return res.status(200).send({ message: "good" })
-})
+route.post("/api/createProject", multer.single("picture"), createProject)
 route.get("/api/getProjects", getProjects)
 
 module.exports = route

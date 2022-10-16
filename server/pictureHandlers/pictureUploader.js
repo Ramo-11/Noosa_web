@@ -28,31 +28,6 @@ async function uploadUserProfilePicture(req, res) {
     }
 }
 
-async function uploadProjectPicture(req, res) {
-    try {
-        // Get user's name to specify folder to upload image to
-        const userID = req.user._id
-        const user_ = await user.findById(userID)
-
-        // Upload the image to cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path, { folder: user_.name + "_projects" })
-        const newDetails = {
-            profilePicture: result.secure_url,
-            cloudinary_id: result.public_id
-        }
-
-        // Update user's profile image
-        await user.findByIdAndUpdate(userID, newDetails)
-        
-        projectLogger.info("Project picture was uploaded successfully")
-        return res.status(200).send("Project picture was uploaded successfully")
-    } catch (error) {
-        projectLogger.error("Unable to upload project picture")
-        projectLogger.debug("Unable to upload project picture: " + error)
-    }
-}
-
 module.exports = {
     uploadUserProfilePicture,
-    uploadProjectPicture
 }

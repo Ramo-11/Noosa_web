@@ -1,11 +1,14 @@
 const project = require("../../model/project")
+const user = require("../../model/user")
+const cloudinary = require("../pictureHandlers/cloudinary")
 const { getLoggerType } = require("../../utils/loggers/loggerType")
 authLogger = getLoggerType("authentication")
 projectLogger = getLoggerType("project")
 
 async function createProject(req, res) {
-    var { title, date, description, link } = req.body
-    var userID = req.user._id
+    const picture = req.file.path
+    const { title, date, description, link } = req.body
+    const userID = req.user._id
 
     if(!title || !date || !description) {
         projectLogger.error("one of the required fields are empty, cannot create project")
@@ -13,12 +16,17 @@ async function createProject(req, res) {
     }
 
     try {
+        const user_ = await user.findById(userID)
+        const result = await cloudinary.uploader.upload(picture, { folder: user_.name + "_projects" })
+
         await project.create({
             author: userID,
             title,
             date,
             description,
-            link
+            link,
+            picture: result.secure_url,
+            cloudinary_id: result.public_id
         }) 
     
         projectLogger.info('Project with title [' + title + '] was created successfully')
