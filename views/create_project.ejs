@@ -8,19 +8,29 @@
     <% } %>
     <div class="create-project">
         <h1>Project Details</h1>
-        <h2>Title*</h2>
-        <input type="text" class="input" placeholder="Project's title">
-        <h2>Date*</h2>
-        <input type="month" class="input">
-        <h2>Description*</h2>
-        <input type="text" class="input" placeholder="Project's Description">
-        <h2>Link</h2>
-        <input type="text" class="input" placeholder="link to project"><br><br>
-        <input type="file" name="image" id="image"/>
+        <div class="project-title">
+            <h2>Title*</h2>
+            <input type="text" class="input" placeholder="Project's title">
+        </div>
+        <div class="project-date">
+            <h2>Date*</h2>
+            <input type="month" class="input">
+        </div>
+        <div class="project-description">
+            <h2>Description*</h2>
+            <textarea type="text" id="description" class="input" placeholder="Project's Description"></textarea>
+        </div>
+        <div class="project-link">
+            <h2>Link</h2>
+            <input type="text" class="input" placeholder="link to project"><br><br>
+        </div>
+        <div class="project-picture">
+            <h2>Image</h2>
+            <input type="file" name="image" id="image"/>
+        </div>
         <button class="submitButton" id="submitButton" onclick="createProject()">Submit</button>
     </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
     <%- include("./partials/footer.ejs") %>
 </body>
 <script>
