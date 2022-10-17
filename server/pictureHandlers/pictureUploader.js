@@ -2,8 +2,9 @@ const cloudinary = require("./cloudinary")
 const user = require("../../model/user")
 const { getLoggerType } = require("../../utils/loggers/loggerType")
 generalLogger = getLoggerType("general")
+projectLogger = getLoggerType("project")
 
-async function uploadImage(req, res) {
+async function uploadUserProfilePicture(req, res) {
     try {
         // Get user's name to specify folder to upload image to
         const userID = req.user._id
@@ -28,5 +29,5 @@ async function uploadImage(req, res) {
 }
 
 module.exports = {
-    uploadImage
+    uploadUserProfilePicture,
 }

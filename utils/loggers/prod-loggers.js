@@ -49,10 +49,23 @@ const prod_mailLogger = createLogger({
     ]
 })
 
+const prod_projectLogger = createLogger({
+    format: combine(
+        timestamp(),
+        errors({ stack: true }),
+        json()
+    ),
+    defaultMeta: { service: "user-service" },
+    transports: [
+        new transports.File({filename: "./logs/prod_project.log", level: "silly"})
+    ]
+})
+
 module.exports = {
     prod_authLogger,
     prod_databaseLogger,
     prod_generalLogger,
-    prod_mailLogger
+    prod_mailLogger,
+    prod_projectLogger
 }
 

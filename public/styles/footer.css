@@ -17,6 +17,7 @@ footer {
     align-items: center;
     text-align: center;
     flex-direction: column;
+    gap: 10px;
 }
 
 .footer-div h3 {
@@ -50,7 +51,7 @@ footer {
     color: blue;
 }
 
-.footer-bottom {
-    padding: 10px;
-    text-align: center;
+.footer-div p {
+    margin-top: 5px;
+    margin-bottom: 30px;
 }
