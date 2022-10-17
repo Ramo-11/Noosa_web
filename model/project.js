@@ -27,7 +27,7 @@ const ProjectSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
-        default: ""
+        default: "https://res.cloudinary.com/dqtle5upc/image/upload/v1665972462/default_project_picture_jjvo89.jpg"
     },
     cloudinary_id: {
         type: String,

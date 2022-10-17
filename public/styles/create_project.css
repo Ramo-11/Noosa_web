@@ -66,3 +66,16 @@ body {
     box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     cursor: pointer;
 }
+
+.submitFlag {
+    margin-bottom: -48px;
+    margin-top: -55px;
+    width: 80%;
+	padding: 10px;
+	border-radius: 3px 3px 3px 3px;
+}
+
+.disable-submit-flag {
+    border: 1px solid #999999;
+    background-color: #b1dfb6;
+}
