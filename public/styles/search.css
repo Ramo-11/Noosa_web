@@ -1,0 +1,84 @@
+/* instant-search = search-container */
+/* instant-search__input-container = search-field */
+/* instant-search__input = input */
+/* instant-search__results-container = list-of-users */
+/* instant-search__result = a */
+
+.search-container {
+    position: relative;
+    max-width: 40rem;
+    max-height: 40rem;
+}
+
+.search-container * {
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.search-field {
+    display: flex;
+    margin-left: 2%;
+    padding: 10px;
+    background-color: #eeeeee;
+}
+
+.search-field:focus-within {
+    background-color: #ffffff;
+}
+
+.search-field input {
+    padding: 0 10px;
+    border-radius: 3%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    flex-grow: 1; /* to let search field take the entire width of the container */
+}
+
+.list-of-users {
+    min-height: 15rem;
+    max-height: 70rem;
+    overflow-y: auto;
+    /* visibility: hidden;
+    opacity: 0; */
+    transition: visibility 0.1s, opacity 0.1s;
+}
+
+.list-of-users--visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.list-of-users a {
+    font-size: 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+.list-of-users div {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    margin-left: 2%;
+    background-color: #fbfafa;
+}
+
+.list-of-users a div:hover {
+    background-color: #eeeeee;
+}
+
+
+.list-of-users h1 {
+    margin-top: 2%;
+}
+
+.list-of-users img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}

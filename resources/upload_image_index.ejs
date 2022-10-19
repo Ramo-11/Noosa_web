@@ -19,7 +19,7 @@
 <script>
     const input = document.getElementById("image")
     const submit = document.getElementById("submit-picture")
-    var data = new FormData()
+    let data = new FormData()
     submit.addEventListener("click", uploadImage)
     
     async function uploadImage(event) {

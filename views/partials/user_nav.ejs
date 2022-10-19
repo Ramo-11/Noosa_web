@@ -1,58 +1,67 @@
-<link rel="stylesheet" href="/styles/nav.css">
-<link rel="stylesheet" href="/styles/user_drop_down.css">
-
-<div class="main-div">
-    <nav>
-        <a href="/"><img src="/images/logo.png" alt="site logo"></a>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/create_project">Create a Project</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li>
-                <div class="action">
-                    <div class="profile" onclick="menuToggle()">
-                        <img src="<%=user.profilePicture%>" width="200px" height="200px">
-                    </div>
-                    <div class="menu">
-                        <h1><%=user.name%></h1>
-                        <ul>
-                            <li><a href="/profile">Profile Information</a></li>
-                            <li><a href="#">Groups</a></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><button type="submit" id="logout">Logout</button></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-<script>
-    function menuToggle() {
-        const toggleMenu = document.querySelector('.menu')
-        toggleMenu.classList.toggle('active')
-    }
-
-    const logoutButton = document.getElementById("logout")
-    if(logoutButton != null)
-        logoutButton.addEventListener("click", logUserOut)
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/styles/nav.css">
+        <link rel="stylesheet" href="/styles/user_drop_down.css">
+    </head>
     
-    async function logUserOut(event) {
-        event.preventDefault()
-        const result = fetch("/api/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify ({})
-        }).then((res) => res)
+    <body>
+        <div class="main-div">
+            <nav>
+                <a href="/"><img src="/images/logo.png" alt="site logo"></a>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/personal_projects">Personal Projects</a></li>
+                    <li><a href="/create_project">Create a Project</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li>
+                        <div class="action">
+                            <div class="profile" onclick="menuToggle()">
+                                <img src="<%=user.profilePicture%>" width="200px" height="200px">
+                            </div>
+                            <div class="menu">
+                                <h1><%=user.name%></h1>
+                                <ul>
+                                    <li><a href="/profile">Profile Information</a></li>
+                                    <li><a href="#">Groups</a></li>
+                                    <li><a href="#">Settings</a></li>
+                                    <li><button type="submit" id="logout">Logout</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
-        const reqResult = await result
-        if (reqResult.status === 200) {
-            location.href = reqResult.url;
-        }
-        else {}
-    }
-</script>
+        <script>
+            function menuToggle() {
+                const toggleMenu = document.querySelector('.menu')
+                toggleMenu.classList.toggle('active')
+            }
+
+            const logoutButton = document.getElementById("logout")
+            if(logoutButton != null)
+                logoutButton.addEventListener("click", logUserOut)
+            
+            async function logUserOut(event) {
+                event.preventDefault()
+                const result = fetch("/api/logout", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify ({})
+                }).then((res) => res)
+
+                const reqResult = await result
+                if (reqResult.status === 200) {
+                    location.href = reqResult.url;
+                }
+                else {}
+            }
+        </script>
+    </body>
+</html>

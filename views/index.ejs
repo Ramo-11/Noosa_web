@@ -1,74 +1,101 @@
 <html lang="en">
-    <link rel="stylesheet" href="/styles/project_card.css">
-<body>
-    <% if (typeof(user) != "undefined") { %>
-        <%- include("./partials/user_nav.ejs") %>
-        <div class="list-of-projects" id="list-of-projects"></div>
-        <script>
-            window.onload = async function retrieveProjects() {
-                const result = await fetch("/api/getProjects", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <!-- <link rel="stylesheet" href="/styles/user_card.css"> -->
+        <link rel="stylesheet" href="/styles/search.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    
+    <body>
+        <% if (typeof(user) != "undefined") { %>
+            <%- include("./partials/user_nav.ejs") %>
+            <div class="search-container">
+                <div class="search-field">
+                    <input type="text" id="search-text" spellcheck="false" placeholder="Search Users">
+                    <i class="material-icons">search</i>
+                </div>
+                <div class="list-of-users" id="list-of-users"></div>
+            </div>
+            
+            <script>
+                var users = {}
+
+                const searchInput = document.getElementById("search-text")
+                searchInput.addEventListener("input", filterUsers)
+
+                window.onload = async function retrieveUsers(e) {
+                    const value = e.target.value
+                    const result = await fetch("/api/getUsers", {
+                        method: "GET"
+                    })
+                    const reqResult = await result
+                    let response = await result.json()
+                    users = JSON.parse(JSON.stringify(response))
+
+                    if (reqResult.status === 200) {
                     }
-                })
-                const reqResult = await result
-                var response = await result.json()
-                response = JSON.parse(JSON.stringify(response))
-                if (reqResult.status === 200) {
-                    for (let i = 0; i < response.length; i++) {
-                        var link_tag
-                        if (response[i]['link'] !== '') {
-                            link_tag = document.createElement("a")
-                            link_tag.href = response[i]['link']
-                            link_tag.target = "_blank" 
-                            link_tag.rel = "noopener noreferrer"
+                } // End function
+
+            async function filterUsers (e) {
+                const value = e.target.value
+
+                let list_of_users = document.getElementById("list-of-users")
+                let user_cards = list_of_users.getElementsByTagName("a")
+                let user_has_card = false
+
+                for (var index = 0; index < users.length; index++) {
+                    if (users[index].name.includes(value) && value != "") {
+                        for (let j = index; j < user_cards.length; j++) {
+                            if (user_cards[j].className === "user" + j) {
+                                user_has_card = true
+                            }
                         }
-                        
-                        const div_tag = document.createElement("div")
-                        div_tag.className = "project" + i
-                        div_tag.setAttribute("id", "project" + i)
-                        
-                        const title_tag = document.createElement("h1")
-                        const date_tag = document.createElement("h2")
-                        const line_tag = document.createElement("hr")
-                        const description_tag = document.createElement("p")
+                        if (!user_has_card) {
+                            // create user card
+                            const link_tag = document.createElement("a")
+                            link_tag.className = "user" + index
 
-                        const image_div_tag = document.createElement("div")
-                        const picture_tag = document.createElement("img")
-                        picture_tag.src = response[i]['picture']
-                        image_div_tag.appendChild(picture_tag);
+                            const div_tag = document.createElement("div")
 
-                        title_tag.appendChild(document.createTextNode(response[i]['title']))
-                        date_tag.appendChild(document.createTextNode(response[i]['date']))
-                        description_tag.appendChild(document.createTextNode(response[i]['description']))
+                            const picture_tag = document.createElement("img")
+                            const name_tag = document.createElement("h1")
+                            // link_tag.href = users[index]['link']
+                            picture_tag.src = users[index]['profilePicture']
+                            name_tag.appendChild(document.createTextNode(users[index]['name']))
 
-                        div_tag.appendChild(title_tag);
-                        div_tag.appendChild(date_tag);
-                        div_tag.appendChild(line_tag);
-                        div_tag.appendChild(description_tag);
-                        div_tag.appendChild(image_div_tag);
+                            div_tag.appendChild(picture_tag);
+                            div_tag.appendChild(name_tag);
 
-                        if (link_tag === undefined) {
-                            document.getElementById("list-of-projects").appendChild(div_tag)
-                        } else {
                             link_tag.appendChild(div_tag)
-                            document.getElementById("list-of-projects").appendChild(link_tag)
+                            list_of_users.appendChild(link_tag)
+                        } else {
+                            // do nothing
+                        }
+                    } else {
+                        // no user contain the value
+                        user_cards = list_of_users.getElementsByTagName("a")
+                        // console.log(user_cards)
+                        for (let j = 0; j < user_cards.length; j++) {
+                            const user_number = user_cards[j].className.replace(/\D/g, "");
+                            if (user_cards[j].className === "user" + user_number) {
+                                // delete user card
+                                const card_to_delete = document.getElementsByClassName(user_cards[j].className)
+                                card_to_delete[j].remove()
+                            }
                         }
                     }
-                } else {
-                    const error_tag = document.createElement("p")
-                    const error_text = document.createTextNode("Error retrieving projects")
-                    const listOfProjectsDiv = document.getElementById("list-of-projects");
-                    listOfProjectsDiv.appendChild(error_tag);
                 }
             }
-        </script>
-    <% } else { %>
-        <%- include("./partials/generic_nav.ejs") %>
-    <% } %>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <%- include("./partials/footer.ejs") %>
-</body>
+            </script>
+
+
+
+        <% } else { %>
+            <%- include("./partials/generic_nav.ejs") %>
+        <% } %>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <%- include("./partials/footer.ejs") %>    
+    </body>
 </html>

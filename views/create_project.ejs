@@ -41,19 +41,19 @@
         const inputFields = document.getElementsByTagName("input")
         const description = document.getElementsByTagName("textarea")
 
-        var data = new FormData()
+        let data = new FormData()
         data.append("picture", inputFields[3].files[0])
         data.append("title", inputFields[0].value)
         data.append("date", inputFields[1].value)
         data.append("description", description[0].value)
         data.append("link", inputFields[2].value)
 
-        var result = await fetch("/api/createProject", {
+        let result = await fetch("/api/createProject", {
             method: "POST",
             body: data 
         })
 
-        var reqResult = await result
+        let reqResult = await result
         const message = await result.json()
 
         document.getElementById("submitFlag").style.display = "block"

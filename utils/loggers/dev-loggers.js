@@ -41,11 +41,19 @@ const dev_projectLogger = createLogger({
     ]
 })
 
+const dev_userLogger = createLogger({
+    format: customFormat,
+    transports: [
+        new transports.File({filename: "./logs/dev_user.log", level: "silly"})
+    ]
+})
+
 module.exports = {
     dev_authLogger,
     dev_databaseLogger,
     dev_generalLogger,
     dev_mailLogger,
-    dev_projectLogger
+    dev_projectLogger,
+    dev_userLogger
 }
 
