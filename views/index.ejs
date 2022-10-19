@@ -46,15 +46,16 @@
 
                 for (var index = 0; index < users.length; index++) {
                     if (users[index].name.includes(value) && value != "") {
-                        for (let j = index; j < user_cards.length; j++) {
-                            if (user_cards[j].className === "user" + j) {
+                        for (let i = 0; i < user_cards.length; i++) {
+                            if (user_cards[i].className === users[index]['email']) {
                                 user_has_card = true
+                                break
                             }
                         }
                         if (!user_has_card) {
                             // create user card
                             const link_tag = document.createElement("a")
-                            link_tag.className = "user" + index
+                            link_tag.className = users[index]['email']
 
                             const div_tag = document.createElement("div")
 
@@ -69,20 +70,15 @@
 
                             link_tag.appendChild(div_tag)
                             list_of_users.appendChild(link_tag)
-                        } else {
-                            // do nothing
+                            user_cards = list_of_users.getElementsByTagName("a")
+                            user_has_card = false
                         }
                     } else {
-                        // no user contain the value
-                        user_cards = list_of_users.getElementsByTagName("a")
-                        // console.log(user_cards)
-                        for (let j = 0; j < user_cards.length; j++) {
-                            const user_number = user_cards[j].className.replace(/\D/g, "");
-                            if (user_cards[j].className === "user" + user_number) {
-                                // delete user card
-                                const card_to_delete = document.getElementsByClassName(user_cards[j].className)
-                                card_to_delete[j].remove()
-                            }
+                        // user doesn't contain the value
+                        // if a user card exists, delete it
+                        const card_to_delete = document.getElementsByClassName(users[index]['email'])
+                        if (typeof card_to_delete[0] !== "undefined") {
+                            card_to_delete[0].remove()
                         }
                     }
                 }
