@@ -6,13 +6,39 @@ body {
   height: 100%;
 }
 
+.createProject {
+    min-height: 7rem;
+    padding: 0px 15px;
+    border: 0;
+    background: #7ed386;
+}
+
+.createProject Button {
+    margin-top: 1.5%;
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    border: 0;
+    padding: 7px 15px;
+    color: #fff;
+    background: #7ed386;
+    cursor: pointer;
+    margin-left: 80%;
+}
+
+.createProject a {
+    color: #fff;
+    font-size: 30px;
+    font-family: "Roboto", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
 .list-of-projects {
     width: 50rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5rem;
-    margin: 20px 30% 50px 30%; /* top right bottom left */
+    margin: 30px 30% 50px 30%; /* top right bottom left */
 }
 
 .list-of-projects a {

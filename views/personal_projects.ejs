@@ -1,9 +1,14 @@
 <html lang="en">
     <link rel="stylesheet" href="/styles/project_card.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <title>Personal Projects</title>
 <body>
     <% if (typeof(user) != "undefined") { %>
         <%- include("./partials/user_nav.ejs") %>
+        <div class="createProject">
+            <button><a href="/create_project">Create a Project</a></button>
+        </div>
+        
         <div class="list-of-projects" id="list-of-projects"></div>
         <script>
             window.onload = async function retrieveProjects() {
@@ -69,7 +74,6 @@
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
     <%- include("./partials/footer.ejs") %>
 </body>
 </html>
