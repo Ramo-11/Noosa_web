@@ -52,7 +52,7 @@ async function createUser(req, res) {
 
  async function getUsers(req, res) {
     try {
-        const user_ = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 0 })
+        const user_ = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 1 })
         authLogger.info("List of users was retrieved successfully from the database")
         res.status(200)
         return res.json(user_)

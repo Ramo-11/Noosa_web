@@ -21,12 +21,6 @@ const { uploadUserProfilePicture, uploadProjectPicture } = require("./pictureHan
 route.get("/", (req, res) => res.render("index", { user: res.req.user }))
 
 /**
- * @description about route
- * @method GET /about
- */
-route.get("/about", (req, res) => res.render("about", { user: res.req.user }))
-
-/**
  * @description create a project route
  * @method GET /create_project
  */

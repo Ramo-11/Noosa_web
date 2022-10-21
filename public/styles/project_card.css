@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15rem;
+    gap: 5rem;
     margin: 20px 30% 50px 30%; /* top right bottom left */
 }
 
