@@ -1,9 +1,11 @@
 const user = require("../../model/user")
+const cloudinary = require("../pictureHandlers/cloudinary")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validateEmail, verifyPassword } = require("../../utils/authentication")
 
 const { getLoggerType } = require("../../utils/loggers/loggerType");
+const { cloudinary_js_config } = require("../pictureHandlers/cloudinary");
 authLogger = getLoggerType("authentication")
 
 const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"
@@ -80,7 +82,25 @@ async function updateUser(req, res) {
     }
 
     try {
-        await user.findByIdAndUpdate(userID, req.body)
+        if (req.file != undefined) {
+            const picture = req.file.path
+            const user_ = await user.findById(userID)
+            const result = await cloudinary.uploader.upload(picture, { folder: user_.name })
+
+            await user.findByIdAndUpdate(userID, {
+                name,
+                email,
+                profilePicture: result.secure_url,
+                cloudinary_id: result.public_id
+            })
+        }
+        else {
+            console.log ("I guess here")
+            await user.findByIdAndUpdate(userID, {
+                name,
+                email
+            })
+        }
 
         authLogger.info("user was updated successfully")
         return res.status(200).send({message: "Success: user was updated successfully"})
@@ -91,7 +111,7 @@ async function updateUser(req, res) {
             return res.status(400).send({message: "Error: " + error_message})
         } else {
             authLogger.error("Error in updating user")
-            return res.status(400).send({message: "Unable to update user"})
+            return res.status(400).send({message: "Unable to update user: " + error})
         }        
     }
 }

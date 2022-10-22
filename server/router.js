@@ -52,7 +52,7 @@ route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and
 
 // User API routes
 route.post("/api/signup", isLoggedOut, createUser)
-route.post("/api/updateUserInfo", updateUser)
+route.post("/api/updateUserInfo", multer.single("picture"), updateUser)
 route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
 route.post("/api/change_password", change_password)

@@ -59,10 +59,16 @@ div[class^='project'] {
     width: 50rem;
     height: 26rem;
     box-shadow: -1px 1px 10px #000;
+    /* word-wrap: break-word; */
 }
 
 div[class^='project'] h1, h2, hr, p {
     width: 40%
+}
+
+div[class^='project'] h1 {
+    max-height: 2.5rem;
+    overflow-y: auto; 
 }
 
 div[class^='project'] h2 {
@@ -74,15 +80,18 @@ div[class^='project'] hr {
 }
 
 div[class^='project'] p {
-    margin-top: 20px;
-    min-height: 20rem
+    padding: 5px;
+    margin-top: 15px;
+    min-height: 16rem;
+    max-height: 16rem; 
+    overflow-y: auto;
 }
 
 div[class^='project'] div {
     position: relative;
     width: 27rem;
-    height: 24rem;
-    margin-top: -59%;
+    height: 25rem;
+    margin-top: -50%;
     margin-left: 44%;
 }
 
