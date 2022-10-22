@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const { validateEmail, verifyPassword } = require("../../utils/authentication")
 
 const { getLoggerType } = require("../../utils/loggers/loggerType");
-const { cloudinary_js_config } = require("../pictureHandlers/cloudinary");
 authLogger = getLoggerType("authentication")
 
 const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"

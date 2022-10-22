@@ -27,7 +27,7 @@
                     <h2>Email</h2>
                     <input type="text" class="input" value="<%=user.email%>" readonly>
                     <h2>Profile Picture</h2>
-                    <input type="file" name='image' id='image'/>
+                    <input type="file" name='image' id='image' readonly>
                     <br><br>
                     <div class="flexContainer">
                         <button class="submitButton" id="submitButton" onclick="submitButtonFunction()" hidden>Submit</button>
@@ -38,15 +38,16 @@
         </div>
         <script>
             var inputFields = document.getElementsByTagName("input")
+            document.getElementById("image").disabled = true;
             var submitButton = document.getElementById("submitButton")
             var editButton = document.getElementById("editButton")
             var cancelButton = document.getElementById("cancelButton")
         
             function editButtonFunction() {
-                console.log(inputFields)
                 submitButton.style.display = "block"
                 cancelButton.style.display = "block"
                 editButton.style.display = "none"
+                document.getElementById("image").disabled = false;
         
                 for (let i = 0; i < inputFields.length; i++)
                     inputFields[i].readOnly = false    
@@ -83,6 +84,7 @@
                 submitButton.style.display = "none"
                 cancelButton.style.display = "none"
                 editButton.style.display = "block"
+                document.getElementById("image").disabled = true;
         
                 for (let i = 0; i < inputFields.length; i++) {
                     inputFields[i].value = inputFields[i].defaultValue
