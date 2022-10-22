@@ -12,7 +12,6 @@ generalLogger = getLoggerType("general")
 authLogger = getLoggerType("authentication")
 
 const multer = require("./pictureHandlers/multer");
-const { uploadUserProfilePicture, uploadProjectPicture } = require("./pictureHandlers/pictureUploader")
 
 /**
  * @description home route
@@ -56,7 +55,6 @@ route.post("/api/updateUserInfo", multer.single("picture"), updateUser)
 route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
 route.post("/api/change_password", change_password)
-route.post("/api/profilePicture/upload", multer.single("image"), uploadUserProfilePicture)
 route.get("/api/getUsers", getUsers)
 
 route.post("/api/sendemail", sendEmail)

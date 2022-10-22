@@ -21,8 +21,14 @@
 .main-div nav {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     padding: 2% 10%;
+}
+
+.main-div .main-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-div li {
@@ -31,10 +37,18 @@
     padding: 0px 20px;
 }
 
-.main-div li a {
+.main-div .main-list > li a {
     transition: all 0.3s ease 0s;
     text-decoration: none;
     color: black;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+@media screen and (max-width:750px) {
+    .main-div li a {
+        font-size: 12px;
+    }
 }
 
 .main-div li a:hover {
