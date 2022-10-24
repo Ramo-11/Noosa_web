@@ -1,5 +1,6 @@
 const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger, dev_projectLogger, dev_userLogger } = require("./dev-loggers")
 const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger, prod_projectLogger, prod_userLogger  } = require("./prod-loggers")
+require("dotenv").config()
 
 function getLoggerType(type) {
     try {

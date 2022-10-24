@@ -35,12 +35,16 @@
                         div_tag.className = "project" + i
                         div_tag.setAttribute("id", "project" + i)
                         
+                        const text_div = document.createElement("div")
+                        text_div.className = "text-div"
                         const title_tag = document.createElement("h1")
                         const date_tag = document.createElement("h2")
                         const line_tag = document.createElement("hr")
                         const description_tag = document.createElement("p")
 
                         const image_div_tag = document.createElement("div")
+                        image_div_tag.className = "image-div"
+
                         const picture_tag = document.createElement("img")
                         picture_tag.src = response[i]['picture']
                         image_div_tag.appendChild(picture_tag);
@@ -49,11 +53,13 @@
                         date_tag.appendChild(document.createTextNode(response[i]['date']))
                         description_tag.appendChild(document.createTextNode(response[i]['description']))
 
-                        div_tag.appendChild(title_tag);
-                        div_tag.appendChild(date_tag);
-                        div_tag.appendChild(line_tag);
-                        div_tag.appendChild(description_tag);
+                        text_div.appendChild(title_tag);
+                        text_div.appendChild(date_tag);
+                        text_div.appendChild(line_tag);
+                        text_div.appendChild(description_tag);
+                        
                         div_tag.appendChild(image_div_tag);
+                        div_tag.appendChild(text_div);
 
                         if (link_tag === undefined) {
                             document.getElementById("list-of-projects").appendChild(div_tag)
