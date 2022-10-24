@@ -3,6 +3,7 @@
         <meta charset="UTF-8">
         <title>Home</title>
         <!-- <link rel="stylesheet" href="/styles/user_card.css"> -->
+        <link rel="stylesheet" href="/styles/index.css">
         <link rel="stylesheet" href="/styles/search.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
@@ -10,7 +11,16 @@
     <body>
         <% if (typeof(user) != "undefined") { %>
             <%- include("./partials/user_nav.ejs") %>
+            <div class="first-container">
+
+            </div>
+            <hr>
+            <div class="create-project-container">
+
+            </div>
+            <hr>
             <div class="search-container">
+                <Label>Search for users to view their projects</Label>
                 <div class="search-field">
                     <input type="text" id="search-text" spellcheck="false" placeholder="Search Users">
                     <i class="material-icons">search</i>
@@ -45,7 +55,7 @@
                 let user_has_card = false
 
                 for (var index = 0; index < users.length; index++) {
-                    if (users[index].name.includes(value) && value != "") {
+                    if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
                         for (let i = 0; i < user_cards.length; i++) {
                             if (user_cards[i].className === users[index]['email']) {
                                 user_has_card = true
@@ -90,8 +100,7 @@
         <% } else { %>
             <%- include("./partials/generic_nav.ejs") %>
         <% } %>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br>
         <%- include("./partials/footer.ejs") %>    
     </body>
 </html>
