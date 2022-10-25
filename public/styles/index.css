@@ -1,7 +1,7 @@
-html, body {
+/* html, body {
     max-width: 100%;
     text-align: center;
-}
+} */
 
 hr {
     width: 50%;
@@ -12,23 +12,24 @@ hr {
 .first-container, .create-project-container, .search-container {
     min-width: 60rem;
     min-height: 16rem;
+    max-height: 16rem;
     background-color: grey;
 }
 
 .first-container {
-    margin-bottom: 50px;
     background-color: grey;
-    min-height: 16rem;
 }
 
 .create-project-container {
-    margin-top: 100px;
-    margin-bottom: 50px;
     background-color: grey;
-    min-height: 16rem;
 }
 
 .search-container {
     margin-top: 100px;
     box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.5);
+}
+
+.main-content img {
+    width: 100%;
+    height: 100%;
 }

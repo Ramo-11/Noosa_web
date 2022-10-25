@@ -10,96 +10,95 @@
     <body>
         <% if (typeof(user) != "undefined") { %>
             <%- include("./partials/user_nav.ejs") %>
-            <div class="first-container">
-
-            </div>
-            <hr>
-            <div class="create-project-container">
-
-            </div>
-            <hr>
-            <div class="search-container">
-                <Label>Search for users to view their projects</Label>
-                <div class="search-field">
-                    <input type="text" id="search-text" spellcheck="false" placeholder="Search Users">
-                    <i class="material-icons">search</i>
+            <div class="main-content">
+                <div class="first-container">
+                    <img src="/images/about.jpg" alt="about us image">
                 </div>
-                <div class="list-of-users" id="list-of-users"></div>
-            </div>
-            
-            <script>
-                var users = {}
-
-                const searchInput = document.getElementById("search-text")
-                searchInput.addEventListener("input", filterUsers)
-
-                window.onload = async function retrieveUsers(e) {
+                <div class="create-project-container">
+                    <img src="/images/create_project.jpg" alt="create project image">
+                </div>
+                <div class="search-container">
+                    <img src="/images/search_users.jpg" alt="search users image">
+                    <Label>Search for users to view their projects</Label>
+                    <div class="search-field">
+                        <input type="text" id="search-text" spellcheck="false" placeholder="Search Users">
+                        <i class="material-icons">search</i>
+                    </div>
+                    <div class="list-of-users" id="list-of-users"></div>
+                </div>
+                
+                <script>
+                    var users = {}
+    
+                    const searchInput = document.getElementById("search-text")
+                    searchInput.addEventListener("input", filterUsers)
+    
+                    window.onload = async function retrieveUsers(e) {
+                        const value = e.target.value
+                        const result = await fetch("/api/getUsers", {
+                            method: "GET"
+                        })
+                        const reqResult = await result
+                        let response = await result.json()
+                        users = JSON.parse(JSON.stringify(response))
+    
+                        if (reqResult.status === 200) {
+                        }
+                    } // End function
+    
+                async function filterUsers (e) {
                     const value = e.target.value
-                    const result = await fetch("/api/getUsers", {
-                        method: "GET"
-                    })
-                    const reqResult = await result
-                    let response = await result.json()
-                    users = JSON.parse(JSON.stringify(response))
-
-                    if (reqResult.status === 200) {
-                    }
-                } // End function
-
-            async function filterUsers (e) {
-                const value = e.target.value
-
-                let list_of_users = document.getElementById("list-of-users")
-                let user_cards = list_of_users.getElementsByTagName("a")
-                let user_has_card = false
-
-                for (var index = 0; index < users.length; index++) {
-                    if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
-                        for (let i = 0; i < user_cards.length; i++) {
-                            if (user_cards[i].className === users[index]['email']) {
-                                user_has_card = true
-                                break
+    
+                    let list_of_users = document.getElementById("list-of-users")
+                    let user_cards = list_of_users.getElementsByTagName("a")
+                    let user_has_card = false
+    
+                    for (var index = 0; index < users.length; index++) {
+                        if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
+                            for (let i = 0; i < user_cards.length; i++) {
+                                if (user_cards[i].className === users[index]['email']) {
+                                    user_has_card = true
+                                    break
+                                }
                             }
-                        }
-                        if (!user_has_card) {
-                            // create user card
-                            const link_tag = document.createElement("a")
-                            link_tag.className = users[index]['email']
-
-                            const div_tag = document.createElement("div")
-
-                            const picture_tag = document.createElement("img")
-                            const name_tag = document.createElement("h1")
-                            // link_tag.href = users[index]['link']
-                            picture_tag.src = users[index]['profilePicture']
-                            name_tag.appendChild(document.createTextNode(users[index]['name']))
-
-                            div_tag.appendChild(picture_tag);
-                            div_tag.appendChild(name_tag);
-
-                            link_tag.appendChild(div_tag)
-                            list_of_users.appendChild(link_tag)
-                            user_cards = list_of_users.getElementsByTagName("a")
-                        }
-                        user_has_card = false
-                    } else {
-                        // user doesn't contain the value
-                        // if a user card exists, delete it
-                        const card_to_delete = document.getElementsByClassName(users[index]['email'])
-                        if (typeof card_to_delete[0] !== "undefined") {
-                            card_to_delete[0].remove()
+                            if (!user_has_card) {
+                                // create user card
+                                const link_tag = document.createElement("a")
+                                link_tag.className = users[index]['email']
+    
+                                const div_tag = document.createElement("div")
+    
+                                const picture_tag = document.createElement("img")
+                                const name_tag = document.createElement("h1")
+                                // link_tag.href = users[index]['link']
+                                picture_tag.src = users[index]['profilePicture']
+                                name_tag.appendChild(document.createTextNode(users[index]['name']))
+    
+                                div_tag.appendChild(picture_tag);
+                                div_tag.appendChild(name_tag);
+    
+                                link_tag.appendChild(div_tag)
+                                list_of_users.appendChild(link_tag)
+                                user_cards = list_of_users.getElementsByTagName("a")
+                            }
+                            user_has_card = false
+                        } else {
+                            // user doesn't contain the value
+                            // if a user card exists, delete it
+                            const card_to_delete = document.getElementsByClassName(users[index]['email'])
+                            if (typeof card_to_delete[0] !== "undefined") {
+                                card_to_delete[0].remove()
+                            }
                         }
                     }
                 }
-            }
-            </script>
-
-
-
+                </script>
+            </div>
+            
         <% } else { %>
             <%- include("./partials/generic_nav.ejs") %>
+            <div class="main-content"></div>
         <% } %>
-        <br><br><br><br><br><br><br><br><br><br><br><br>
         <%- include("./partials/footer.ejs") %>    
     </body>
 </html>
