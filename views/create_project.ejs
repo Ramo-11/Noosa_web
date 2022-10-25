@@ -1,4 +1,5 @@
 <html lang="en">
+    <link rel="stylesheet" href="/styles/general.css">
     <link rel="stylesheet" href="/styles/create_project.css">
 <body>
     <% if (typeof(user) != "undefined") { %>
@@ -6,32 +7,33 @@
     <% } else { %>
         <%- include("./partials/generic_nav.ejs") %>
     <% } %>
-    <div class="create-project">
-        <h1>New Project Details</h1>
-        <p class="submitFlag" id="submitFlag" hidden></p>
-        <div class="project-title">
-            <h2>Title*</h2>
-            <input type="text" class="input" placeholder="Project's title">
+    <div class="main-content">
+        <div class="create-project">
+            <h1>New Project Details</h1>
+            <p class="submitFlag" id="submitFlag" hidden></p>
+            <div class="project-title">
+                <h2>Title*</h2>
+                <input type="text" class="input" placeholder="Project's title">
+            </div>
+            <div class="project-date">
+                <h2>Date*</h2>
+                <input type="month" class="input">
+            </div>
+            <div class="project-description">
+                <h2>Description*</h2>
+                <textarea type="text" class="input" id="description" placeholder="Project's Description"></textarea>
+            </div>
+            <div class="project-link">
+                <h2>Link</h2>
+                <input type="text" class="input" placeholder="link to project"><br><br>
+            </div>
+            <div class="project-picture">
+                <h2>Image</h2>
+                <input type="file" name="image" id="image">
+            </div>
+            <button class="submitButton" id="submitButton" onclick="createProject()">Submit</button>
         </div>
-        <div class="project-date">
-            <h2>Date*</h2>
-            <input type="month" class="input">
-        </div>
-        <div class="project-description">
-            <h2>Description*</h2>
-            <textarea type="text" class="input" id="description" placeholder="Project's Description"></textarea>
-        </div>
-        <div class="project-link">
-            <h2>Link</h2>
-            <input type="text" class="input" placeholder="link to project"><br><br>
-        </div>
-        <div class="project-picture">
-            <h2>Image</h2>
-            <input type="file" name="image" id="image">
-        </div>
-        <button class="submitButton" id="submitButton" onclick="createProject()">Submit</button>
     </div>
-    <br><br><br><br><br><br><br>
     <%- include("./partials/footer.ejs") %>
 </body>
 <script>

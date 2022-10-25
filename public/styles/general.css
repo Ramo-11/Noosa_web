@@ -1,0 +1,32 @@
+* {
+    font-family: sans-serif;;
+}
+
+.main-content {
+    min-height: 50rem;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+button {
+    padding: 9px 25px;
+    background-color: rgba(11, 149, 11, 1);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    color: white;
+}
+
+button:hover {
+    background-color: darkseagreen;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}

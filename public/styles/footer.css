@@ -5,10 +5,9 @@
 }
 
 footer {
-    position: relative;
-    bottom: 0;
+    min-width: 60rem;
     padding-top: 10px;
-    background-color: darkseagreen;
+    background-color: #11a72f;
 }
 
 .footer-div {
@@ -24,6 +23,7 @@ footer {
     font-size: 30px;
     font-weight: 400;
     line-height: 40px;
+    color: white
 }
 
 .footer-div ul {
@@ -31,7 +31,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0 0 0;   /* to change the height of the footer */
+    margin: 10px 0 0 0; 
 }
 
 .footer-div ul li {
@@ -40,7 +40,6 @@ footer {
 
 .footer-div ul li a {
     text-decoration: none;
-    color: black;
 }
 
 .footer-div ul li a i {
@@ -54,4 +53,9 @@ footer {
 .footer-div p {
     margin-top: 5px;
     margin-bottom: 30px;
+    color: white
+}
+
+.fa-facebook, .fa-twitter, .fa-linkedin-in, .fa-instagram {
+    color: white
 }
