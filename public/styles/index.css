@@ -1,35 +1,56 @@
-/* html, body {
-    max-width: 100%;
-    text-align: center;
-} */
-
 hr {
     width: 50%;
     margin: auto;
     border-top: 1px solid rgb(70, 70, 152);
 }
 
-.first-container, .create-project-container, .search-container {
-    min-width: 60rem;
-    min-height: 16rem;
-    max-height: 16rem;
-    background-color: grey;
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
 }
 
-.first-container {
-    background-color: grey;
+.about-us-container, .create-project-container, .search-container {
+    min-width: 60rem;
+    height: 40rem;
+    opacity: 0.7;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.about-us-container {
+    position: relative;
+    /* background: linear-gradient(180deg, rgba(78, 78, 78, 0) 0%, rgba(0, 0, 0, 0.75) 100%), url(../images/about.jpg); */
+    background: linear-gradient(to bottom, transparent 0%, black 100%), url(../images/about.jpg);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.about-us-container h1 {
+    position: absolute;
+    top: 70%;
+    left: 7%;
+    font-size: 40px;
+    color: white;
+}
+
+.about-us-container p {
+    position: absolute;
+    top: 80%;
+    left: 7.2%;
+    font-size: 20px;
+    color: white;
 }
 
 .create-project-container {
-    background-color: grey;
+    background: linear-gradient(180deg, rgba(78, 78, 78, 0) 0%, rgba(0, 0, 0, 0.75) 100%), url(../images/create_project.jpg);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 .search-container {
-    margin-top: 100px;
-    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.5);
-}
-
-.main-content img {
-    width: 100%;
-    height: 100%;
+    background: linear-gradient(180deg, rgba(78, 78, 78, 0) 0%, rgba(0, 0, 0, 0.75) 100%), url(../images/search_users.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
