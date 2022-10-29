@@ -25,8 +25,6 @@
 .main-list a {
     transition: all 0.3s ease 0s;
     text-decoration: none;
-    color: black;
-    font-size: 20px;
     white-space: nowrap;
 }
 

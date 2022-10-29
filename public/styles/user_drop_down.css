@@ -71,7 +71,7 @@
 .action .menu ul li a {
     display: inline-block;
     text-decoration: none;
-    color: #555;
+    /* color: #555; */
     font-weight: 500;
     transition: 0.5s;
     font-size: 15px;

@@ -1,7 +1,7 @@
 const express = require("express")
 const route = express.Router()
 
-const {isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
+const { isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, getUsers, updateUser, deleteUser, change_password } = require("./controllers/UserController")
 const { createProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
@@ -23,13 +23,13 @@ route.get("/", (req, res) => res.render("index", { user: res.req.user }))
  * @description create a project route
  * @method GET /create_project
  */
- route.get("/create_project", (req, res) => res.render("create_project", { user: res.req.user }))
+ route.get("/create_project", isLoggedIn, (req, res) => res.render("create_project", { user: res.req.user }))
 
 /**
  * @description retrieve personal projects route
  * @method GET /personal_projects
  */
- route.get("/personal_projects", (req, res) => res.render("personal_projects", { user: res.req.user }))
+ route.get("/personal_projects", isLoggedIn, (req, res) => res.render("personal_projects", { user: res.req.user }))
 
  /**
  * @description retrieve user's projects route
@@ -63,14 +63,13 @@ route.post("/api/signup", isLoggedOut, createUser)
 route.post("/api/updateUserInfo", multer.single("picture"), updateUser)
 route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
-route.post("/api/change_password", change_password)
-route.get("/api/getUsers", getUsers)
+route.get("/api/getUsers", isLoggedIn, getUsers)
 
-route.post("/api/sendemail", sendEmail)
+// route.post("/api/sendemail", sendEmail)
 
 // Project API routes
 route.post("/api/createProject", multer.single("picture"), createProject)
-route.get("/api/getProjects", getProjects)
-route.get("/api/getUserProjects/:username", getUserProjects)
+route.get("/api/getProjects", isLoggedIn, getProjects)
+route.get("/api/getUserProjects/:email", isLoggedIn, getUserProjects)
 
 module.exports = route

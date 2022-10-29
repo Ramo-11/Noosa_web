@@ -3,6 +3,10 @@
     font-size: 20px;
 }
 
+.main-content a {
+    color: white
+}
+
 .list-of-projects {
     width: 50rem;
     display: flex;

@@ -53,10 +53,17 @@ async function createUser(req, res) {
 
  async function getUsers(req, res) {
     try {
-        const user_ = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 1 })
+        const userID = req.user._id
+        const currentUser = await user.findById(userID)
+
+        let users = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 1 })
+
+        // Do not return the current logged in user in the list of users for the search field
+        users = users.filter(obj => JSON.stringify(obj._id) !== JSON.stringify(currentUser._id))
+
         authLogger.info("List of users was retrieved successfully from the database")
         res.status(200)
-        return res.json(user_)
+        return res.json(users)
     } catch (error) {
         authLogger.error("Unable to get list of users from database")
         authLogger.debug(error)

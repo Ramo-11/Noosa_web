@@ -19,7 +19,7 @@
                 <div class="create-project-container">
                     <div class="create-project-child-container">
                         <h1>Create your own project</h1>
-                        <p>Want to showcase your proejcts in a clean and modern way?
+                        <p>Want to showcase your projects in a clean and modern way?
                             Start now and create your project</p>
                             <button><a class="create-project" href="/create_project">Create a Project</a></button>
                     </div>
@@ -50,9 +50,6 @@
                         const reqResult = await result
                         let response = await result.json()
                         users = JSON.parse(JSON.stringify(response))
-    
-                        if (reqResult.status === 200) {
-                        }
                     } // End function
     
                 async function filterUsers (e) {
@@ -90,7 +87,7 @@
                                 list_of_users.appendChild(link_tag)
                                 user_cards = list_of_users.getElementsByTagName("a")
 
-                                link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['name'])})`)
+                                link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['email'])})`)
                             }
                             user_has_card = false
                         } else {
@@ -104,8 +101,8 @@
                     }
                 }
 
-                async function goToUser(username_) {
-                    const result = await fetch(`/api/getUserProjects/${username_}`, {
+                async function goToUser(email_) {
+                    const result = await fetch(`/api/getUserProjects/${email_}`, {
                         method: "GET"
                     })
                     const reqResult = await result
@@ -120,7 +117,30 @@
             
         <% } else { %>
             <%- include("./partials/generic_nav.ejs") %>
-            <div class="main-content"></div>
+            <div class="main-content">
+                <div class="about-us-container">
+                    <h1>About Us</h1>
+                    <p>Showcase your projects in a clean and modern way</p>
+                </div>
+                <div class="create-project-container">
+                    <div class="create-project-child-container">
+                        <h1>Create your own project</h1>
+                        <p>Want to showcase your projects in a clean and modern way?
+                            Start now and create your project</p>
+                            <button><a class="create-project" href="/signup_and_login">Create a Project</a></button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div class="search-child-container">
+                        <h1>Search users</h1>
+                        <p>Search for users and view their personal projects</p>
+                        <div class="search-field">
+                            <input type="text" id="search-text" spellcheck="false">
+                            <i class="material-icons">search</i>
+                        </div>
+                        <div class="list-of-users" id="list-of-users"></div>
+                    </div>
+                </div>
         <% } %>
         <%- include("./partials/footer.ejs") %>    
     </body>

@@ -65,8 +65,8 @@ async function getProjects(req, res) {
 
 async function getUserProjects(req, res) {
     try {
-        const username = req.params.username
-        const targetUser = await user.findOne( { name: username }, { _id: 1, name: 1, profilePicture: 1 } )
+        const email = req.params.email
+        const targetUser = await user.findOne( { email: email }, { _id: 1, name: 1, profilePicture: 1 } )
         const targetUserID = targetUser._id
 
         const target_obj = await project.find( { author: targetUserID } , { title: 1, date: 1, picture: 1, description: 1, link: 1 })
