@@ -4,7 +4,7 @@ const route = express.Router()
 const {isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, getUsers, updateUser, deleteUser, change_password } = require("./controllers/UserController")
-const { createProject, getProjects } = require("./controllers/ProjectController")
+const { createProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
 
 const { getLoggerType } = require("../utils/loggers/loggerType")
@@ -30,6 +30,15 @@ route.get("/", (req, res) => res.render("index", { user: res.req.user }))
  * @method GET /personal_projects
  */
  route.get("/personal_projects", (req, res) => res.render("personal_projects", { user: res.req.user }))
+
+ /**
+ * @description retrieve user's projects route
+ * @method GET /user_projects
+ */
+  route.get("/user_projects", (req, res) =>  {
+    const user_ = req.session.message[req.session.message.length - 1]
+    res.render("user_projects", { user: res.req.user, secondary_user: user_, projects: req.session.message }) 
+  })
 
 /**
  * @description contact route
@@ -62,5 +71,6 @@ route.post("/api/sendemail", sendEmail)
 // Project API routes
 route.post("/api/createProject", multer.single("picture"), createProject)
 route.get("/api/getProjects", getProjects)
+route.get("/api/getUserProjects/:username", getUserProjects)
 
 module.exports = route

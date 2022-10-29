@@ -89,6 +89,8 @@
                                 link_tag.appendChild(div_tag)
                                 list_of_users.appendChild(link_tag)
                                 user_cards = list_of_users.getElementsByTagName("a")
+
+                                link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['name'])})`)
                             }
                             user_has_card = false
                         } else {
@@ -100,6 +102,18 @@
                             }
                         }
                     }
+                }
+
+                async function goToUser(username_) {
+                    const result = await fetch(`/api/getUserProjects/${username_}`, {
+                        method: "GET"
+                    })
+                    const reqResult = await result
+                    
+                    if (reqResult.status === 200) {
+                        location.href = reqResult.url
+                    }
+
                 }
                 </script>
             </div>

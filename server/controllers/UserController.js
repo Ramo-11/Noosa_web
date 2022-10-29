@@ -94,7 +94,6 @@ async function updateUser(req, res) {
             })
         }
         else {
-            console.log ("I guess here")
             await user.findByIdAndUpdate(userID, {
                 name,
                 email

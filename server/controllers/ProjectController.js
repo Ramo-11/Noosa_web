@@ -63,4 +63,31 @@ async function getProjects(req, res) {
     }
 }
 
-module.exports = { createProject, getProjects }
+async function getUserProjects(req, res) {
+    try {
+        const username = req.params.username
+        const targetUser = await user.findOne( { name: username }, { _id: 1, name: 1, profilePicture: 1 } )
+        const targetUserID = targetUser._id
+
+        const target_obj = await project.find( { author: targetUserID } , { title: 1, date: 1, picture: 1, description: 1, link: 1 })
+
+        const userObj = { 
+            "name": targetUser.name,
+            "profilePicture": targetUser.profilePicture
+        }
+
+        target_obj.push(userObj)
+
+        req.session.message = target_obj
+
+        res.status(200)
+        return res.redirect("/user_projects")
+        // projectLogger.info("Projects were retrieved successfully")
+    } catch (error) {
+        projectLogger.error("Unable to retrieve projects")
+        projectLogger.debug("Unable to retrieve projects: " + error)
+        return res.status(400).send({ message: "Unable to retrieve projects for this user" })
+    }
+}
+
+module.exports = { createProject, getProjects, getUserProjects }
