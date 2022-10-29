@@ -1,0 +1,84 @@
+.search-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+.search-container * {
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.search-container label {
+    font-size: 32px;
+}
+
+.search-field {
+    width: 30rem;
+    display: flex;
+    padding: 10px;
+    background-color: #eeeeee;
+    border-radius: 10px;
+}
+
+.search-field:focus-within {
+    background-color: #ffffff;
+}
+
+.search-field input {
+    padding: 0 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    flex-grow: 1; /* places icon correctly */
+}
+
+.list-of-users {
+    width: 20rem;
+    min-height: 15rem;
+    max-height: 10rem;
+    overflow-y: auto;
+    transition: visibility 0.1s, opacity 0.1s;
+}
+
+.list-of-users a {
+    font-size: 10px;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.list-of-users div {
+    display: flex;
+    padding: 5px;
+    gap: 20px;
+    background-color: #fbfafa;
+    border-radius: 10px;
+}
+
+.list-of-users a div:hover {
+    background-color: #eeeeee;
+}
+
+.list-of-users h1 {
+    color: black;
+    font-size: 20px;
+    margin-top: 2%;
+}
+
+.list-of-users img {
+    border-radius: 50%;
+    display: block;
+    max-width: 60px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+}

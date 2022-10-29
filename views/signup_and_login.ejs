@@ -65,9 +65,9 @@
 
         async function signupUser(event) {
             event.preventDefault() // This will prevent the refresh event
-            var name = document.getElementById("name").value
-            var email = document.getElementById("signup-email").value
-            var password = document.getElementById("signup-password").value
+            let name = document.getElementById("name").value
+            let email = document.getElementById("signup-email").value
+            let password = document.getElementById("signup-password").value
             
             // Sign up api call
             const result = await fetch("/api/signup", {

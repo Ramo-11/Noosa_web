@@ -1,0 +1,51 @@
+<html lang="en">
+    <head>
+        <title>Projects</title>
+        <link rel="stylesheet" href="/styles/general.css">
+        <link rel="stylesheet" href="/styles/project_card.css">
+        <link rel="stylesheet" href="/styles/user_projects.css">
+    </head>
+    
+    <body>
+        <%- include("./partials/user_nav.ejs") %>
+        <div class="main-content">
+            
+            <div class="list-of-projects" id="list-of-projects">
+                <div class="user-info">
+                    <img src="<%=`${secondary_user.profilePicture}` %>" alt="user profile picture">
+                    <h1><%=`${secondary_user.name}` %></h1>
+                </div>
+            <% for (let i = 0; i < projects.length - 1; i++) { %>
+                <% if (projects[i]['link'] !== '') { %>
+                    <a href="<%=`${projects[i].link}` %>" target="_blank" rel="noopener noreferrer">
+                        <div class="project<%= `${i}` %>" >
+                            <div class="image-div">
+                                <img src="<%= `${projects[i].picture}` %>" alt="project picture">
+                            </div>
+                            <div class="text-div">
+                                <h1> <%= `${projects[i].title}` %> </h1>
+                                <h2> <%= `${projects[i].date}` %> </h2>
+                                <hr>
+                                <p> <%= `${projects[i].description}` %> </p>
+                            </div>
+                        </div>
+                    </a>
+                <% } else { %>
+                    <div class="project<%= `${i}` %>" >
+                        <div class="image-div">
+                            <img src="<%= `${projects[i].picture}` %>" alt="project picture">
+                        </div>
+                        <div class="text-div">
+                            <h1> <%= `${projects[i].title}` %> </h1>
+                            <h2> <%= `${projects[i].date}` %> </h2>
+                            <hr>
+                            <p> <%= `${projects[i].description}` %> </p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+            </div>
+        </div>
+        <%- include("./partials/footer.ejs") %>
+    </body>
+</html>

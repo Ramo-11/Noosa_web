@@ -1,74 +1,127 @@
 <html lang="en">
-    <link rel="stylesheet" href="/styles/project_card.css">
-<body>
-    <% if (typeof(user) != "undefined") { %>
-        <%- include("./partials/user_nav.ejs") %>
-        <div class="list-of-projects" id="list-of-projects"></div>
-        <script>
-            window.onload = async function retrieveProjects() {
-                const result = await fetch("/api/getProjects", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                const reqResult = await result
-                var response = await result.json()
-                response = JSON.parse(JSON.stringify(response))
-                if (reqResult.status === 200) {
-                    for (let i = 0; i < response.length; i++) {
-                        var link_tag
-                        if (response[i]['link'] !== '') {
-                            link_tag = document.createElement("a")
-                            link_tag.href = response[i]['link']
-                            link_tag.target = "_blank" 
-                            link_tag.rel = "noopener noreferrer"
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link rel="stylesheet" href="/styles/general.css">
+        <link rel="stylesheet" href="/styles/index.css">
+        <link rel="stylesheet" href="/styles/search.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    
+    <body>
+        <% if (typeof(user) != "undefined") { %>
+            <%- include("./partials/user_nav.ejs") %>
+            <div class="main-content">
+                <div class="about-us-container">
+                    <h1>About Us</h1>
+                    <p>Showcase your projects in a clean and modern way</p>
+                </div>
+                <div class="create-project-container">
+                    <div class="create-project-child-container">
+                        <h1>Create your own project</h1>
+                        <p>Want to showcase your proejcts in a clean and modern way?
+                            Start now and create your project</p>
+                            <button><a class="create-project" href="/create_project">Create a Project</a></button>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div class="search-child-container">
+                        <h1>Search users</h1>
+                        <p>Search for users and view their personal projects</p>
+                        <div class="search-field">
+                            <input type="text" id="search-text" spellcheck="false">
+                            <i class="material-icons">search</i>
+                        </div>
+                        <div class="list-of-users" id="list-of-users"></div>
+                    </div>
+                </div>
+                
+                <script>
+                    var users = {}
+    
+                    const searchInput = document.getElementById("search-text")
+                    searchInput.addEventListener("input", filterUsers)
+    
+                    window.onload = async function retrieveUsers(e) {
+                        const value = e.target.value
+                        const result = await fetch("/api/getUsers", {
+                            method: "GET"
+                        })
+                        const reqResult = await result
+                        let response = await result.json()
+                        users = JSON.parse(JSON.stringify(response))
+    
+                        if (reqResult.status === 200) {
                         }
-                        
-                        const div_tag = document.createElement("div")
-                        div_tag.className = "project" + i
-                        div_tag.setAttribute("id", "project" + i)
-                        
-                        const title_tag = document.createElement("h1")
-                        const date_tag = document.createElement("h2")
-                        const line_tag = document.createElement("hr")
-                        const description_tag = document.createElement("p")
+                    } // End function
+    
+                async function filterUsers (e) {
+                    const value = e.target.value
+    
+                    let list_of_users = document.getElementById("list-of-users")
+                    let user_cards = list_of_users.getElementsByTagName("a")
+                    let user_has_card = false
+    
+                    for (var index = 0; index < users.length; index++) {
+                        if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
+                            for (let i = 0; i < user_cards.length; i++) {
+                                if (user_cards[i].className === users[index]['email']) {
+                                    user_has_card = true
+                                    break
+                                }
+                            }
+                            if (!user_has_card) {
+                                // create user card
+                                const link_tag = document.createElement("a")
+                                link_tag.className = users[index]['email']
+    
+                                const div_tag = document.createElement("div")
+    
+                                const picture_tag = document.createElement("img")
+                                const name_tag = document.createElement("h1")
+                                // link_tag.href = users[index]['link']
+                                picture_tag.src = users[index]['profilePicture']
+                                name_tag.appendChild(document.createTextNode(users[index]['name']))
+    
+                                div_tag.appendChild(picture_tag);
+                                div_tag.appendChild(name_tag);
+    
+                                link_tag.appendChild(div_tag)
+                                list_of_users.appendChild(link_tag)
+                                user_cards = list_of_users.getElementsByTagName("a")
 
-                        const image_div_tag = document.createElement("div")
-                        const picture_tag = document.createElement("img")
-                        picture_tag.src = response[i]['picture']
-                        image_div_tag.appendChild(picture_tag);
-
-                        title_tag.appendChild(document.createTextNode(response[i]['title']))
-                        date_tag.appendChild(document.createTextNode(response[i]['date']))
-                        description_tag.appendChild(document.createTextNode(response[i]['description']))
-
-                        div_tag.appendChild(title_tag);
-                        div_tag.appendChild(date_tag);
-                        div_tag.appendChild(line_tag);
-                        div_tag.appendChild(description_tag);
-                        div_tag.appendChild(image_div_tag);
-
-                        if (link_tag === undefined) {
-                            document.getElementById("list-of-projects").appendChild(div_tag)
+                                link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['name'])})`)
+                            }
+                            user_has_card = false
                         } else {
-                            link_tag.appendChild(div_tag)
-                            document.getElementById("list-of-projects").appendChild(link_tag)
+                            // user doesn't contain the value
+                            // if a user card exists, delete it
+                            const card_to_delete = document.getElementsByClassName(users[index]['email'])
+                            if (typeof card_to_delete[0] !== "undefined") {
+                                card_to_delete[0].remove()
+                            }
                         }
                     }
-                } else {
-                    const error_tag = document.createElement("p")
-                    const error_text = document.createTextNode("Error retrieving projects")
-                    const listOfProjectsDiv = document.getElementById("list-of-projects");
-                    listOfProjectsDiv.appendChild(error_tag);
                 }
-            }
-        </script>
-    <% } else { %>
-        <%- include("./partials/generic_nav.ejs") %>
-    <% } %>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br>
-    <%- include("./partials/footer.ejs") %>
-</body>
+
+                async function goToUser(username_) {
+                    const result = await fetch(`/api/getUserProjects/${username_}`, {
+                        method: "GET"
+                    })
+                    const reqResult = await result
+                    
+                    if (reqResult.status === 200) {
+                        location.href = reqResult.url
+                    }
+
+                }
+                </script>
+            </div>
+            
+        <% } else { %>
+            <%- include("./partials/generic_nav.ejs") %>
+            <div class="main-content"></div>
+        <% } %>
+        <%- include("./partials/footer.ejs") %>    
+    </body>
 </html>

@@ -107,6 +107,15 @@ Button  {
     cursor: pointer;
 }
 
+#image {
+    width: 80%;
+    padding: 2px 0;
+    margin-left: 1.2%;
+    margin-top: 0.5%;
+    border: 0;
+    border-bottom: 1px solid #3fb6a8;
+}
+
 .editButton {
     margin-left: 75%;
 }

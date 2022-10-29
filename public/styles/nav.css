@@ -1,64 +1,41 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.main-div {
-    position: relative;
-    top: 0;
-}
-
-.main-div li, a, button {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 16px;
+.main-div li, .main-div a, .main-div button {
     text-decoration: none;
 }
 
 .main-div nav {
+    background-color: #e4e4e4;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    padding: 2% 10%;
+    align-items: center;
+    padding: 5px 100px;
+}
+
+.main-div .main-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-div li {
     list-style: none;
     display: inline-block;
-    padding: 0px 20px;
+    padding: 0px 50px;
 }
 
-.main-div li a {
+.main-list a {
     transition: all 0.3s ease 0s;
     text-decoration: none;
     color: black;
+    font-size: 20px;
+    white-space: nowrap;
 }
 
 .main-div li a:hover {
     color: darkgreen
 }
 
-.main-div button {
-    padding: 9px 25px;
-    background-color: rgba(11, 149, 11, 1);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
-}
-
-.main-div button:hover {
-    background-color: darkseagreen;
-}
-
 .profile_image {
     border-radius: 50%;
-    background: #512DA8;
-    font-size: 25px;
-    color: #fff;
     text-align: center;
     line-height: 1.6;
     padding: 5px;

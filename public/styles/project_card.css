@@ -1,9 +1,6 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+.main-content button {
+    margin-left: 400px;
+    font-size: 20px;
 }
 
 .list-of-projects {
@@ -11,12 +8,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15rem;
-    margin: 20px 30% 50px 30%; /* top right bottom left */
+    align-items: center;
+    gap: 5rem;
+    margin: auto;
 }
 
 .list-of-projects a {
-    /* text-decoration: none; */
     transition: all 0.5s ease 0s;
     text-decoration: none;
     color: black;
@@ -27,49 +24,55 @@ body {
 }
 
 div[class^='project'] {
-    position: relative;
-    padding: 20px;
+    background-color: #e4e4e4;
+    display: flex;
+    justify-content: space-between;
     border-radius: 10px;
     width: 50rem;
     height: 26rem;
     box-shadow: -1px 1px 10px #000;
 }
 
-div[class^='project'] h1, h2, hr, p {
-    width: 40%
-}
-
-div[class^='project'] h2 {
-    padding: 20px 0 20px 0;
-}
-
-div[class^='project'] hr {
-    border-top: 2px solid black;
-}
-
-div[class^='project'] p {
-    margin-top: 20px;
-    min-height: 20rem
-}
-
-div[class^='project'] div {
+.image-div {
     position: relative;
-    width: 27rem;
-    height: 24rem;
-    margin-top: -59%;
-    margin-left: 44%;
+    width: 25rem;
+    height: 26rem;
+    border-radius: 10px;
 }
 
-
-div[class^='project'] img {
+.image-div img {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
-    right: 0;
     margin: auto;
+    object-fit: cover;
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    border-radius: 10px;
+}
+
+.text-div {
+    width: 24rem;
+    padding: 30px 15px;
+}
+
+div[class^='project'] h1 {
+    margin-bottom: 10px;
+    max-height: 2.5rem;
+    overflow-y: auto; 
+}
+
+div[class^='project'] hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-top: 2px solid black;
+}
+
+div[class^='project'] p {
+    min-height: 16rem;
+    max-height: 16rem; 
+    overflow-y: auto; 
 }

@@ -1,0 +1,92 @@
+hr {
+    width: 50%;
+    margin: auto;
+    border-top: 1px solid rgb(70, 70, 152);
+}
+
+h1 {
+    font-size: 40px;
+    color: white;
+}
+
+p {
+    font-size: 20px;
+    color: white;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.about-us-container, .create-project-container, .search-container {
+    min-width: 60rem;
+    height: 40rem;
+    opacity: 0.7;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.about-us-container {
+    position: relative;
+    background: linear-gradient(to bottom, transparent 0%, black 100%), url(../images/about.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.about-us-container h1 {
+    position: absolute;
+    top: 70%;
+    left: 7%;
+    /* font-size: 40px; */
+    /* color: white; */
+}
+
+.about-us-container p {
+    position: absolute;
+    top: 80%;
+    left: 7.2%;
+    /* font-size: 20px; */
+    /* color: white; */
+}
+
+.create-project-container {
+    background: linear-gradient(to bottom, transparent 0%, black 100%), url(../images/create_project.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.create-project-child-container {
+    margin-top: 17%;
+    margin-left: 60%;
+    max-width: 500px;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.create-project-container button {
+    font-size: 20px;
+}
+
+.search-container {
+    background: linear-gradient(to bottom, transparent 0%, black 100%), url(../images/search_users.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.search-child-container {
+    margin-top: 7%;
+    margin-left: -50%;
+    min-width: 300px;
+    max-width: 500px;
+    max-height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}

@@ -1,9 +1,10 @@
 const user = require("../../model/user")
+const cloudinary = require("../pictureHandlers/cloudinary")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validateEmail, verifyPassword } = require("../../utils/authentication")
 
-const { getLoggerType } = require("../../utils/loggers/loggerType")
+const { getLoggerType } = require("../../utils/loggers/loggerType");
 authLogger = getLoggerType("authentication")
 
 const JWT_SECRET = "kasdkfjioe.,mncv xkio@#@#%#$#nbsw#$knlk23@@3kln3%#4323nk"
@@ -50,12 +51,16 @@ async function createUser(req, res) {
     }
 }
 
- async function findUser(req, res) {
+ async function getUsers(req, res) {
     try {
-        const user = await user.find()
-        return res.json(user)
+        const user_ = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 1 })
+        authLogger.info("List of users was retrieved successfully from the database")
+        res.status(200)
+        return res.json(user_)
     } catch (error) {
-        return res.status(400).send({message: "unable to get data from database"})
+        authLogger.error("Unable to get list of users from database")
+        authLogger.debug(error)
+        return res.status(400).send({message: "Unable to get list of users from database"})
     }
 }
 
@@ -64,27 +69,48 @@ async function updateUser(req, res) {
     const { name, email } = req.body
 
     if(!name) {
-        var error_message = "name cannot be empty"
+        let error_message = "name cannot be empty"
         authLogger.error("Error in updating user: " + error_message)
         return res.status(400).send({message: "Error: " + error_message})
     }
 
     if(!email || typeof email !== "string" || !validateEmail(email)) {
-        var error_message = "email is invalid"
+        let error_message = "email is invalid"
         authLogger.error("Error in updating user: " + error_message)
         return res.status(400).send({message: "Error: " + error_message})
     }
 
     try {
-        await user.findByIdAndUpdate(userID, req.body)
+        if (req.file != undefined) {
+            const picture = req.file.path
+            const user_ = await user.findById(userID)
+            const result = await cloudinary.uploader.upload(picture, { folder: user_.name })
+
+            await user.findByIdAndUpdate(userID, {
+                name,
+                email,
+                profilePicture: result.secure_url,
+                cloudinary_id: result.public_id
+            })
+        }
+        else {
+            await user.findByIdAndUpdate(userID, {
+                name,
+                email
+            })
+        }
 
         authLogger.info("user was updated successfully")
         return res.status(200).send({message: "Success: user was updated successfully"})
     } catch (error) {
-        if (error.codeName == "DuplicateKey")
-            var error_message = "email is already in use"
-        authLogger.error("Error in updating user: " + error_message)
-        return res.status(400).send({message: "Error: " + error_message})
+        if (error.codeName == "DuplicateKey") {
+            let error_message = "email is already in use"
+            authLogger.error("Error in updating user: " + error_message)
+            return res.status(400).send({message: "Error: " + error_message})
+        } else {
+            authLogger.error("Error in updating user")
+            return res.status(400).send({message: "Unable to update user: " + error})
+        }        
     }
 }
 
@@ -127,7 +153,7 @@ async function change_password (req, res) {
 
 module.exports = {
     createUser,
-    findUser,
+    getUsers,
     updateUser,
     deleteUser,
     change_password
