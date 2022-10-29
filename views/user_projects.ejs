@@ -3,14 +3,18 @@
         <title>Projects</title>
         <link rel="stylesheet" href="/styles/general.css">
         <link rel="stylesheet" href="/styles/project_card.css">
+        <link rel="stylesheet" href="/styles/user_projects.css">
     </head>
     
     <body>
         <%- include("./partials/user_nav.ejs") %>
         <div class="main-content">
-            <img src="<%=`${secondary_user.profilePicture}` %>" alt="user profile picture">
-            <h1><%=`${secondary_user.name}` %></h1>
+            
             <div class="list-of-projects" id="list-of-projects">
+                <div class="user-info">
+                    <img src="<%=`${secondary_user.profilePicture}` %>" alt="user profile picture">
+                    <h1><%=`${secondary_user.name}` %></h1>
+                </div>
             <% for (let i = 0; i < projects.length - 1; i++) { %>
                 <% if (projects[i]['link'] !== '') { %>
                     <a href="<%=`${projects[i].link}` %>" target="_blank" rel="noopener noreferrer">

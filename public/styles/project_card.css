@@ -8,8 +8,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 5rem;
-    margin: 30px 30% 50px 25%; /* top right bottom left */
+    margin: auto;
 }
 
 .list-of-projects a {
