@@ -7,7 +7,7 @@ To list current docker images:
     docker images
 
 To run docker image:
-    docker run -it -d -p 8000:3000 [nameOfDockerImage]
+    docker run -it -d -p 8000:3000 --name [nameOfDockerContainer] [nameOfDockerImage]
 
     -it will give it an interactive terminal
     -d will run the container in the background

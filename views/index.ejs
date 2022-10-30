@@ -82,7 +82,7 @@
 
         async function filterUsers (e) {
             const value = e.target.value
-
+            
             let list_of_users = document.getElementById("list-of-users")
             let user_cards = list_of_users.getElementsByTagName("a")
             let user_has_card = false
@@ -98,6 +98,7 @@
                     if (!user_has_card) {
                         // create user card
                         const link_tag = document.createElement("a")
+                        link_tag.className = users[index]['email']
 
                         const div_tag = document.createElement("div")
 
