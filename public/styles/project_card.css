@@ -3,6 +3,10 @@
     font-size: 20px;
 }
 
+.main-content a {
+    color: white
+}
+
 .list-of-projects {
     width: 50rem;
     display: flex;
@@ -61,7 +65,7 @@ div[class^='project'] {
 
 div[class^='project'] h1 {
     margin-bottom: 10px;
-    max-height: 2.5rem;
+    max-height: 3rem;
     overflow-y: auto; 
 }
 

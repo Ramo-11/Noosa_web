@@ -4,7 +4,7 @@ const User = require("../model/user")
 const bcrypt = require("bcryptjs");
 
 const { getLoggerType } = require("../utils/loggers/loggerType")
-authLogger = getLoggerType("authentication")
+userLogger = getLoggerType("user")
 
 passport.serializeUser((user, done) => done(null, user._id))
 passport.deserializeUser(async function (id, done) {
@@ -14,7 +14,8 @@ passport.deserializeUser(async function (id, done) {
             throw new Error("user was not found")
         return done(null, user)
     } catch(error) {
-        authLogger.error("unable to deserialize user: user was not found")
+        userLogger.error("unable to deserialize user")
+        userLogger.debug(error)
         return done(error, null)
     }
 })
@@ -29,7 +30,7 @@ passport.use(
                 if(!user)
                     throw new Error("User was not found with the given email")
                 if(await bcrypt.compare(password, user.password)) {
-                    authLogger.info("user logged in successfully")
+                    userLogger.info("user with email [" + email + "] logged in successfully")
                     return done(null, user)
                 }
                 else 
@@ -38,47 +39,57 @@ passport.use(
             else
                 throw new Error("Email and password must not be empty")
         } catch (error) {
-            authLogger.error(error)
+            userLogger.error("Unable to log user in")
+            userLogger.debug(error)
             return done(null, false, { message: error.message })
         }
     })
 )
 
 function logUserIn(req, res, next) {
-    passport.authenticate("local", function(err, user, info) {
-        if (err)
-            return next(err) // will generate a 500 error
+    passport.authenticate("local", function(error, user, info) {
+        if (error) {
+            userLogger.error("Unable to log user in")
+            userLogger.debug(error)
+            return next(error) // will generate a 500 error
+        }
             // usually this means missing credentials
-        if (!user)
+        if (!user) {
+            userLogger.error("Unable to log user in")
+            userLogger.debug(info.message)
             return res.status(400).send({ message: info.message })
+        }
         req.login(user, loginErr => {
             if (loginErr)
                 return next(loginErr)
-            authLogger.info("user was logged in successfully")
             return res.status(200).send({ message: "User was logged in successfully" })
         }) 
     }) (req, res, next)
 }
 
 function logUserOut(req, res) {
-    req.logout(function(err) {
-        if (err) {
-            return next(err)
+    req.logout(function(error) {
+        if (error) {
+            userLogger.error("Unable to log user out")
+            userLogger.debug(error)
+            return next(error)
         }
-        authLogger.info("user has been logged out")
+        userLogger.info("user has been logged out")
         return res.redirect("/signup_and_login")
     })
 }
 
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated())
+    if(req.isAuthenticated()) {
         return next()
+    }
     return res.redirect("/signup_and_login")
 }
 
 function isLoggedOut(req, res, next) {
-    if(!req.isAuthenticated())
+    if(!req.isAuthenticated()) {
         return next()
+    }
     return res.redirect("/")
 }
 

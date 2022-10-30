@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,900|Montserrat|Roboto");
 
-body {
-    overflow-x: hidden;
-}
-
 .container {
     width: 80%;
     height: 65%;
@@ -30,11 +26,12 @@ body {
 }
 
 .container .leftbox nav a {
+    margin-top: 40px;
     padding: 35px;
     text-align: center;
     list-style: none;
     color: black;
-    font-size: 1.1em;
+    font-size: 3.5rem;
     display: block;
     transition: all 0.3s ease-in-out;
 }

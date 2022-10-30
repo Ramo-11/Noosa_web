@@ -1,5 +1,5 @@
-const { dev_generalLogger, dev_authLogger, dev_databaseLogger, dev_mailLogger, dev_projectLogger, dev_userLogger } = require("./dev-loggers")
-const { prod_generalLogger, prod_authLogger, prod_databaseLogger, prod_mailLogger, prod_projectLogger, prod_userLogger  } = require("./prod-loggers")
+const { dev_generalLogger, dev_databaseLogger, dev_mailLogger, dev_projectLogger, dev_userLogger } = require("./dev-loggers")
+const { prod_generalLogger, prod_databaseLogger, prod_mailLogger, prod_projectLogger, prod_userLogger  } = require("./prod-loggers")
 require("dotenv").config()
 
 function getLoggerType(type) {
@@ -8,8 +8,6 @@ function getLoggerType(type) {
             switch(type) {
                 case "general":
                     return dev_generalLogger
-                case "authentication":
-                    return dev_authLogger
                 case "database":
                     return dev_databaseLogger
                 case "mail":
@@ -25,8 +23,6 @@ function getLoggerType(type) {
             switch(type) {
                 case "general":
                     return prod_generalLogger
-                case "authentication":
-                    return prod_authLogger
                 case "database":
                     return prod_databaseLogger
                 case "mail":

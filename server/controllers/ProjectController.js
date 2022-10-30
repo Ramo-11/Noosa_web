@@ -2,7 +2,6 @@ const project = require("../../model/project")
 const user = require("../../model/user")
 const cloudinary = require("../pictureHandlers/cloudinary")
 const { getLoggerType } = require("../../utils/loggers/loggerType")
-authLogger = getLoggerType("authentication")
 projectLogger = getLoggerType("project")
 
 async function createProject(req, res) {
@@ -39,11 +38,11 @@ async function createProject(req, res) {
             })
         }
 
-        projectLogger.info('Project with title [' + title + '] was created successfully')
+        projectLogger.info("Project with title [" + title + "] was created successfully")
         return res.status(200).send({ message: "Project was created successfully" })
     } catch (error) {
         projectLogger.error("Unable to create project")
-        projectLogger.debug("Unable to create project: " + error)
+        projectLogger.debug(error)
         return res.status(400).send({ message: "Unable to create project" })
     }
 }
@@ -58,15 +57,15 @@ async function getProjects(req, res) {
         return res.json(found_projects)
     } catch (error) {
         projectLogger.error("Unable to retrieve projects")
-        projectLogger.debug("Unable to retrieve projects: " + error)
+        projectLogger.debug(error)
         return res.status(400).send({ message: "Unable to retrieve projects for this user" })
     }
 }
 
 async function getUserProjects(req, res) {
     try {
-        const username = req.params.username
-        const targetUser = await user.findOne( { name: username }, { _id: 1, name: 1, profilePicture: 1 } )
+        const email = req.params.email
+        const targetUser = await user.findOne( { email: email }, { _id: 1, name: 1, profilePicture: 1 } )
         const targetUserID = targetUser._id
 
         const target_obj = await project.find( { author: targetUserID } , { title: 1, date: 1, picture: 1, description: 1, link: 1 })
@@ -80,13 +79,13 @@ async function getUserProjects(req, res) {
 
         req.session.message = target_obj
 
+        projectLogger.info("Projects were retrieved successfully for user [" + targetUser.name + "]")
         res.status(200)
         return res.redirect("/user_projects")
-        // projectLogger.info("Projects were retrieved successfully")
     } catch (error) {
-        projectLogger.error("Unable to retrieve projects")
-        projectLogger.debug("Unable to retrieve projects: " + error)
-        return res.status(400).send({ message: "Unable to retrieve projects for this user" })
+        projectLogger.error("Unable to retrieve projects for user with email [" + email + "]")
+        projectLogger.debug(error)
+        return res.status(400).send({ message: "Unable to retrieve projects for the selected user" })
     }
 }
 

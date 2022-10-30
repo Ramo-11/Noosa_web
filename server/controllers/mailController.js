@@ -3,7 +3,7 @@ const { getLoggerType } = require("../../utils/loggers/loggerType")
 mailLogger = getLoggerType("mail")
 
 async function sendEmail(req, res) {
-    const {first_name, last_name, email, content} = req.body
+    const { first_name, last_name, email, content } = req.body
 
     let mailTransporter = nodemailer.createTransport({
         service: "gmail",
@@ -21,14 +21,15 @@ async function sendEmail(req, res) {
     }
 
     mailTransporter.sendMail(details, (error) => {
-        if(!error) { 
+        if (!error) { 
             mailLogger.info("email was sent successfully from contact page")
-            return res.status(200).send({message: "Message was sent successfully"})
+            return res.status(200).send({ message: "Message was sent successfully" })
         }
 
         else {
-            mailLogger.error(error)
-            return res.status(400).send({message: "Message was not sent"})
+            mailLogger.error("Unable to send message")
+            mailLogger.debug(error)
+            return res.status(400).send({ message: "Message was not sent" })
         }
     })
 }

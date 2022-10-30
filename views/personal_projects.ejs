@@ -23,55 +23,62 @@
                     let response = await result.json()
                     response = JSON.parse(JSON.stringify(response))
                     if (reqResult.status === 200) {
-                        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                        for (let i = 0; i < response.length; i++) {
-                            let link_tag
-                            if (response[i]['link'] !== '') {
-                                link_tag = document.createElement("a")
-                                link_tag.href = response[i]['link']
-                                link_tag.target = "_blank" 
-                                link_tag.rel = "noopener noreferrer"
-                            }
-                            
-                            const div_tag = document.createElement("div")
-                            div_tag.className = "project" + i
-                            div_tag.setAttribute("id", "project" + i)
-                            
-                            const text_div = document.createElement("div")
-                            text_div.className = "text-div"
-                            const title_tag = document.createElement("h1")
-                            const date_tag = document.createElement("h2")
-                            const line_tag = document.createElement("hr")
-                            const description_tag = document.createElement("p")
-    
-                            const image_div_tag = document.createElement("div")
-                            image_div_tag.className = "image-div"
-    
-                            const picture_tag = document.createElement("img")
-                            picture_tag.src = response[i]['picture']
-                            image_div_tag.appendChild(picture_tag);
-    
-                            title_tag.appendChild(document.createTextNode(response[i]['title']))
-                             
-                            let project_date = months[+response[i]['date'].split('-')[1] - 1] + ", " + response[i]['date'].split('-')[0]
+                        if (response.length != 0) {
+                            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                            for (let i = 0; i < response.length; i++) {
+                                let link_tag
+                                if (response[i]['link'] !== '') {
+                                    link_tag = document.createElement("a")
+                                    link_tag.href = response[i]['link']
+                                    link_tag.target = "_blank" 
+                                    link_tag.rel = "noopener noreferrer"
+                                }
+                                
+                                const div_tag = document.createElement("div")
+                                div_tag.className = "project" + i
+                                div_tag.setAttribute("id", "project" + i)
+                                
+                                const text_div = document.createElement("div")
+                                text_div.className = "text-div"
+                                const title_tag = document.createElement("h1")
+                                const date_tag = document.createElement("h2")
+                                const line_tag = document.createElement("hr")
+                                const description_tag = document.createElement("p")
+        
+                                const image_div_tag = document.createElement("div")
+                                image_div_tag.className = "image-div"
+        
+                                const picture_tag = document.createElement("img")
+                                picture_tag.src = response[i]['picture']
+                                image_div_tag.appendChild(picture_tag);
+        
+                                title_tag.appendChild(document.createTextNode(response[i]['title']))
+                                
+                                let project_date = months[+response[i]['date'].split('-')[1] - 1] + ", " + response[i]['date'].split('-')[0]
 
-                            date_tag.appendChild(document.createTextNode(project_date))
-                            description_tag.appendChild(document.createTextNode(response[i]['description']))
-    
-                            text_div.appendChild(title_tag);
-                            text_div.appendChild(date_tag);
-                            text_div.appendChild(line_tag);
-                            text_div.appendChild(description_tag);
-                            
-                            div_tag.appendChild(image_div_tag);
-                            div_tag.appendChild(text_div);
-    
-                            if (link_tag === undefined) {
-                                document.getElementById("list-of-projects").appendChild(div_tag)
-                            } else {
-                                link_tag.appendChild(div_tag)
-                                document.getElementById("list-of-projects").appendChild(link_tag)
+                                date_tag.appendChild(document.createTextNode(project_date))
+                                description_tag.appendChild(document.createTextNode(response[i]['description']))
+        
+                                text_div.appendChild(title_tag);
+                                text_div.appendChild(date_tag);
+                                text_div.appendChild(line_tag);
+                                text_div.appendChild(description_tag);
+                                
+                                div_tag.appendChild(image_div_tag);
+                                div_tag.appendChild(text_div);
+        
+                                if (link_tag === undefined) {
+                                    document.getElementById("list-of-projects").appendChild(div_tag)
+                                } else {
+                                    link_tag.appendChild(div_tag)
+                                    document.getElementById("list-of-projects").appendChild(link_tag)
+                                }
                             }
+                        } else {
+                            const no_projects_tag = document.createElement("h1")
+                            no_projects_tag.appendChild(document.createTextNode("No projects to display"))
+                            no_projects_tag.style.color = "#D8000C"
+                            document.getElementById("list-of-projects").appendChild(no_projects_tag)
                         }
                     } else {
                         const error_tag = document.createElement("p")

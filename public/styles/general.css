@@ -14,6 +14,7 @@ body {
 }
 
 button {
+    font-size: 15px;
     padding: 9px 25px;
     background-color: rgba(11, 149, 11, 1);
     border: none;
@@ -29,5 +30,6 @@ button:hover {
 
 a {
     text-decoration: none;
-    color: white;
+    color: black;
+    font-size: 20px;
 }

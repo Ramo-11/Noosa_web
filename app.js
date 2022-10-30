@@ -30,6 +30,7 @@ app.use(cookieParser())
 
 app.use(session({
     secret: "kljasoiuj3io43@$3klnklv4515451$232s:",
+    cookie: { maxAge: 86400000 }, // 24 hours
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })

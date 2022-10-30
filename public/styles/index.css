@@ -23,7 +23,7 @@ p {
 .about-us-container, .create-project-container, .search-container {
     min-width: 60rem;
     height: 40rem;
-    opacity: 0.7;
+    opacity: 0.85;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
@@ -38,16 +38,12 @@ p {
     position: absolute;
     top: 70%;
     left: 7%;
-    /* font-size: 40px; */
-    /* color: white; */
 }
 
 .about-us-container p {
     position: absolute;
     top: 80%;
     left: 7.2%;
-    /* font-size: 20px; */
-    /* color: white; */
 }
 
 .create-project-container {
@@ -70,6 +66,10 @@ p {
 
 .create-project-container button {
     font-size: 20px;
+}
+
+.create-project-container a {
+    color: white;
 }
 
 .search-container {
