@@ -55,13 +55,14 @@ async function createUser (req, res) {
 
  async function getUsers(req, res) {
     try {
-        const userID = req.user._id
-        const currentUser = await user.findById(userID)
-
         let users = await user.find({}, { name: 1, email: 1, profilePicture: 1, _id: 1 })
-
-        // Do not return the current logged in user in the list of users for the search field
-        users = users.filter(obj => JSON.stringify(obj._id) !== JSON.stringify(currentUser._id))
+        
+        if (typeof req.user !== "undefined") {
+            // Do not return the current logged in user in the list of users for the search field
+            const userID = req.user._id
+            const currentUser = await user.findById(userID)
+            users = users.filter(obj => JSON.stringify(obj._id) !== JSON.stringify(currentUser._id))
+        }
 
         userLogger.info("List of users was retrieved successfully from the database")
         res.status(200)

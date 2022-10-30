@@ -59,7 +59,7 @@ route.post("/api/signup", isLoggedOut, createUser)
 route.post("/api/updateUserInfo", multer.single("picture"), updateUser)
 route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
-route.get("/api/getUsers", isLoggedIn, getUsers)
+route.get("/api/getUsers", getUsers)
 
 // route.post("/api/sendemail", sendEmail)
 
