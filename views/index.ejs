@@ -35,84 +35,6 @@
                         <div class="list-of-users" id="list-of-users"></div>
                     </div>
                 </div>
-                
-                <script>
-                    var users = {}
-    
-                    const searchInput = document.getElementById("search-text")
-                    searchInput.addEventListener("input", filterUsers)
-    
-                    window.onload = async function retrieveUsers(e) {
-                        const value = e.target.value
-                        const result = await fetch("/api/getUsers", {
-                            method: "GET"
-                        })
-                        const reqResult = await result
-                        let response = await result.json()
-                        users = JSON.parse(JSON.stringify(response))
-                    } // End function
-    
-                async function filterUsers (e) {
-                    const value = e.target.value
-    
-                    let list_of_users = document.getElementById("list-of-users")
-                    let user_cards = list_of_users.getElementsByTagName("a")
-                    let user_has_card = false
-    
-                    for (var index = 0; index < users.length; index++) {
-                        if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
-                            for (let i = 0; i < user_cards.length; i++) {
-                                if (user_cards[i].className === users[index]['email']) {
-                                    user_has_card = true
-                                    break
-                                }
-                            }
-                            if (!user_has_card) {
-                                // create user card
-                                const link_tag = document.createElement("a")
-                                link_tag.className = users[index]['email']
-    
-                                const div_tag = document.createElement("div")
-    
-                                const picture_tag = document.createElement("img")
-                                const name_tag = document.createElement("h1")
-                                // link_tag.href = users[index]['link']
-                                picture_tag.src = users[index]['profilePicture']
-                                name_tag.appendChild(document.createTextNode(users[index]['name']))
-    
-                                div_tag.appendChild(picture_tag);
-                                div_tag.appendChild(name_tag);
-    
-                                link_tag.appendChild(div_tag)
-                                list_of_users.appendChild(link_tag)
-                                user_cards = list_of_users.getElementsByTagName("a")
-
-                                link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['email'])})`)
-                            }
-                            user_has_card = false
-                        } else {
-                            // user doesn't contain the value
-                            // if a user card exists, delete it
-                            const card_to_delete = document.getElementsByClassName(users[index]['email'])
-                            if (typeof card_to_delete[0] !== "undefined") {
-                                card_to_delete[0].remove()
-                            }
-                        }
-                    }
-                }
-
-                async function goToUser(email_) {
-                    const result = await fetch(`/api/getUserProjects/${email_}`, {
-                        method: "GET"
-                    })
-                    const reqResult = await result
-                    
-                    if (reqResult.status === 200) {
-                        location.href = reqResult.url
-                    }
-
-                }
-                </script>
             </div>
             
         <% } else { %>
@@ -142,6 +64,81 @@
                     </div>
                 </div>
         <% } %>
+        <script>
+            var users = {}
+
+            const searchInput = document.getElementById("search-text")
+            searchInput.addEventListener("input", filterUsers)
+
+            window.onload = async function retrieveUsers(e) {
+                const value = e.target.value
+                const result = await fetch("/api/getUsers", {
+                    method: "GET"
+                })
+                const reqResult = await result
+                let response = await result.json()
+                users = JSON.parse(JSON.stringify(response))
+            } // End function
+
+        async function filterUsers (e) {
+            const value = e.target.value
+
+            let list_of_users = document.getElementById("list-of-users")
+            let user_cards = list_of_users.getElementsByTagName("a")
+            let user_has_card = false
+
+            for (var index = 0; index < users.length; index++) {
+                if (users[index].name.toLowerCase().includes(value.toLowerCase()) && value != "") {
+                    for (let i = 0; i < user_cards.length; i++) {
+                        if (user_cards[i].className === users[index]['email']) {
+                            user_has_card = true
+                            break
+                        }
+                    }
+                    if (!user_has_card) {
+                        // create user card
+                        const link_tag = document.createElement("a")
+
+                        const div_tag = document.createElement("div")
+
+                        const picture_tag = document.createElement("img")
+                        const name_tag = document.createElement("h1")
+                        picture_tag.src = users[index]['profilePicture']
+                        name_tag.appendChild(document.createTextNode(users[index]['name']))
+
+                        div_tag.appendChild(picture_tag);
+                        div_tag.appendChild(name_tag);
+
+                        link_tag.appendChild(div_tag)
+                        list_of_users.appendChild(link_tag)
+                        user_cards = list_of_users.getElementsByTagName("a")
+
+                        link_tag.setAttribute("onclick", `goToUser(${JSON.stringify(users[index]['email'])})`)
+                    }
+                    user_has_card = false
+                } else {
+                    // user doesn't contain the value
+                    // if a user card exists, delete it
+                    const card_to_delete = document.getElementsByClassName(users[index]['email'])
+                    if (typeof card_to_delete[0] !== "undefined") {
+                        card_to_delete[0].remove()
+                    }
+                }
+            }
+        }
+
+        async function goToUser(email_) {
+            const result = await fetch(`/api/getUserProjects/${email_}`, {
+                method: "GET"
+            })
+            const reqResult = await result
+            
+            if (reqResult.status === 200) {
+                location.href = reqResult.url
+            }
+
+        }
+        </script>
         <%- include("./partials/footer.ejs") %>    
     </body>
 </html>

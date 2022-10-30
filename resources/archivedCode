@@ -1,0 +1,36 @@
+async function deleteUser (req, res) {
+    const userID = req.params.id
+    try {
+        await user.findByIdAndDelete(userID)
+        return res.status(200).send({message: "Users were deleted successfully"})
+    } catch (error) {
+        return res.status(400).send({message: "Unable to delete user"})
+    }
+}
+
+async function change_password (req, res) {
+    const { token } = req.headers
+    const { newPassword } = req.body
+    
+    try {
+        const user = jwt.verify(token, JWT_SECRET)
+        const _id = user.id
+        const password = await bcrypt.hash(newPassword)
+
+        passwordCheck = verifyPassword(newPassword)
+        if(passwordCheck !== "password is good")
+            return res.state(400).send({message: passwordCheck})
+
+        await user.updateOne( 
+            {_id }, 
+            { 
+                $set: { password }
+            }
+        )
+        userLogger.info("password was changed successfully")
+        return res.status(200).send({message: "Password was changed successfully"})
+    } catch (error) {
+        userLogger.error(error)
+        return res.status(400).send({message: "Invalid request"})
+    }
+}

@@ -3,13 +3,9 @@ const route = express.Router()
 
 const { isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
-const { createUser, getUsers, updateUser, deleteUser, change_password } = require("./controllers/UserController")
+const { createUser, getUsers, updateUser } = require("./controllers/UserController")
 const { createProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
-
-const { getLoggerType } = require("../utils/loggers/loggerType")
-generalLogger = getLoggerType("general")
-authLogger = getLoggerType("authentication")
 
 const multer = require("./pictureHandlers/multer");
 

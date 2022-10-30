@@ -3,11 +3,16 @@
 }
 
 .main-div nav {
+    height: 100px;
     background-color: #e4e4e4;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 5px 100px;
+}
+
+.main-div img {
+    width: 100px;
 }
 
 .main-div .main-list {

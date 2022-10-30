@@ -6,13 +6,6 @@ const customFormat = format.combine(
     return `${info.timestamp} = [${info.level.toUpperCase().padEnd(6)}] - ${info.message}`
 }))
 
-const dev_authLogger = createLogger({
-    format: customFormat,
-    transports: [
-        new transports.File({filename: "./logs/dev_authentication.log", level: "silly"})
-    ]
-})
-
 const dev_databaseLogger = createLogger({
     format: customFormat,
     transports: [
@@ -49,11 +42,9 @@ const dev_userLogger = createLogger({
 })
 
 module.exports = {
-    dev_authLogger,
     dev_databaseLogger,
     dev_generalLogger,
     dev_mailLogger,
     dev_projectLogger,
     dev_userLogger
 }
-
