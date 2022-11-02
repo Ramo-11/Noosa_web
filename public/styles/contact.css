@@ -1,192 +1,70 @@
-* {
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    margin: 20px 30% 50px 30%;
+    padding: 50px;
+    background: #fff;
+    box-shadow: 2px 5px 20px rgba(119,119,119,0.5);
+}
+.contact-form h1 {
     font-family: "Montserrat", sans-serif;
-    margin: 0;
-    padding: 0;
+    color: #7ed386;
+    font-size: 30px;
 }
-
-.contact-container {
-    background-color: #fff;
-    
-    /* To center the form in the middle fo the screen */
-	position: relative;
-    left: 50%;
-    transform: translate(-50%);
-
-	overflow: hidden;
-	width: 1100px;
-	max-width: 100%;
-	min-height: 70vh;
-    margin-top: 30px;
-    margin-bottom: 10px;
-}
-
-/* Contact Form style */
-.contact-container input,
-textarea {
-    width: 30%;
-    margin-top: 3rem;
-    border: none;
-    border-bottom: 1.5px solid;
-    margin-left: 1rem;
-} 
-
-*:focus {
+.contact-form input, textarea {
+    padding: 10px 15px;
+    width: 100%;
+    min-height: 50px;
     outline: none;
+    border: none;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 15px;
+    color: #070707;
+    background-color: rgb(236, 236, 236);
+}
+
+.submitter-name input, .submitter-email input, .submitter-subject input, textarea {
+    margin-top: 2%;
 }
 
 textarea {
+    margin-bottom: 20px;
+    height: 200px;
+}
+
+.submitButton {
     width: 50%;
-    height: 20vh;
+    margin: -15px 0 10px 24%;
+    font-size: 17px;
 }
 
-textarea[id="subject"] {
+.submitFlag {
+    margin-top: -30px;
+    margin-bottom: -30px;
     width: 80%;
-    padding: 12px;
+	padding: 10px;
+	border-radius: 3px 3px 3px 3px;
 }
 
-button[type="submit"] {
-    margin-top: 2rem;
-    margin-left: 1rem;
-	border-radius: 20px;
-	border: 1px solid #14a82f;
-	background-color: #14a82f;
-	color: white;
-    cursor: pointer;
-    padding: 1rem;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 12px 45px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	transition: transform 80ms ease-in;
+.disable-submit-flag {
+    border: 1px solid #999999;
+    background-color: #b1dfb6;
 }
 
-button[type="submit"]:hover {
-    opacity: 0.9;
-}
-
-button[type="button"] {
-    color: blue;
-    cursor: pointer;
-    padding: 0.7rem;
-    border-radius: 70px;
-    width: 40%;
+button {
+    font-size: 15px;
+    padding: 9px 25px;
     background-color: rgba(11, 149, 11, 1);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    color: white;
 }
 
-button[type="button"]:hover {
-    opacity: 0.75;
-}
-
-.popup-screen-success {
-    position: fixed;
-    z-index: 999990;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    visibility: hidden;
-}
-
-.popup-window {
-    height: 50vh;
-    background-color: green;
-    border-radius: 25px;
-    box-shadow: 0 0 20px;
-    max-width: 500px; 
-    width: 50%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-.popup-tophalf {
-    display:flex;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    top: 0;
-    justify-content: center;
-    align-items: center;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-}
-.checkmark-circle {
-    position: relative;
-    height: 80px;
-    width: 80px;
-    border-radius: 50%;
-    border: 5px solid #78b13f;
-}
-
-.checkmark-stem {
-    position: absolute;
-    left: 35%;
-    top: 20%;
-    transform: rotate(45deg);
-    height: 35px;
-    width: 18px;
-    border-bottom: 5px solid #78b13f;
-    border-right: 5px solid #78b13f;   
-}
-
-.popup-bottomhalf {
-    display:flex;
-    height: 100%;
-    width: 100%;
-    background-color: #78b13f;
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-}
-
-.popup-text {
-    padding: 12px;
-    letter-spacing: 1px;
-}
-
-.popup-text h1 {
-    font: bold 2em arial, helvetica;
-}
-
-.popup-screen-fail {
-    position: fixed;
-    z-index: 999990;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    visibility: hidden;
-}
-
-.popup-bottomhalf-fail {
-    display:flex;
-    height: 100%;
-    width: 100%;
-    background-color: red;
-    /* border: 3px solid red; */
-    justify-content: center;
-    align-items: center;
-    bottom: 0;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-}
-
-.open-popup {
-    visibility: visible;
-}
-
-.close-popup{
-    visibility: hidden;
+button:hover {
+    background-color: darkseagreen;
 }

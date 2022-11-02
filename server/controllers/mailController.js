@@ -3,7 +3,13 @@ const { getLoggerType } = require("../../utils/loggers/loggerType")
 mailLogger = getLoggerType("mail")
 
 async function sendEmail(req, res) {
-    const { first_name, last_name, email, content } = req.body
+    const { fullName, email, subject, description } = req.body
+
+    if (!fullName || !email || !subject || !description) {
+        mailLogger.error("Unable to send message")
+        mailLogger.debug("One or more fields are empty")
+        return res.status(400).send({ message: "Error: All fields must be completed" })
+    }
 
     let mailTransporter = nodemailer.createTransport({
         service: "gmail",
@@ -15,9 +21,9 @@ async function sendEmail(req, res) {
 
     let details = {
         from: email,
-        to: "balhusni@iu.com",      // This should ultimately be the Noosa email: support@noosa.com
-        subject: `Message from ${email}`,
-        text: content
+        to: "omarh5877@gmail.com",      // This should ultimately be the Noosa email: support@noosa.com
+        subject: `Message from ${fullName}: subject: ${subject}`,
+        text: description
     }
 
     mailTransporter.sendMail(details, (error) => {

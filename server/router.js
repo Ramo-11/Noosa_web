@@ -61,7 +61,8 @@ route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
 route.get("/api/getUsers", getUsers)
 
-// route.post("/api/sendemail", sendEmail)
+// Send email API
+route.post("/api/sendemail", sendEmail)
 
 // Project API routes
 route.post("/api/createProject", multer.single("picture"), createProject)

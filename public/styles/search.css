@@ -77,8 +77,6 @@
 .list-of-users img {
     border-radius: 50%;
     display: block;
-    max-width: 60px;
-    max-height: 40px;
-    width: auto;
-    height: auto;
+    width: 40;
+    height: 40;
 }

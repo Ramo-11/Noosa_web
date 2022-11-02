@@ -55,11 +55,11 @@
             body: data 
         })
 
-        let reqResult = await result
+        const reqResult = await result
         const message = await result.json()
 
-        document.getElementById("submitFlag").style.display = "block"
         document.getElementById("submitFlag").innerHTML = message["message"]
+        document.getElementById("submitFlag").style.display = "block"
 
         if (reqResult.status === 200) {
             document.getElementById("submitFlag").style.color = "#270"
