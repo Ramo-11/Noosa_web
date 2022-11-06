@@ -4,7 +4,7 @@ const route = express.Router()
 const { isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, getUsers, updateUser } = require("./controllers/UserController")
-const { createProject, deleteProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
+const { createProject, editProjectRedirect, editProject, deleteProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
 
 const multer = require("./pictureHandlers/multer");
@@ -36,6 +36,12 @@ route.get("/", (req, res) => res.render("index", { user: res.req.user }))
     res.render("user_projects", { user: res.req.user, secondary_user: user_, projects: req.session.message }) 
   })
 
+ /**
+ * @description retrieve edit project page
+ * @method GET /edit_project
+ */
+  route.get("/edit_project", isLoggedIn, (req, res) => res.render("edit_project", { user: res.req.user, project: req.session.message}))
+
 /**
  * @description contact route
  * @method GET /contact
@@ -56,7 +62,7 @@ route.get("/signup_and_login", isLoggedOut, (req, res) => res.render("signup_and
 
 // User API routes
 route.post("/api/signup", isLoggedOut, createUser)
-route.post("/api/updateUserInfo", multer.single("picture"), updateUser)
+route.post("/api/updateUserInfo", isLoggedIn, multer.single("picture"), updateUser)
 route.post("/api/login", logUserIn)
 route.post("/api/logout", logUserOut)
 route.get("/api/getUsers", getUsers)
@@ -65,8 +71,10 @@ route.get("/api/getUsers", getUsers)
 route.post("/api/sendemail", sendEmail)
 
 // Project API routes
-route.post("/api/createProject", multer.single("picture"), createProject)
-route.delete("/api/deleteProject/:projectID", deleteProject)
+route.post("/api/createProject", isLoggedIn, multer.single("picture"), createProject)
+route.put("/api/editProject", isLoggedIn, multer.single("picture"), editProject)
+route.get("/api/editProjectRedirect/:projectID", isLoggedIn, editProjectRedirect)
+route.delete("/api/deleteProject/:projectID", isLoggedIn, deleteProject)
 
 route.get("/api/getProjects", isLoggedIn, getProjects)
 route.get("/api/getUserProjects/:email", isLoggedIn, getUserProjects)

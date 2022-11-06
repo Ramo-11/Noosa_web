@@ -61,7 +61,7 @@
                                 const icons_div = document.createElement("div")
                                 icons_div.className = "icons-div"
                                 const edit_icon = document.createElement("i")
-                                edit_icon.setAttribute("onclick", "editProject()")
+                                edit_icon.setAttribute("onclick", `editProject(${JSON.stringify(response[i]['_id'])})`)
                                 const delete_icon = document.createElement("i")
                                 delete_icon.setAttribute("onclick", `deleteProject(${JSON.stringify(response[i]['_id'])})`)
 
@@ -80,7 +80,7 @@
                                 delete_icon.appendChild(document.createTextNode("delete"))
 
                                 title_tag.appendChild(document.createTextNode(response[i]['title']))
-                                let project_date = months[+response[i]['date'].split('-')[1] - 1] + ", " + response[i]['date'].split('-')[0]
+                                let project_date = months[+response[i]['date'].split('-')[1] - 1] + " " + response[i]['date'].split('-')[0]
                                 date_tag.appendChild(document.createTextNode(project_date))
                                 description_tag.appendChild(document.createTextNode(response[i]['description']))
         
@@ -121,8 +121,15 @@
                     }
                 }
 
-                async function editProject () {
-                    console.log("no")
+                async function editProject (projectID) {
+                    const result = await fetch(`/api/editProjectRedirect/${projectID}`, {
+                        method: "GET"
+                    })
+                    const reqResult = await result
+
+                    if (reqResult.status === 200) {
+                        location.href = reqResult.url
+                    }
                 }
 
                 async function deleteProject (projectID) {
