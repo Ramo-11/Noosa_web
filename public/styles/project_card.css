@@ -58,9 +58,46 @@ div[class^='project'] {
     border-radius: 10px;
 }
 
+.right-div {
+    width: 25rem;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.icons-div {
+    min-height: 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    cursor: default;
+}
+
+.icons-div i {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.icons-div i:hover {    
+    font-size: 2rem;
+    transition: 0.25s ease-out;
+}
+
 .text-div {
-    width: 24rem;
-    padding: 30px 15px;
+    max-height: 22rem;
+}
+
+#edit-icon {    
+    color: rgb(92, 92, 92);
+}
+
+
+#delete-icon {
+    color: rgb(222, 2, 2);
 }
 
 div[class^='project'] h1 {

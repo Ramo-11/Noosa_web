@@ -4,7 +4,7 @@ const route = express.Router()
 const { isLoggedIn, isLoggedOut, logUserIn, logUserOut } = require("./local")
 
 const { createUser, getUsers, updateUser } = require("./controllers/UserController")
-const { createProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
+const { createProject, deleteProject, getProjects, getUserProjects } = require("./controllers/ProjectController")
 const sendEmail = require("./controllers/mailController")
 
 const multer = require("./pictureHandlers/multer");
@@ -66,6 +66,8 @@ route.post("/api/sendemail", sendEmail)
 
 // Project API routes
 route.post("/api/createProject", multer.single("picture"), createProject)
+route.delete("/api/deleteProject/:projectID", deleteProject)
+
 route.get("/api/getProjects", isLoggedIn, getProjects)
 route.get("/api/getUserProjects/:email", isLoggedIn, getUserProjects)
 
