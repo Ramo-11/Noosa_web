@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="/styles/general.css">
     <link rel="stylesheet" href="/styles/project_card.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Personal Projects</title>
 <body>
     <% if (typeof(user) != "undefined") { %>
@@ -22,22 +23,48 @@
                     const reqResult = await result
                     let response = await result.json()
                     response = JSON.parse(JSON.stringify(response))
+
                     if (reqResult.status === 200) {
                         if (response.length != 0) {
                             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                             for (let i = 0; i < response.length; i++) {
-                                let link_tag
+                                let link_tag1
+                                let link_tag2
+                                
                                 if (response[i]['link'] !== '') {
-                                    link_tag = document.createElement("a")
-                                    link_tag.href = response[i]['link']
-                                    link_tag.target = "_blank" 
-                                    link_tag.rel = "noopener noreferrer"
+                                    link_tag1 = document.createElement("a")
+                                    link_tag1.href = response[i]['link']
+                                    link_tag1.target = "_blank" 
+                                    link_tag1.rel = "noopener noreferrer"
+                                    link_tag2 = document.createElement("a")
+                                    link_tag2.href = response[i]['link']
+                                    link_tag2.target = "_blank" 
+                                    link_tag2.rel = "noopener noreferrer"
                                 }
                                 
                                 const div_tag = document.createElement("div")
                                 div_tag.className = "project" + i
                                 div_tag.setAttribute("id", "project" + i)
+
+                                // Image div properties
+                                const picture_div = document.createElement("div")
+                                picture_div.className = "image-div"
+
+                                const picture_tag = document.createElement("img")
+                                picture_tag.src = response[i]['picture']
+                                picture_div.appendChild(picture_tag);
                                 
+                                // Text div properties
+                                const right_div = document.createElement("div")
+                                right_div.className = "right-div"
+
+                                const icons_div = document.createElement("div")
+                                icons_div.className = "icons-div"
+                                const edit_icon = document.createElement("i")
+                                edit_icon.setAttribute("onclick", `editProject(${JSON.stringify(response[i]['_id'])})`)
+                                const delete_icon = document.createElement("i")
+                                delete_icon.setAttribute("onclick", `deleteProject(${JSON.stringify(response[i]['_id'])})`)
+
                                 const text_div = document.createElement("div")
                                 text_div.className = "text-div"
                                 const title_tag = document.createElement("h1")
@@ -45,34 +72,40 @@
                                 const line_tag = document.createElement("hr")
                                 const description_tag = document.createElement("p")
         
-                                const image_div_tag = document.createElement("div")
-                                image_div_tag.className = "image-div"
-        
-                                const picture_tag = document.createElement("img")
-                                picture_tag.src = response[i]['picture']
-                                image_div_tag.appendChild(picture_tag);
-        
-                                title_tag.appendChild(document.createTextNode(response[i]['title']))
-                                
-                                let project_date = months[+response[i]['date'].split('-')[1] - 1] + ", " + response[i]['date'].split('-')[0]
+                                edit_icon.className = "material-icons"
+                                edit_icon.setAttribute("id", "edit-icon")
+                                edit_icon.appendChild(document.createTextNode("edit"))
+                                delete_icon.className = "material-icons"
+                                delete_icon.setAttribute("id", "delete-icon")
+                                delete_icon.appendChild(document.createTextNode("delete"))
 
+                                title_tag.appendChild(document.createTextNode(response[i]['title']))
+                                let project_date = months[+response[i]['date'].split('-')[1] - 1] + " " + response[i]['date'].split('-')[0]
                                 date_tag.appendChild(document.createTextNode(project_date))
                                 description_tag.appendChild(document.createTextNode(response[i]['description']))
         
+                                icons_div.appendChild(edit_icon)
+                                icons_div.appendChild(delete_icon);
                                 text_div.appendChild(title_tag);
                                 text_div.appendChild(date_tag);
                                 text_div.appendChild(line_tag);
                                 text_div.appendChild(description_tag);
                                 
-                                div_tag.appendChild(image_div_tag);
-                                div_tag.appendChild(text_div);
+                                right_div.appendChild(icons_div)
         
-                                if (link_tag === undefined) {
-                                    document.getElementById("list-of-projects").appendChild(div_tag)
+                                if (link_tag1 !== undefined) {
+                                    link_tag1.appendChild(picture_div)
+                                    div_tag.appendChild(link_tag1);
+                                    link_tag2.appendChild(text_div)
+                                    right_div.appendChild(link_tag2)
                                 } else {
-                                    link_tag.appendChild(div_tag)
-                                    document.getElementById("list-of-projects").appendChild(link_tag)
+                                    div_tag.appendChild(picture_div);
+                                    right_div.appendChild(text_div)
                                 }
+                                
+                                div_tag.appendChild(right_div);
+
+                                document.getElementById("list-of-projects").appendChild(div_tag)
                             }
                         } else {
                             const no_projects_tag = document.createElement("h1")
@@ -87,13 +120,34 @@
                         listOfProjectsDiv.appendChild(error_tag);
                     }
                 }
+
+                async function editProject (projectID) {
+                    const result = await fetch(`/api/editProjectRedirect/${projectID}`, {
+                        method: "GET"
+                    })
+                    const reqResult = await result
+
+                    if (reqResult.status === 200) {
+                        location.href = reqResult.url
+                    }
+                }
+
+                async function deleteProject (projectID) {
+                    const result = await fetch(`/api/deleteProject/${projectID}`, {
+                        method: "DELETE"
+                    })
+                    const reqResult = await result
+                    
+                    if (reqResult.status === 200) {
+                        confirm("Are you sure you want to delete the project?")
+                        location.reload(true);
+                    }
+                }  
             </script>
         </div>
     <% } else { %>
         <%- include("./partials/generic_nav.ejs") %>
-        <div class="main-content">
-
-        </div>
+        <div class="main-content"></div>
     <% } %>
     <%- include("./partials/footer.ejs") %>
 </body>

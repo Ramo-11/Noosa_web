@@ -17,8 +17,8 @@ async function createProject(req, res) {
         // If a picture is submitted
         if (req.file != undefined) {
             const picture = req.file.path
-            const user_ = await user.findById(userID)
-            const result = await cloudinary.uploader.upload(picture, { folder: user_.name + "/projects" })
+            const userName = await user.findById(userID, { name: 1 })
+            const result = await cloudinary.uploader.upload(picture, { folder: userName.name + "/projects" })
             await project.create({
                 author: userID,
                 title,
@@ -47,10 +47,91 @@ async function createProject(req, res) {
     }
 }
 
+async function editProjectRedirect (req, res) {
+    const projectID = req.params.projectID
+    
+    try { 
+        const projectToDelete = await project.findById(projectID)
+
+        req.session.message = projectToDelete
+
+        projectLogger.info("Projects with id [" + projectID + "] was successfully redirect to be edited")
+        res.status(200)
+        return res.redirect("/edit_project")
+    } catch (error) {
+        projectLogger.error("Unable to delete project")
+        projectLogger.debug(error)
+        return res.status(400).send({ message: "Unable to delete project" })
+    }
+}
+
+async function editProject (req, res) {
+    const { projectID, title, date, description, link } = req.body
+    const userID = req.user._id
+
+    try { 
+        // If a picture is submitted
+        if (req.file != undefined) {
+            const picture = req.file.path
+            const userName = await user.findById(userID, { name: 1 })
+            const result = await cloudinary.uploader.upload(picture, { folder: userName.name + "/projects" })
+            await project.findByIdAndUpdate(projectID, {
+                author: userID,
+                title,
+                date,
+                description,
+                link,
+                picture: result.secure_url,
+                cloudinary_id: result.public_id
+            }) 
+        } else {
+            await project.findByIdAndUpdate(projectID, {
+                author: userID,
+                title,
+                date,
+                description,
+                link
+            })
+        }
+
+        projectLogger.info("Project with title [" + title + "] has been updated successfully")
+        return res.status(200).send({ message: "Project was updated successfully" })
+    } catch (error) {
+        projectLogger.error("Unable to update project")
+        projectLogger.debug(error)
+        return res.status(400).send({ message: "Unable to update project" })
+    }
+}
+
+async function deleteProject (req, res) {
+    const projectID = req.params.projectID
+    
+    try { 
+        const projectToDelete = await project.findById(projectID, { cloudinary_id: 1 } )
+        const projectPicturePublicID = projectToDelete.cloudinary_id
+
+        // Project doesn't have default picture, delete the image from cloudinary
+        if (typeof projectPicturePublicID !== "undefined") {
+            if (!projectPicturePublicID.includes("default_project_picture_jjvo89.jpg")) {
+                await cloudinary.uploader.destroy(projectPicturePublicID)
+            }
+        }
+        
+        await project.findByIdAndDelete(projectID)
+
+        projectLogger.info("Projects with id [" + projectID + "] was deleted successfully")
+        return res.status(200).send({ message: "Project was deleted successfully" })
+    } catch (error) {
+        projectLogger.error("Unable to delete project")
+        projectLogger.debug(error)
+        return res.status(400).send({ message: "Unable to delete project" })
+    }
+}
+
 async function getProjects(req, res) {
     try {
         const userID = req.user._id
-        const found_projects = await project.find({ author: userID }, { title: 1, date: 1, picture: 1, description: 1, link: 1 })
+        const found_projects = await project.find({ author: userID }, { author: 0 })
 
         projectLogger.info("Projects were retrieved successfully")
         res.status(200)
@@ -89,4 +170,4 @@ async function getUserProjects(req, res) {
     }
 }
 
-module.exports = { createProject, getProjects, getUserProjects }
+module.exports = { createProject, editProjectRedirect, editProject, deleteProject, getProjects, getUserProjects }
